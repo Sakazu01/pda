@@ -1,0 +1,7 @@
+node_modules/
+tests/page.html
+tests/page-hook.html
+*.log
+.DS_Store
+Thumbs.db
+shots/

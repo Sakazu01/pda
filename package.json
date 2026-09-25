@@ -1,0 +1,43 @@
+{
+  "name": "pda",
+  "version": "1.0.0",
+  "description": "PDA: Plan & Design Anything. One-file diagram studio for business strategy, process modeling, software architecture, AI and automation.",
+  "license": "MIT",
+  "author": "Ariel Cornelius Sitorus",
+  "homepage": "https://sakazu01.github.io/pda/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sakazu01/pda.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Sakazu01/pda/issues"
+  },
+  "keywords": [
+    "diagram",
+    "bpmn",
+    "uml",
+    "architecture",
+    "system-design",
+    "erd",
+    "c4",
+    "whiteboard",
+    "ai",
+    "no-build"
+  ],
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node tests/run.mjs",
+    "test:quick": "node tests/run.mjs --quick",
+    "screenshots": "node scripts/screenshots.mjs"
+  },
+  "devDependencies": {
+    "axe-core": "4.10.2",
+    "playwright": "1.56.0",
+    "pptxgenjs": "3.12.0"
+  }
+}

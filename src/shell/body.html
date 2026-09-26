@@ -1,0 +1,254 @@
+<div class="app" id="app" lang="en">
+  <header class="top">
+    <h1 class="sr">PDA, Plan &amp; Design Anything</h1>
+    <div class="brand" aria-label="PDA, Plan &amp; Design Anything">
+      <svg viewBox="0 0 32 32" aria-hidden="true" class="brand-mark">
+        <defs><linearGradient id="rgBrand" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#14868f"/><stop offset="1" stop-color="#0b4f56"/></linearGradient></defs>
+        <rect x="1" y="1" width="30" height="30" rx="9" fill="url(#rgBrand)"/>
+        <path d="M1 22.5C9 26 22 26 31 17.5V22a9 9 0 0 1-9 9H10a9 9 0 0 1-9-9z" fill="#ffffff" fill-opacity=".07"/>
+        <path d="M10.5 24.5V8.5h6.2a4.6 4.6 0 0 1 0 9.2h-6.2" fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M16.7 17.7h3.3a2 2 0 0 1 2 2v1.6" fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="22" cy="24.4" r="2.7" fill="#ffb84d"/>
+        <circle cx="10.5" cy="8.5" r="2.1" fill="#ffffff"/>
+      </svg>
+      <span class="word">PDA<small>plan &amp; design anything</small></span>
+    </div>
+    <button class="ibtn only-narrow" id="btnPal" type="button" aria-label="Show shapes and icons"><i data-ic="panel-left"></i></button>
+    <div class="doc">
+      <input id="docTitle" type="text" aria-label="Diagram name" spellcheck="false" autocomplete="off">
+      <span class="save" id="saveState" data-s="idle" role="status">Not saved yet</span>
+    </div>
+    <div class="top-actions">
+      <button class="btn" id="btnLib" type="button" title="Your saved diagrams"><i data-ic="folder-open"></i><span class="lbl">Diagrams</span></button>
+      <button class="btn" id="btnLlm" type="button" title="Pilih model AI: Claude bawaan atau API LLM milikmu"><i data-ic="plug"></i><span class="lbl">AI</span></button>
+      <button class="btn ai" id="btnGen" type="button" hidden title="Describe a system and let Claude draft the diagram"><i data-ic="sparkles"></i><span class="lbl">Generate</span></button>
+      <button class="btn" id="btnReview" type="button" hidden title="Ask Claude to review this design"><i data-ic="brain"></i><span class="lbl">Review</span></button>
+      <button class="btn" id="btnSlides" type="button" aria-pressed="false" title="Slide: bingkai 16:9 untuk presentasi"><i data-ic="monitor"></i><span class="lbl">Slide</span></button>
+      <button class="btn" id="btnSim" type="button" aria-pressed="false" title="Jalankan simulasi: telusuri alur langkah demi langkah"><i data-ic="play"></i><span class="lbl">Simulasi</span></button>
+      <button class="btn" id="btnCalm" type="button" aria-pressed="false" title="Warna tenang: netral dengan satu aksen. Matikan untuk warna penuh per kategori"><i data-ic="brush"></i><span class="lbl">Warna: tenang</span></button>
+      <button class="btn" id="btnCheck" type="button" title="Check for common modelling mistakes"><i data-ic="circle-check-big"></i><span class="lbl">Check</span></button>
+      <div class="menu-wrap">
+        <button class="btn pri" id="btnExport" type="button" aria-label="Export" aria-haspopup="true" aria-expanded="false"><i data-ic="download"></i><span class="lbl">Export</span><i data-ic="chevron-down" class="chev"></i></button>
+        <div class="pop menu" id="exportMenu" hidden>
+          <button class="mi" type="button" data-exp="png"><i data-ic="image-down"></i><span><b>PNG image</b><small>For docs, slides and chats</small></span></button>
+          <button class="mi" type="button" data-exp="svg"><i data-ic="spline"></i><span><b>SVG vector</b><small>Sharp at any size, editable in Figma</small></span></button>
+          <button class="mi" type="button" data-exp="copy"><i data-ic="clipboard-copy"></i><span><b>Copy as image</b><small>Paste straight into Word or Docs</small></span></button>
+          <button class="mi" type="button" data-exp="json"><i data-ic="file-json"></i><span><b>Diagram file (.json)</b><small>Re-open and keep editing later</small></span></button>
+          <hr>
+          <button class="mi" type="button" data-exp="open"><i data-ic="folder-open"></i><span><b>Open .json file…</b><small>Also opens files from the old BPMN canvas</small></span></button>
+          <hr>
+          <div class="opt">
+            <span>Background</span>
+            <div class="seg" id="expBg"><button type="button" data-v="light" class="on">Light</button><button type="button" data-v="dark">Dark</button><button type="button" data-v="none">Transparent</button></div>
+            <span>PNG scale</span>
+            <div class="seg" id="expScale"><button type="button" data-v="1">1×</button><button type="button" data-v="2" class="on">2×</button><button type="button" data-v="3">3×</button></div>
+            <label class="chk"><input type="checkbox" id="expSel"> Selection only</label>
+          </div>
+        </div>
+      </div>
+      <button class="ibtn only-narrow" id="btnInsp" type="button" aria-label="Show properties"><i data-ic="panel-right"></i></button>
+    </div>
+  </header>
+
+  <nav class="domain" id="domain" aria-label="Workspaces and diagram types">
+    <div class="pj-views" role="group" aria-label="Dokumen proyek">
+      <button type="button" class="pj-vbtn" id="vPrd" aria-pressed="false" title="PRD proyek (Markdown) · bisa dibangun jadi kanvas dan sebaliknya"><i data-ic="file-text"></i><span class="lbl">PRD</span></button>
+      <button type="button" class="pj-vbtn" id="vInteg" aria-pressed="false" title="Cek integrasi: kamus bersama dan ketidaksesuaian antar bagian"><i data-ic="git-merge"></i><span class="lbl">Integrasi</span></button>
+    </div>
+    <div class="ws-tabs" id="wsTabs" role="tablist" aria-label="Workspaces"></div>
+    <div class="dt-chips" id="dtChips" aria-label="Diagram types"></div>
+    <div class="pop dtpop" id="dtPop" hidden></div>
+  </nav>
+
+  <aside class="panel pal" id="pal" aria-label="Shapes and icons">
+    <h2 class="sr">Bentuk dan ikon</h2>
+    <div class="pal-head">
+      <div class="pal-type" id="palType"></div>
+      <label class="search"><i data-ic="search"></i><input id="palQ" type="search" placeholder="Search all shapes: redis, actor, swot…" aria-label="Search shapes and icons" autocomplete="off"><kbd>/</kbd></label>
+    </div>
+    <div class="pal-body" id="palBody"></div>
+  </aside>
+
+  <main class="stage" id="stage">
+    <svg id="svg" xmlns="http://www.w3.org/2000/svg" aria-label="Diagram canvas" role="application">
+      <defs>
+        <pattern id="gridSm" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1.05" id="dotSm"/></pattern>
+        <pattern id="gridLg" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="2" id="dotLg"/></pattern>
+        <filter id="sketchF" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7" result="nz"/><feDisplacementMap in="SourceGraphic" in2="nz" scale="2.6" xChannelSelector="R" yChannelSelector="G"/></filter>
+      </defs>
+      <defs id="mdefs"></defs>
+      <rect id="bg" x="0" y="0" width="100" height="100" fill="url(#gridSm)"/>
+      <g id="content"></g>
+      <g id="simLayer" pointer-events="none"></g>
+      <path id="pxMask" pointer-events="none" fill-rule="evenodd" d=""/>
+      <g id="over"></g>
+      <g id="measure" visibility="hidden" pointer-events="none"></g>
+    </svg>
+
+    <div class="island simbar" id="simBar" hidden role="toolbar" aria-label="Simulasi alur">
+      <button class="tb flip" id="simPrev" type="button" aria-label="Langkah sebelumnya"><i data-ic="chevron-right"></i></button>
+      <button class="tb" id="simPlay" type="button" aria-label="Putar"><i data-ic="play"></i></button>
+      <button class="tb" id="simNext" type="button" aria-label="Langkah berikutnya"><i data-ic="chevron-right"></i></button>
+      <span class="sim-lbl" id="simLbl" aria-live="polite"></span>
+      <button class="tb" id="simPres" type="button" aria-pressed="false" aria-label="Mode presentasi" title="Mode presentasi (Esc untuk keluar)"><i data-ic="maximize"></i></button>
+      <button class="tb" id="simClose" type="button" aria-label="Tutup simulasi"><i data-ic="x"></i></button>
+    </div>
+    <div class="island pxstrip" id="pxStrip" hidden role="toolbar" aria-label="Slide"></div>
+    <div class="pxshow" id="pxShow" hidden tabindex="-1" aria-label="Presentasi slide">
+      <div class="px-sc island" role="toolbar" aria-label="Kontrol presentasi">
+        <button class="tb flip" id="pxShowPrev" type="button" aria-label="Slide sebelumnya"><i data-ic="chevron-right"></i></button>
+        <span class="sim-lbl" id="pxShowLbl" aria-live="polite">1 / 1</span>
+        <button class="tb" id="pxShowNext" type="button" aria-label="Slide berikutnya"><i data-ic="chevron-right"></i></button>
+        <button class="tb" id="pxShowExit" type="button" aria-label="Keluar presentasi (Esc)"><i data-ic="x"></i></button>
+      </div>
+    </div>
+    <input type="file" id="pxImgIn" accept="image/png,image/jpeg,image/gif,image/webp,image/avif,image/svg+xml" multiple hidden>
+    <div class="island toolbar" id="toolbar" role="toolbar" aria-label="Canvas tools">
+      <button class="tb on" type="button" data-tool="select" title="Select and move (V)" aria-label="Select tool"><i data-ic="mouse-pointer-2"></i></button>
+      <button class="tb" type="button" data-tool="hand" title="Pan the canvas (H, or hold Space)" aria-label="Pan tool"><i data-ic="hand"></i></button>
+      <button class="tb" type="button" data-tool="connect" title="Connect mode: click a source, then a target (C)" aria-label="Connect tool"><i data-ic="link-2"></i></button>
+      <button class="tb" type="button" data-tool="pen" title="Pen: draw freehand (P)" aria-label="Pen tool"><i data-ic="pencil"></i></button>
+      <span class="tsep"></span>
+      <select class="tsel" id="flowSel" title="Line type for new connections" aria-label="Line type for new connections"><option value="auto">Auto line type</option></select>
+      <button class="tb" type="button" id="tLine" title="Add a free line" aria-label="Add a free line"><i data-ic="minus"></i></button>
+      <button class="tb" type="button" id="tArrow" title="Add a free arrow" aria-label="Add a free arrow"><i data-ic="route"></i></button>
+      <button class="tb" type="button" id="tImg" title="Sisipkan gambar (atau seret file / tempel Ctrl+V)" aria-label="Sisipkan gambar"><i data-ic="image-plus"></i></button>
+      <span class="tsep"></span>
+      <button class="tb on" type="button" id="tAuto" title="Auto-connect: with an element selected, a new shape lands next to it and gets linked" aria-label="Auto-connect"><i data-ic="wand-sparkles"></i></button>
+      <button class="tb on" type="button" id="tGrid" title="Snap to grid and alignment guides" aria-label="Snap to grid"><i data-ic="magnet"></i></button>
+      <button class="tb" type="button" id="tFlow" title="Animate the flow along lines" aria-label="Animate flows"><i data-ic="play"></i></button>
+      <button class="tb" type="button" id="tSketch" title="Hand-drawn sketch style (saved with the diagram)" aria-label="Sketch style"><i data-ic="brush"></i></button>
+      <span class="tsep"></span>
+      <button class="tb" type="button" id="tUndo" title="Undo (Ctrl+Z)" aria-label="Undo"><i data-ic="undo-2"></i></button>
+      <button class="tb" type="button" id="tRedo" title="Redo (Ctrl+Y)" aria-label="Redo"><i data-ic="redo-2"></i></button>
+      <button class="tb" type="button" id="tLayout" title="Auto-arrange left to right (selection, or everything)" aria-label="Auto-arrange"><i data-ic="list-tree"></i></button>
+      <span class="tsep"></span>
+      <select class="tsel" id="tplSel" title="Open an example as a new diagram" aria-label="Open an example"><option value="">Examples…</option></select>
+      <button class="tb" type="button" id="tKeys" title="Keyboard shortcuts (?)" aria-label="Keyboard shortcuts"><i data-ic="keyboard"></i></button>
+    </div>
+
+    <div class="island zoombar" role="group" aria-label="Zoom">
+      <button class="tb" type="button" id="zOut" title="Zoom out (−)" aria-label="Zoom out"><i data-ic="zoom-out"></i></button>
+      <button class="tb zl" type="button" id="zReset" title="Reset to 100% (Ctrl+0)">100%</button>
+      <button class="tb" type="button" id="zIn" title="Zoom in (+)" aria-label="Zoom in"><i data-ic="zoom-in"></i></button>
+      <button class="tb" type="button" id="zFit" title="Fit diagram to screen (Shift+1)" aria-label="Fit to screen"><i data-ic="maximize"></i></button>
+      <button class="tb on" type="button" id="zMini" title="Show minimap" aria-label="Toggle minimap"><i data-ic="map"></i></button>
+    </div>
+    <div class="island minimap" id="mini"><svg id="miniSvg" aria-label="Minimap" role="img"></svg></div>
+    <div class="hintbar" id="hint">Double-click empty canvas to add · drag a blue port to connect · Space + drag to pan · Ctrl + scroll to zoom</div>
+    <div class="empty" id="empty" hidden>
+      <div class="empty-card">
+        <h2 id="emptyT">Blank canvas</h2>
+        <p id="emptyP">Click a shape on the left, double-click anywhere to add one, or start from an example.</p>
+        <div class="row">
+          <button class="btn" type="button" id="emptyEx"><i data-ic="layout-grid"></i><span id="emptyExL">Example</span></button>
+          <button class="btn ai" type="button" id="emptyGen" hidden><i data-ic="sparkles"></i>Generate</button>
+        </div>
+      </div>
+    </div>
+    <div class="pop findings" id="findings" hidden>
+      <header><i data-ic="circle-check-big" id="findIc"></i><b id="findTitle">Check</b><button class="ibtn" type="button" id="findClose" aria-label="Close"><i data-ic="x"></i></button></header>
+      <div class="fb" id="findBody"></div>
+    </div>
+    <div class="pop quick" id="quick" hidden>
+      <label class="search"><i data-ic="search"></i><input id="quickQ" type="text" placeholder="Add a shape…" aria-label="Search shapes to add" autocomplete="off"></label>
+      <ul id="quickList" role="listbox"></ul>
+    </div>
+    <div class="pop ctx" id="ctx" hidden role="menu"></div>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </main>
+
+  <main class="pjview prdview" id="prdView" hidden aria-label="PRD" data-mode="split">
+    <div class="pv-bar">
+      <div class="pv-t"><b>PRD</b><small id="prdStat"></small></div>
+      <div class="seg" id="prdMode" role="group" aria-label="Tampilan"><button type="button" data-v="split" class="on">Split</button><button type="button" data-v="edit">Tulis</button><button type="button" data-v="view">Pratinjau</button></div>
+      <span class="grow"></span>
+      <button class="btn" type="button" aria-label="Templat" id="prdTpl" title="Sisipkan templat PRD lengkap"><i data-ic="file-plus-2"></i><span class="lbl">Templat</span></button>
+      <button class="btn" type="button" aria-label="Impor .md" id="prdImp" title="Impor file .md"><i data-ic="upload"></i><span class="lbl">Impor .md</span></button>
+      <button class="btn" type="button" aria-label="Ekspor .md" id="prdExp" title="Unduh PRD sebagai .md"><i data-ic="download"></i><span class="lbl">Ekspor .md</span></button>
+      <button class="btn" type="button" aria-label="Perbarui dari kanvas" id="prdFromCanvas" title="Tulis ulang bagian terstruktur PRD dari isi semua kanvas"><i data-ic="rotate-ccw"></i><span class="lbl">Perbarui dari kanvas</span></button>
+      <button class="btn ai" type="button" aria-label="Susun pakai AI" id="prdAi" title="Rapikan PRD bebas ke format templat dengan AI"><i data-ic="sparkles"></i><span class="lbl">Susun pakai AI</span></button>
+      <button class="btn pri" type="button" aria-label="Bangun kanvas" id="prdBuild" title="Bangun semua kanvas yang relevan dari PRD"><i data-ic="workflow"></i><span class="lbl">Bangun kanvas</span></button>
+    </div>
+    <div class="pv-map" id="prdMap" aria-label="Bagian terstruktur"></div>
+    <div id="prdMsg" aria-live="polite"></div>
+    <div class="pv-body">
+      <textarea id="prdText" class="mono" spellcheck="false" aria-label="Isi PRD (Markdown)" placeholder="# Nama produk&#10;&#10;## Aktor&#10;- **Pelanggan**: …&#10;&#10;Klik Templat untuk contoh lengkap."></textarea>
+      <article class="md" id="prdPrev" aria-label="Pratinjau PRD"></article>
+    </div>
+    <input type="file" id="prdFile" accept=".md,.markdown,.txt,text/markdown,text/plain" hidden>
+  </main>
+  <main class="pjview integview" id="integView" hidden aria-label="Integrasi proyek">
+    <div class="pv-bar">
+      <div class="pv-t"><b>Integrasi</b><small id="integStat"></small></div>
+      <span class="grow"></span>
+      <button class="btn ai" type="button" aria-label="Cek pakai AI" id="integAi" title="Minta AI mencari ketidaksesuaian makna antar bagian"><i data-ic="sparkles"></i><span class="lbl">Cek pakai AI</span></button>
+      <button class="btn pri" type="button" aria-label="Cek ulang" id="integRun"><i data-ic="rotate-ccw"></i><span class="lbl">Cek ulang</span></button>
+    </div>
+    <div class="iv-body">
+      <div class="iv-col"><h2>Temuan</h2><div id="integIssues"></div></div>
+      <div class="iv-col"><h2>Peta keterkaitan</h2><p class="note">Satu baris = satu hal (aktor, data, fitur, layar). Titik = muncul di halaman itu. Klik titik untuk membukanya.</p><div id="integMatrix"></div><h2>Kamus bersama</h2><div id="integDict"></div></div>
+    </div>
+  </main>
+  <aside class="panel insp" id="insp" aria-label="Properties"><h2 class="sr">Properti</h2><div class="insp-body" id="inspBody"></div></aside>
+</div>
+
+<div class="scrim" id="scrim" hidden>
+  <div class="modal" id="mLib" role="dialog" aria-modal="true" aria-labelledby="mLibT" hidden>
+    <header><i data-ic="folder-open"></i><h2 id="mLibT">Your diagrams</h2><button class="ibtn" type="button" data-close aria-label="Close"><i data-ic="x"></i></button></header>
+    <div class="mb">
+      <p class="where" id="libWhere"></p>
+      <ul class="lib-list" id="libList"></ul>
+    </div>
+    <div class="mf"><button class="btn" type="button" id="libImport"><i data-ic="file-json"></i>Open .json file</button><button class="btn pri" type="button" id="libNew"><i data-ic="file-plus-2"></i>New diagram</button></div>
+  </div>
+  <div class="modal" id="mGen" role="dialog" aria-modal="true" aria-labelledby="mGenT" hidden>
+    <header><i data-ic="sparkles"></i><h2 id="mGenT">Generate a diagram</h2><button class="ibtn" type="button" data-close aria-label="Close"><i data-ic="x"></i></button></header>
+    <div class="mb">
+      <label class="fld"><span id="genLab">Describe the system, its users and the main flows</span><textarea id="genText"></textarea></label>
+      <div class="chips" id="genChips"></div>
+      <div class="fld"><span>Taruh di mana</span><div class="seg" id="genMode"><button type="button" data-v="add" id="genAddLbl" class="on">Di sebelah hasil sebelumnya</button><button type="button" data-v="new">Proyek baru terpisah</button></div></div>
+      <p class="note">Runs on the AI model you pick under “AI” (Claude by default). The result lands on the canvas fully editable, and Ctrl+Z undoes it.</p>
+    </div>
+    <div class="mf"><span class="prog" id="genProg"></span><button class="btn" type="button" id="genStop" hidden>Stop</button><button class="btn pri" type="button" id="genGo"><i data-ic="sparkles"></i>Generate</button></div>
+  </div>
+  <div class="modal" id="mLlm" role="dialog" aria-modal="true" aria-labelledby="mLlmT" hidden>
+    <header><i data-ic="plug"></i><h2 id="mLlmT">Model AI</h2><button class="ibtn" type="button" data-close aria-label="Tutup"><i data-ic="x"></i></button></header>
+    <div class="mb">
+      <label class="fld"><span>Penyedia</span><select id="llmProv"></select></label>
+      <label class="fld"><span>URL endpoint</span><input id="llmBase" type="url" spellcheck="false" autocomplete="off"></label>
+      <label class="fld"><span>Nama model</span><input id="llmModel" type="text" spellcheck="false" autocomplete="off"></label>
+      <label class="fld" id="llmKeyWrap"><span>Kunci API</span><input id="llmKey" type="password" spellcheck="false" autocomplete="off"></label>
+      <label class="chk"><input type="checkbox" id="llmKeep"> Ingat kunci di browser ini (kalau tidak, hilang saat tab ditutup)</label>
+      <p class="note" id="llmNote"></p>
+    </div>
+    <div class="mf"><span class="prog" id="llmProg" role="status"></span><button class="btn" type="button" id="llmClear">Hapus kunci</button><button class="btn" type="button" id="llmTest">Tes koneksi</button><button class="btn pri" type="button" id="llmSave">Simpan</button></div>
+  </div>
+  <div class="modal" id="mKeys" role="dialog" aria-modal="true" aria-labelledby="mKeysT" hidden>
+    <header><i data-ic="keyboard"></i><h2 id="mKeysT">Keyboard shortcuts</h2><button class="ibtn" type="button" data-close aria-label="Close"><i data-ic="x"></i></button></header>
+    <div class="mb"><div class="keys" id="keysList"></div></div>
+  </div>
+  <div class="modal" id="mOutline" role="dialog" aria-modal="true" aria-labelledby="mOutlineT" hidden>
+    <header><i data-ic="list-tree"></i><h2 id="mOutlineT">Edit as outline</h2><button class="ibtn" type="button" data-close aria-label="Close"><i data-ic="x"></i></button></header>
+    <div class="mb">
+      <label class="fld"><span>One box per line. Indent two spaces (or press Tab) per level.</span><textarea id="olText" class="mono outline" spellcheck="false"></textarea></label>
+      <ul class="tips"><li><b>Name | detail</b> adds a second line (a person, a URL).</li><li>End a line with <b>*</b> to highlight that box.</li><li><kbd>Ctrl</kbd>+<kbd>Enter</kbd> rebuilds the tree.</li></ul>
+    </div>
+    <div class="mf"><span class="prog" id="olProg"></span><button class="btn" type="button" id="olAdd"><i data-ic="plus"></i>Add as a new tree</button><button class="btn pri" type="button" id="olReplace"><i data-ic="rotate-ccw"></i>Rebuild tree</button></div>
+  </div>
+  <div class="modal wide" id="mIcons" role="dialog" aria-modal="true" aria-labelledby="mIconsT" hidden>
+    <header><i data-ic="image-plus"></i><h2 id="mIconsT">My icons</h2><button class="ibtn" type="button" data-close aria-label="Close"><i data-ic="x"></i></button></header>
+    <div class="mb">
+      <label class="drop" id="iconDrop" tabindex="0"><i data-ic="upload"></i><b>Drop logo images here, or click to choose</b><small>PNG, JPG, WebP or SVG · up to 4 MB each · several at once</small><input type="file" id="iconFile" accept="image/png,image/jpeg,image/webp,image/gif,image/svg+xml,.svg" multiple hidden></label>
+      <label class="chk"><input type="checkbox" id="iconBg" checked> Remove a plain background and trim to the logo</label>
+      <label class="chk"><input type="checkbox" id="iconSplit"> This image is a sheet of several logos — split it into separate icons</label>
+      <label class="fld" id="iconNamesWrap" hidden><span>Names in reading order (left to right, row by row), separated by commas</span><textarea id="iconNames" rows="3" placeholder="Python, PyTorch, Hugging Face, TypeScript…"></textarea></label>
+      <p class="note">Name an icon after a tech (Gemini, Qwen, PostgreSQL…) and every matching tech-stack item uses it. You can also drop images straight onto the canvas.</p>
+      <p class="where" id="iconWhere"></p>
+      <div class="icon-list" id="iconList"></div>
+    </div>
+    <div class="mf"><span class="prog" id="iconProg"></span><button class="btn pri" type="button" data-close>Done</button></div>
+  </div>
+</div>
+<input type="file" id="fileOpen" accept=".json,application/json" hidden>
+<datalist id="techNames"></datalist>

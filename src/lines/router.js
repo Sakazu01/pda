@@ -166,3 +166,21 @@ function rtCenterJog(P,ia,ib){
   return P;
 }
 
+// "Rapikan tata letak": re-run the layered layout on the current page so
+// crowded diagrams get clean lanes. Containers and lifelines stay put.
+function tidyLayout(){
+  var ns=S.nodes.filter(function(n){return !/^z-|^b-/.test(n.t)&&!isLife(n)});
+  if(ns.length<2){toast('Belum ada cukup bentuk untuk dirapikan.');return}
+  var ids=ns.map(function(n){return n.id}),keep={};ids.forEach(function(id){keep[id]=1});
+  var lay=S.edges.filter(function(e){return keep[e.from]&&keep[e.to]}).map(function(e){return{from:e.from,to:e.to}});
+  var x0=Math.min.apply(null,ns.map(function(n){return n.x})),y0=Math.min.apply(null,ns.map(function(n){return n.y}));
+  var pos=layered(ids,lay,{},S.dir||'LR',120);
+  pushUndo();
+  ns.forEach(function(n){var q=pos[n.id];if(q){n.x=snap(x0+q.x);n.y=snap(y0+q.y)}});
+  S.edges.forEach(function(e){if(keep[e.from]&&keep[e.to])tidyEdge(e)});
+  renderAll();scheduleSave();toast(ns.length+' bentuk ditata ulang. Ctrl+Z membatalkan.');
+}
+var rtMore0=nvMoreItems;
+nvMoreItems=function(){var L=rtMore0(),i=L.findIndex(function(x){return x[0]==='tidy'});L.splice(i+1,0,['layout','workflow','Rapikan tata letak','Susun ulang bentuk agar garis tidak bertumpuk']);return L};
+NV_ACTS.push(['layout','Rapikan tata letak halaman ini','workflow','tata letak layout susun ulang auto arrange rapikan',function(){pjView('canvas');tidyLayout()}]);
+document.addEventListener('click',function(ev){var m=ev.target.closest&&ev.target.closest('[data-nvm=layout]');if(!m)return;ev.stopPropagation();closeMenus();pjView('canvas');tidyLayout()},true);

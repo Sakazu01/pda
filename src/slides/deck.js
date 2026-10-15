@@ -259,9 +259,11 @@ function dkClearAuto(sl){S.nodes=S.nodes.filter(function(o){return !(o.t==='text
 
 // ---------- PowerPoint export ----------
 var DK_PPTX_URLS=['https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js','https://unpkg.com/pptxgenjs@3.12.0/dist/pptxgen.bundle.js'];
+// Subresource Integrity: the browser refuses the file if a CDN ever serves different bytes.
+var DK_PPTX_SRI='sha384-Cck14aA9cifjYolcnjebXRfWGkz5ltHMBiG4px/j8GS+xQcb7OhNQWZYyWjQ+UwQ';
 function dkLoadPptx(){
   if(window.PptxGenJS)return Promise.resolve(window.PptxGenJS);
-  return new Promise(function(res,rej){var i=0;(function next(){if(i>=DK_PPTX_URLS.length){rej(new Error('Pustaka PowerPoint tidak bisa dimuat. Periksa koneksi.'));return}var sc=document.createElement('script');sc.src=DK_PPTX_URLS[i++];sc.onload=function(){window.PptxGenJS?res(window.PptxGenJS):next()};sc.onerror=function(){sc.remove();next()};document.head.appendChild(sc)})()});
+  return new Promise(function(res,rej){var i=0;(function next(){if(i>=DK_PPTX_URLS.length){rej(new Error('Pustaka PowerPoint tidak bisa dimuat. Periksa koneksi.'));return}var sc=document.createElement('script');sc.integrity=DK_PPTX_SRI;sc.crossOrigin='anonymous';sc.src=DK_PPTX_URLS[i++];sc.onload=function(){window.PptxGenJS?res(window.PptxGenJS):next()};sc.onerror=function(){sc.remove();next()};document.head.appendChild(sc)})()});
 }
 function dkSvgPng(str,w,h,scale){return new Promise(function(res){var img=new Image();img.onload=function(){var c=document.createElement('canvas');c.width=Math.max(1,Math.round(w*scale));c.height=Math.max(1,Math.round(h*scale));var g=c.getContext('2d');g.scale(scale,scale);g.drawImage(img,0,0);res(c.toDataURL('image/png'))};img.onerror=function(){res(null)};img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(str)})}
 function dkPart(nodes,edges,box){

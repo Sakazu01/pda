@@ -485,8 +485,9 @@ function doExport(kind){
   }
   else if(kind==='open')$('fileOpen').click();
 }
+var IMPORT_MAX=25*1024*1024; // a real project is far smaller; this stops a huge file from freezing the tab
 function importFile(file){
-  if(!file)return;var rd=new FileReader();
+  if(!file)return;if(file.size>IMPORT_MAX){toast('File terlalu besar (maks 25 MB).');return}var rd=new FileReader();
   rd.onload=function(){
     try{
       var d=JSON.parse(rd.result);if(!d||(!(d.pages&&typeof d.pages==="object")&&(!Array.isArray(d.nodes)||!Array.isArray(d.edges))))throw 0;

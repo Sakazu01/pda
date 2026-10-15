@@ -36,6 +36,8 @@ function llmHttpError(r,body){
 function llmCall(prompt,opt){
   var p=LLM_P[LLM_CFG.prov],base=(LLM_CFG.base||p.base||'').replace(/\/+$/,''),model=LLM_CFG.model||p.model,key=LLM_CFG.key||'';
   if(!base)return Promise.reject(new Error('Isi URL endpoint dulu.'));
+  // a key must never travel in clear text: HTTPS only, plain HTTP just for a model on this machine
+  if(!/^https:\/\//i.test(base)&&!/^http:\/\/(localhost|127\.0\.0\.1|\[::1\])(:\d+)?(\/|$)/i.test(base))return Promise.reject(new Error('Endpoint harus HTTPS (atau http://localhost untuk model lokal).'));
   if(!model)return Promise.reject(new Error('Isi nama model dulu.'));
   if(p.key&&!key)return Promise.reject(new Error('Isi kunci API dulu.'));
   var url,headers={'Content-Type':'application/json'},body;

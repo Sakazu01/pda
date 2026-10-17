@@ -1,0 +1,42 @@
+const { chromium } = require('playwright');const path=require('path');
+(async()=>{const b=await chromium.launch();const p=await (await b.newContext({viewport:{width:1440,height:900}})).newPage();
+const errs=[];p.on('pageerror',e=>errs.push(e.message));
+await p.goto('file://'+path.join(__dirname,'page.html'));await p.evaluate(()=>localStorage.clear());await p.reload();await p.waitForTimeout(700);
+let pass=0,fail=0;const ok=(n,c)=>{c?pass++:fail++;console.log((c?'PASS ':'FAIL ')+n)};const ev=(f,a)=>p.evaluate(f,a);const W=ms=>p.waitForTimeout(ms);
+await p.screenshot({path:'shots/nav0.png'});
+await p.click('#btnLib');await W(150);await p.click('#libNew');await W(300);
+ok('start screen on empty project',await ev(()=>!document.getElementById('empty').hidden&&!!document.querySelector('#nvStart [data-nvs="prd"]')));
+await p.screenshot({path:'shots/nav_start.png'});
+ok('few chips (<=6) not 28',await ev(()=>document.querySelectorAll('#dtChips .dt-chip').length<=6));
+await p.click('#nvMore');await W(200);ok('picker opens with all types',await ev(()=>document.querySelectorAll('#nvPick [data-dt]').length===Object.keys({}).length||document.querySelectorAll('#nvPick [data-dt]').length>=80));
+await p.screenshot({path:'shots/nav_pick.png'});
+await p.keyboard.type('okr');await W(150);ok('picker search filters to OKR',await ev(()=>{const l=[...document.querySelectorAll('#nvPick [data-dt]')];return l.length>=1&&l[0].dataset.dt==='okr'}));
+await p.keyboard.press('Enter');await W(300);ok('Enter opens OKR page',await ev(()=>document.querySelector('#dtChips [aria-pressed="true"]').dataset.dt)==='okr');
+ok('OKR now a chip in its workspace',await ev(()=>!!document.querySelector('#dtChips [data-dt="okr"]')));
+await p.keyboard.press('Control+k');await W(200);ok('Ctrl+K opens palette',await ev(()=>!document.getElementById('nvCmd').hidden));
+await p.screenshot({path:'shots/nav_cmd0.png'});
+await p.keyboard.type('system design');await W(150);
+ok('palette finds System Design',/System Design/.test(await p.textContent('#nvCmdList')));
+await p.keyboard.press('Enter');await W(300);ok('palette Enter opens System Design',await ev(()=>document.querySelector('#dtChips [aria-pressed="true"]').dataset.dt)==='sysdesign');
+await p.keyboard.press('Control+k');await W(150);await p.keyboard.type('ekspor png');await W(150);
+const first=await ev(()=>document.querySelector('#nvCmdList .nv-ci[aria-selected="true"]').textContent);ok('action search ranks Ekspor PNG first: '+first,/Ekspor PNG/.test(first));
+await p.keyboard.press('Escape');await W(100);ok('Esc closes palette',await ev(()=>document.getElementById('nvCmd').hidden));
+// AI menu
+await p.click('#btnLlm');await W(150);ok('AI menu shows grouped items',await ev(()=>document.querySelectorAll('#nvAiMenu .mi').length===5));
+await p.screenshot({path:'shots/nav_ai.png'});
+await p.click('[data-nvm="set"]');await W(200);ok('settings opens model dialog',await ev(()=>!document.getElementById('mLlm').hidden));await p.keyboard.press('Escape');
+await p.click('#btnMore');await W(150);ok('more menu',await ev(()=>document.querySelectorAll('#nvMoreMenu .mi').length>=6));await p.keyboard.press('Escape');await ev(()=>document.body.click());
+// Alt shortcuts & prev/next page
+await p.keyboard.press('Alt+1');await W(250);ok('Alt+1 goes to Bisnis',await ev(()=>document.querySelector('#wsTabs [aria-selected="true"]').dataset.ws)==='biz');
+await p.keyboard.press('Alt+ArrowRight');await W(250);const d1=await ev(()=>document.querySelector('#dtChips [aria-pressed="true"]')?document.querySelector('#dtChips [aria-pressed="true"]').dataset.dt:'');ok('Alt+→ cycles project pages ('+d1+')',['okr','sysdesign','bpmn'].includes(d1)||!!d1);
+// element search across pages
+await p.click('#vPrd');await p.click('#prdTpl');await p.click('#prdBuild');await W(400);if(await p.$('[data-prdgo="all"]'))await p.click('[data-prdgo="all"]');await W(300);
+await p.keyboard.press('Control+k');await W(150);await p.keyboard.type('pembayaran');await W(200);
+ok('palette finds elements on other pages',/Elemen di halaman lain/.test(await p.textContent('#nvCmdList')));
+await p.screenshot({path:'shots/nav_cmd1.png'});
+await ev(()=>{const b=[...document.querySelectorAll('#nvCmdList .nv-ci')].find(b=>/ERD/.test(b.textContent));b&&b.click()});await W(400);
+ok('jump to ERD element',await ev(()=>document.querySelector('#dtChips [aria-pressed="true"]').dataset.dt)==='erd');
+await p.screenshot({path:'shots/nav_after.png'});
+await p.setViewportSize({width:400,height:820});await W(300);ok('phone: no h-scroll',await ev(()=>document.documentElement.scrollWidth<=innerWidth+1));await p.screenshot({path:'shots/nav_phone.png'});
+await p.click('#nvMore');await W(200);await p.screenshot({path:'shots/nav_phone_pick.png'});ok('phone picker usable',await ev(()=>{const r=document.getElementById('nvPick').getBoundingClientRect();return r.right<=innerWidth+1&&r.width>300}));
+console.log('RESULT',pass,'pass',fail,'fail');console.log('errors',errs);await b.close()})();

@@ -50,7 +50,10 @@ const ICON = "data:image/svg+xml," + encodeURIComponent('<svg xmlns="http://www.
 // opts.inject: extra code placed at the end of the app scope (tests only)
 // opts.artifact: page body only, for hosts that add their own document shell and CSP
 export function bundle(opts = {}) {
-  const js = '(function(){\n"use strict";\n' + MODULES.map(src).join('\n') + '\n' + (opts.inject || '') + '\n})();';
+  // Tags written inside JS strings ('<img src=...') are spelled '\x3cimg' so the
+  // browser's HTML preload scanner never mistakes them for real elements.
+  const js = ('(function(){\n"use strict";\n' + MODULES.map(src).join('\n') + '\n' + (opts.inject || '') + '\n})();')
+    .replace(/<(?=\/?(img|image|script|style|link|iframe|video|audio|source|object|embed)\b)/gi, '\\x3c');
   new vm.Script(js, { filename: 'pda.js' }); // throws on a syntax error
   const app = src('shell/head.html') + '\n' + src('shell/body.html') + '\n<script>' + js + '</script>\n';
   if (opts.artifact) return app;

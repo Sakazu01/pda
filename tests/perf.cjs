@@ -14,6 +14,6 @@ for(const [N,E] of [[60,90],[120,180],[200,300]]){
   let cross=0,routed=0;S.edges.forEach(e=>{const P=R.route(e);if(!P||e.route)return;routed++;for(let i=1;i<P.length;i++){const a=P[i-1],c=P[i],x1=Math.min(a.x,c.x),x2=Math.max(a.x,c.x),y1=Math.min(a.y,c.y),y2=Math.max(a.y,c.y);S.nodes.forEach(n=>{if(n.id===e.from||n.id===e.to||/^z-|^b-/.test(n.t))return;if(x1<n.x+n.w-2&&x2>n.x+2&&y1<n.y+n.h-2&&y2>n.y+2)cross++})}});
   return{t,cross,routed,edges:S.edges.length}},[N,E]);
  ok(r.t<(N>150?300:200),N+' nodes / '+r.edges+' lines: first render '+r.t.toFixed(0)+'ms');
- ok(r.cross<=Math.ceil(r.edges*(N>150?0.06:0.03)),N+' nodes: line-through-shape crossings '+r.cross+' after background routing (≤3%)');
+ ok(r.cross===0,N+' nodes: line-through-shape crossings '+r.cross+' after background routing (must be 0)');
 }
 console.log(R.join('\n'),'\nerrors',errs);await b.close()})();

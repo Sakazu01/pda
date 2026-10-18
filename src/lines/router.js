@@ -6,7 +6,8 @@
 //     another line already uses, start/end side chosen by the search
 //  3. lines with no free path retry with soft walls (crossing a shape
 //     costs a lot), so they cross as few shapes as possible
-//  4. nudge: collinear overlapping middle segments are spread 9px apart
+//  4. nudge: collinear overlapping middle segments are spread 9px apart,
+//     unless spreading would push a segment into a shape
 // Over budget (90ms) the rest finish in a background pass.
 // Manual bends (mx/my), straight/curved lines, sequence lifelines,
 // tree families and containers keep the old behaviour.
@@ -126,7 +127,9 @@ function rtNudge(){
     cl.forEach(function(c){
       var it=c.items.filter(function(s,ix,arr){return arr.findIndex(function(o){return o.id===s.id})===ix});if(it.length<2)return;
       it.sort(function(a,b){return (a.lo+a.hi)-(b.lo+b.hi)});
-      it.forEach(function(s,n){var off=(n-(it.length-1)/2)*RT.gap,P=RT.routes[s.id].pts;if(s.v){P[s.i].x+=off;P[s.i+1].x+=off}else{P[s.i].y+=off;P[s.i+1].y+=off}});
+      it.forEach(function(s,n){var off=(n-(it.length-1)/2)*RT.gap,r=RT.routes[s.id],P=r.pts,a=P[s.i],b=P[s.i+1],ax=a.x,ay=a.y,bx=b.x,by=b.y;if(s.v){a.x+=off;b.x+=off}else{a.y+=off;b.y+=off}
+        // never let a spread line slide into a shape
+        if(!rtClear(P[s.i-1],a,r.ia,r.ib)||!rtClear(a,b,r.ia,r.ib)||!rtClear(b,P[s.i+2],r.ia,r.ib)){a.x=ax;a.y=ay;b.x=bx;b.y=by}});
     });
   });
 }

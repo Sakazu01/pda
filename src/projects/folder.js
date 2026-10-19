@@ -15,7 +15,8 @@ function fdIdb(mode,fn){
     var rq=indexedDB.open('pda',1);
     rq.onupgradeneeded=function(){rq.result.createObjectStore('kv')};
     rq.onerror=function(){rej(rq.error)};
-    rq.onsuccess=function(){var db=rq.result,tx=db.transaction('kv',mode),r=fn(tx.objectStore('kv'));
+    rq.onsuccess=function(){var db=rq.result,tx,r;
+      try{tx=db.transaction('kv',mode);r=fn(tx.objectStore('kv'))}catch(err){db.close();rej(err);return}
       tx.oncomplete=function(){db.close();res(r&&r.result)};tx.onerror=function(){db.close();rej(tx.error)}};
   });
 }
@@ -111,7 +112,7 @@ document.addEventListener('click',function(ev){
   if(b.hasAttribute('data-fdopen'))fdOpen(+b.getAttribute('data-fdopen'));
   else if(a==='pick')fdPick();else if(a==='grant')fdGrant();else if(a==='forget')fdForget();
   else if(a==='save'){saveNow(true);fdWrite().then(function(){toast('Tersimpan di folder.');fdRefresh()})}
-});
+},true);
 
 (function(){var w=$('libWhere');if(w)w.insertAdjacentHTML('beforebegin','<section class="fd" id="fdBox" aria-label="Folder proyek"></section>')})();
 var fdRenderLib0=renderLib;

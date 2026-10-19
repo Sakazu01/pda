@@ -1,6 +1,6 @@
 const { chromium } = require('playwright');const path=require('path');const fs=require('fs');
 (async()=>{const b=await chromium.launch();const ctx=await b.newContext({viewport:{width:1440,height:900},acceptDownloads:true});const p=await ctx.newPage();
-await p.route(/pptxgen\.bundle\.js/,r=>r.fulfill({path:require.resolve('pptxgenjs/dist/pptxgen.bundle.js'),contentType:'application/javascript'}));
+await p.route(/pptxgen\.bundle\.js/,r=>r.fulfill({path:require.resolve('pptxgenjs/dist/pptxgen.bundle.js'),contentType:'application/javascript',headers:{'Access-Control-Allow-Origin':'*'}}));
 const errs=[];p.on('pageerror',e=>errs.push(e.message));p.on('console',m=>{if(m.type()==='error'&&!/ERR_TUNNEL|fonts|ERR_NAME|net::/.test(m.text()))errs.push('console: '+m.text())});
 await p.goto('file://'+path.join(__dirname,'page.html'));await p.evaluate(()=>localStorage.clear());await p.reload();await p.waitForTimeout(700);
 let pass=0,fail=0;const ok=(n,c)=>{c?pass++:fail++;console.log((c?'PASS ':'FAIL ')+n)};const ev=(f,a)=>p.evaluate(f,a);const W=ms=>p.waitForTimeout(ms);

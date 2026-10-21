@@ -1,0 +1,12 @@
+const { chromium } = require('playwright');const path=require('path');
+(async()=>{const b=await chromium.launch();const p=await (await b.newContext({viewport:{width:1500,height:950}})).newPage();const errs=[];p.on('pageerror',e=>errs.push(e.message));
+await p.goto('file://'+path.join(__dirname,'page-hook.html'));await p.evaluate(()=>localStorage.clear());await p.reload();await p.waitForTimeout(900);
+const R=[];const ok=(c,m)=>R.push((c?'PASS ':'FAIL ')+m);
+await p.selectOption('#tplSel','web3');await p.waitForTimeout(500);
+const id=await p.evaluate(()=>{const e=__RS.S().edges.find(e=>e.label);__RS.sel([],e.id);return e.id});await p.waitForTimeout(150);
+await p.keyboard.press('Alt+Shift+ArrowRight');await p.waitForTimeout(100);ok((await p.evaluate(id=>__RS.S().edges.find(e=>e.id===id).lt,id))>0.5,'Alt+Shift+→ moves label');
+await p.keyboard.press('Alt+s');await p.waitForTimeout(100);ok(await p.evaluate(id=>__RS.S().edges.find(e=>e.id===id).route,id)==='straight','Alt+S straight');
+await p.keyboard.press('Alt+k');await p.waitForTimeout(100);ok(!(await p.evaluate(id=>__RS.S().edges.find(e=>e.id===id).route,id)),'Alt+K elbow');
+await p.keyboard.press('Alt+l');await p.waitForTimeout(100);ok(await p.evaluate(()=>document.activeElement&&document.activeElement.closest('#eBar')!=null),'Alt+L focuses toolbar');
+console.log(await p.evaluate(()=>document.activeElement.outerHTML.slice(0,80)));await p.keyboard.press('ArrowRight');console.log(await p.evaluate(()=>document.activeElement.outerHTML.slice(0,80)));await p.keyboard.press('ArrowRight');console.log(await p.evaluate(()=>document.activeElement.outerHTML.slice(0,80)));await p.keyboard.press('Enter');await p.waitForTimeout(100);ok(await p.evaluate(id=>__RS.S().edges.find(e=>e.id===id).route,id)==='curve','arrow keys + Enter in toolbar (curve)');
+console.log(R.join('\n'),'\nerrors',errs);await b.close()})();

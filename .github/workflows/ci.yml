@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Build
+        run: npm run build
+      - name: dist/index.html is up to date
+        run: git diff --exit-code -- dist/index.html || (echo "::error::Run npm run build and commit dist/index.html" && exit 1)
+      - name: Tests
+        run: ${{ github.event_name == 'pull_request' && 'npm run test:quick' || 'npm test' }}

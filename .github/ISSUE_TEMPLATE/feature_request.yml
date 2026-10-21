@@ -1,0 +1,19 @@
+name: Feature or diagram request
+description: Suggest a feature or a new diagram type
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What are you trying to design or do?
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would help?
+  - type: textarea
+    id: example
+    attributes:
+      label: Example
+      description: A sketch, a link to the notation, or a similar tool doing it well.

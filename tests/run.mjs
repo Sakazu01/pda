@@ -6,9 +6,9 @@ import { fileURLToPath } from 'node:url';
 import { bundle } from '../scripts/build.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
-const ALL = ['run2', 'roles', 'roles2', 'nav', 'more', 'deck', 'px', 'llm', 'sim', 'audit', 'axe2', 'axe3',
+const ALL = ['run2', 'roles', 'roles2', 'nav', 'more', 'deck', 'px', 'llm', 'llmstat', 'sim', 'audit', 'axe2', 'axe3',
   'pxxss', 'csp', 'folder', 'ux2', 'wp', 'kbd', 'theme', 'aigen', 'tech', 'rtdrag', 'layout', 'perf'];
-const QUICK = ['roles', 'csp', 'folder', 'nav', 'ux2', 'wp', 'kbd', 'theme', 'rtdrag', 'layout'];
+const QUICK = ['roles', 'csp', 'folder', 'llmstat', 'nav', 'ux2', 'wp', 'kbd', 'theme', 'rtdrag', 'layout'];
 
 const args = process.argv.slice(2);
 const named = args.filter((a) => !a.startsWith('--'));

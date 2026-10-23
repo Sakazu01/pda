@@ -37,3 +37,17 @@ Open **AI** in the top bar.
 | Any OpenAI-compatible endpoint | Must be `https://` (or `http://localhost`) |
 
 Keys stay in `sessionStorage` unless you tick **Ingat kunci di browser ini**.
+
+## Connection status
+
+The AI dialog shows whether the model is reachable, and the **AI** button carries a status dot:
+
+| Status | Dot | Means |
+|---|---|---|
+| Terhubung | green | Key accepted, model found |
+| Terhubung, ada catatan | amber | Key accepted, but the model name is not in the provider's list |
+| Belum ada kunci API | amber | The provider needs a key |
+| Tidak terhubung | red | Rejected key (401/403), wrong URL, no network, CORS, or timeout. The reason is shown |
+| Mengecek koneksi… | pulsing | A check is running |
+
+The check runs while you type (0.7 s after the last keystroke), when you save, and when PDA starts. It calls the provider's free *list models* endpoint (`/models`, OpenRouter `/key`, Gemini `models/<name>`), so it **costs no tokens**. Only the last check counts, so typing fast never shows a stale result. **Tes koneksi** still sends one real test message when you want to be sure generation works.

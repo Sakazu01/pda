@@ -18,7 +18,7 @@ Each suite is a plain Playwright script that prints `PASS …` / `FAIL …` line
 | run2, roles, roles2 | End-to-end flows per persona (PM, BA, architect…) |
 | nav, more, kbd | Navigation, command palette, keyboard |
 | deck, px, sim | Slides/PPTX, shapes and media, simulation |
-| llm, aigen | Providers, AI intent and placement |
+| llm, llmstat, aigen | Providers, connection status, AI intent and placement |
 | audit, pxxss, csp, folder | Security: XSS, SVG upload, CSP, project folder |
 | axe2, axe3 | Accessibility (axe-core, light and dark, narrow and wide) |
 | ux2, wp, rtdrag, layout, perf | Labels, waypoints, routing while dragging, re-layout, router invariants |

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-w4gtDxaFsyVwRzcciJJUeVbq0G1Ed8OQHH0ypD2wL+k=' https://cdn.jsdelivr.net https://unpkg.com; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com data:; img-src 'self' data: blob: https:; connect-src https: data: blob: http://localhost:* http://127.0.0.1:*; worker-src blob:; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-RnkAosXhAIHRongg82jZwSimcWfdgeIqeZIbADHQuas=' https://cdn.jsdelivr.net https://unpkg.com; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com data:; img-src 'self' data: blob: https:; connect-src https: data: blob: http://localhost:* http://127.0.0.1:*; worker-src blob:; base-uri 'none'; form-action 'none'; object-src 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="description" content="PDA: Plan &amp; Design Anything. Diagram studio for business strategy, process modeling, software architecture, AI and automation.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2230%22%20height%3D%2230%22%20rx%3D%229%22%20fill%3D%22%230f6b73%22%2F%3E%3Cpath%20d%3D%22M10.5%2024.5V8.5h6.2a4.6%204.6%200%200%201%200%209.2h-6.2M16.7%2017.7h3.3a2%202%200%200%201%202%202v1.6%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222.6%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3Ccircle%20cx%3D%2222%22%20cy%3D%2224.4%22%20r%3D%222.7%22%20fill%3D%22%23ffb84d%22%2F%3E%3C%2Fsvg%3E">
@@ -626,6 +626,20 @@ button.iv-dot.on:hover{transform:scale(1.15)}
 .menu .mi[disabled]{opacity:.45;cursor:not-allowed}
 .menu .mi:focus-visible{outline:2px solid var(--accent-line);outline-offset:-2px}
 .nv-ai{width:300px}
+#btnLlm{position:relative}
+.llm-dot{position:absolute;top:5px;right:5px;width:8px;height:8px;border-radius:50%;background:var(--muted);box-shadow:0 0 0 2px var(--panel)}
+.llm-dot[data-s="ok"]{background:var(--good)}.llm-dot[data-s="warn"],.llm-dot[data-s="nokey"]{background:var(--warn)}.llm-dot[data-s="fail"]{background:var(--bad)}
+.llm-dot[data-s="checking"]{background:var(--info);animation:llmPulse 1s ease-in-out infinite}
+.llm-stat{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:10px;padding:9px 10px}
+.llm-stat .dot{width:10px;height:10px;border-radius:50%;flex:none;background:var(--muted)}
+.llm-stat p{flex:1;min-width:0;margin:0;display:flex;flex-direction:column;gap:1px}
+.llm-stat b{font-size:13px}.llm-stat span{font-size:12px;color:var(--muted);overflow-wrap:anywhere}
+.llm-stat[data-s="ok"]{border-color:var(--good)}.llm-stat[data-s="ok"] .dot{background:var(--good)}.llm-stat[data-s="ok"] b{color:var(--good)}
+.llm-stat[data-s="warn"] .dot,.llm-stat[data-s="nokey"] .dot{background:var(--warn)}.llm-stat[data-s="warn"] b,.llm-stat[data-s="nokey"] b{color:var(--warn)}
+.llm-stat[data-s="fail"]{border-color:var(--bad)}.llm-stat[data-s="fail"] .dot{background:var(--bad)}.llm-stat[data-s="fail"] b{color:var(--bad)}
+.llm-stat[data-s="checking"] .dot{background:var(--info);animation:llmPulse 1s ease-in-out infinite}
+@keyframes llmPulse{50%{opacity:.35}}
+@media (prefers-reduced-motion:reduce){.llm-dot,.llm-stat .dot{animation:none!important}}
 #btnLlm .chev,#btnLlm .i.chev{width:13px;height:13px;opacity:.7}
 .empty-card.wide{max-width:640px;padding:22px}
 .nv-start{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;width:100%;margin-top:4px}
@@ -5374,6 +5388,86 @@ function llmForm(){
   $('llmClear').onclick=function(){LLM_CFG.key='';$('llmKey').value='';llmSave();$('llmProg').textContent='Kunci dihapus dari browser ini.'};
   aiRefresh();
 })();
+
+// Connection status for the AI model: shown in the AI dialog and as a dot on
+// the AI button. Checking is cheap: it lists models (or reads the key) instead
+// of generating text, so it costs no tokens. Results from an older config are
+// ignored, so typing fast never shows a stale "Terhubung".
+var LLM_STAT={s:'idle',msg:'',seq:0,t:0};
+var LLM_STAT_TXT={idle:'Belum dicek',checking:'Mengecek koneksi…',ok:'Terhubung',warn:'Terhubung, ada catatan',fail:'Tidak terhubung',nokey:'Belum ada kunci API'};
+
+function llmPingUrl(p,base,model){
+  if(p.kind==='anthropic')return base+'/models';
+  if(p.kind==='gemini')return base+'/models/'+encodeURIComponent(model);
+  if(/openrouter\.ai/i.test(base))return base+'/key'; // /models there is public, /key needs a valid key
+  return base+'/models';
+}
+// cfg: {prov, base, model, key}. Resolves {s, msg}; never rejects.
+function llmPing(cfg){
+  var p=LLM_P[cfg.prov];
+  if(p.builtin)return Promise.resolve(sampleCap?{s:'ok',msg:'Claude bawaan siap dipakai.'}:{s:'fail',msg:'Claude bawaan hanya tersedia saat PDA dibuka di dalam Claude. Pilih penyedia lain.'});
+  var base=(cfg.base||p.base||'').replace(/\/+$/,''),model=cfg.model||p.model,key=cfg.key||'';
+  if(!base)return Promise.resolve({s:'fail',msg:'Isi URL endpoint dulu.'});
+  if(!/^https:\/\//i.test(base)&&!/^http:\/\/(localhost|127\.0\.0\.1|\[::1\])(:\d+)?(\/|$)/i.test(base))return Promise.resolve({s:'fail',msg:'Endpoint harus HTTPS (atau http://localhost untuk model lokal).'});
+  if(p.key&&!key)return Promise.resolve({s:'nokey',msg:'Tempel kunci API untuk '+p.n+'.'});
+  var h={};
+  if(p.kind==='anthropic'){h['x-api-key']=key;h['anthropic-version']='2023-06-01';h['anthropic-dangerous-direct-browser-access']='true'}
+  else if(p.kind==='gemini')h['x-goog-api-key']=key;
+  else if(key)h.Authorization='Bearer '+key;
+  var ctl=typeof AbortController==='function'?new AbortController():null,tm=setTimeout(function(){if(ctl)ctl.abort()},10000);
+  return fetch(llmPingUrl(p,base,model),{headers:h,signal:ctl&&ctl.signal}).then(function(r){
+    return r.text().then(function(txt){
+      if(r.ok){
+        // the key works; also tell whether the model name exists, when the list says so
+        var ids=null;try{var j=JSON.parse(txt);if(Array.isArray(j.data))ids=j.data.map(function(m){return m&&m.id})}catch(e){}
+        if(ids&&ids.length&&model&&ids.indexOf(model)<0)return{s:'warn',msg:'Kunci diterima, tapi model “'+model+'” tidak ada di daftar penyedia. Periksa nama modelnya.'};
+        return{s:'ok',msg:p.n+' terhubung'+(model?' · '+model:'')+'.'};
+      }
+      if(r.status===404&&p.kind==='gemini')return{s:'warn',msg:'Kunci diterima, tapi model “'+model+'” tidak ditemukan.'};
+      return{s:'fail',msg:llmHttpError(r,txt).message};
+    });
+  },function(e){
+    return{s:'fail',msg:e&&e.name==='AbortError'?'Penyedia tidak menjawab dalam 10 detik.':'Tidak bisa menjangkau '+base.replace(/^https?:\/\//,'').split('/')[0]+'. Periksa URL, koneksi, dan izin CORS.'};
+  }).then(function(r){clearTimeout(tm);return r});
+}
+
+function llmStatSet(s,msg){LLM_STAT.s=s;LLM_STAT.msg=msg||'';LLM_STAT.t=Date.now();llmStatRender()}
+function llmStatRender(){
+  var s=LLM_STAT.s,box=$('llmStat');
+  if(box){box.setAttribute('data-s',s);box.querySelector('b').textContent=LLM_STAT_TXT[s]||'';box.querySelector('span').textContent=LLM_STAT.msg}
+  var btn=$('btnLlm');if(btn){
+    var dot=btn.querySelector('.llm-dot');if(!dot){dot=document.createElement('i');dot.className='llm-dot';dot.setAttribute('aria-hidden','true');btn.appendChild(dot)}
+    dot.setAttribute('data-s',s);btn.setAttribute('aria-label','Model AI: '+(LLM_STAT_TXT[s]||''));
+    btn.title='Model AI · '+(LLM_STAT_TXT[s]||'')+(LLM_STAT.msg?' · '+LLM_STAT.msg:'');
+  }
+}
+function llmCheck(cfg){
+  var my=++LLM_STAT.seq;llmStatSet('checking','');
+  return llmPing(cfg).then(function(r){if(my===LLM_STAT.seq)llmStatSet(r.s,r.msg);return r});
+}
+function llmFormCfg(){return{prov:$('llmProv').value,base:$('llmBase').value.trim(),model:$('llmModel').value.trim(),key:$('llmKey').value.trim()}}
+
+(function(){
+  var foot=document.querySelector('#mLlm .mb');
+  if(foot)foot.insertAdjacentHTML('beforeend','<div class="llm-stat" id="llmStat" data-s="idle" role="status" aria-live="polite"><i class="dot" aria-hidden="true"></i><p><b></b><span></span></p><button type="button" class="sbtn" id="llmRecheck">Cek lagi</button></div>');
+  var tm=0;function soon(){clearTimeout(tm);LLM_STAT.seq++;llmStatSet('checking','');tm=setTimeout(function(){llmCheck(llmFormCfg())},700)}
+  ['llmBase','llmModel','llmKey'].forEach(function(id){$(id).addEventListener('input',soon)});
+  $('llmProv').addEventListener('change',function(){setTimeout(function(){llmCheck(llmFormCfg())},0)});
+  $('llmRecheck').onclick=function(){llmCheck(llmFormCfg())};
+  // opening the dialog shows the status of the saved config, checking it if it was never checked
+  $('btnLlm').addEventListener('click',function(){if(LLM_STAT.s==='idle')llmCheck(LLM_CFG);else llmStatRender()});
+  // the full "Tes koneksi" (a real generation) also updates the status
+  $('llmTest').onclick=function(){
+    var my=++LLM_STAT.seq;llmStatSet('checking','Mengirim pesan uji ke model…');Object.assign(LLM_CFG,llmFormCfg(),{keep:$('llmKeep').checked}); // same as before: testing applies the form
+    var pr=$('llmProg'),bt=$('llmTest');pr.textContent='Menguji…';bt.disabled=true;
+    llmCall('Reply with only this JSON: {"ok":true}',{}).then(function(t){var j=llmJsonFrom(t),good=j&&j.ok;pr.textContent=good?'Terhubung. Model membalas dengan benar.':'Terhubung, tapi balasannya tidak sesuai format.';if(my===LLM_STAT.seq)llmStatSet(good?'ok':'warn',good?'Model membalas dengan benar.':'Balasannya tidak sesuai format.')},function(e){pr.textContent=e.message;if(my===LLM_STAT.seq)llmStatSet('fail',e.message)}).then(function(){bt.disabled=false});
+  };
+  $('llmClear').addEventListener('click',function(){llmCheck(llmFormCfg())});
+})();
+// saving calls aiRefresh, so the saved config is re-checked and the dot on the AI button keeps the result
+var lsAiRefresh0=aiRefresh;
+aiRefresh=function(){lsAiRefresh0();if(LLM_CFG.prov==='claude'||LLM_CFG.key||!LLM_P[LLM_CFG.prov].key)llmCheck(LLM_CFG);else llmStatSet('nokey','Tempel kunci API untuk '+LLM_P[LLM_CFG.prov].n+'.')};
+aiRefresh();
 
 // ================= simulation: step-through, token flow, presentation =================
 // One timeline: step s lights every node at depth s, dims deeper ones, and sends a token down each edge that arrives there.

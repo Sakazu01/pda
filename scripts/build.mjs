@@ -17,7 +17,7 @@ export const MODULES = [
   'vendor/tech-stack-icons.js', 'diagrams/tech-logos.js',
   'core/ui.js', 'core/features.js',
   'diagrams/frameworks.js', 'editor/inspector.js', 'ai/generate.js', 'editor/workspaces.js',
-  'ai/providers.js', 'editor/simulate.js', 'diagrams/shapes-plus.js', 'diagrams/business.js',
+  'ai/providers.js', 'ai/llm-status.js', 'editor/simulate.js', 'diagrams/shapes-plus.js', 'diagrams/business.js',
   'projects/projects.js', 'editor/navigation.js', 'slides/deck.js', 'i18n/id.js',
   'editor/canvas-font.js', 'lines/labels.js', 'lines/toolbar.js', 'lines/snap.js',
   'diagrams/uml-extra.js', 'guide/goals.js', 'ai/intent.js', 'editor/theme.js', 'ai/fab.js',

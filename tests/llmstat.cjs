@@ -1,0 +1,30 @@
+// AI connection status: checked without generating, visible in the dialog and on the AI button.
+const { chromium } = require('playwright');const path=require('path');
+(async()=>{const b=await chromium.launch();const p=await (await b.newContext({viewport:{width:1440,height:900}})).newPage();const errs=[];p.on('pageerror',e=>errs.push(e.message));
+let hits=0;
+await p.route('https://api.openai.com/v1/models',r=>{hits++;const ok=r.request().headers().authorization==='Bearer sk-good';
+  r.fulfill({status:ok?200:401,contentType:'application/json',headers:{'Access-Control-Allow-Origin':'*','Access-Control-Allow-Headers':'*'},body:ok?JSON.stringify({data:[{id:'gpt-4o-mini'},{id:'gpt-4.1'}]}):JSON.stringify({error:{message:'Incorrect API key'}})})});
+await p.route('https://api.openai.com/v1/chat/completions',r=>{throw new Error('status check must not generate')});
+await p.goto('file://'+path.join(__dirname,'page.html'));await p.evaluate(()=>localStorage.clear());await p.reload();await p.waitForTimeout(800);
+const R=[];const ok=(c,m)=>R.push((c?'PASS ':'FAIL ')+m);const W=ms=>p.waitForTimeout(ms);
+const st=()=>p.evaluate(()=>({box:document.getElementById('llmStat').dataset.s,txt:document.getElementById('llmStat').textContent,dot:(document.querySelector('#btnLlm .llm-dot')||{}).dataset?.s}));
+ok(await p.evaluate(()=>!!document.querySelector('#btnLlm .llm-dot')),'AI button shows a status dot');
+await p.click('#btnLlm');await p.click('[data-nvm="set"]');await W(200);
+await p.selectOption('#llmProv','openai');await W(300);
+let s=await st();ok(s.box==='nokey'&&/Belum ada kunci/.test(s.txt),'no key: "Belum ada kunci API" ('+s.box+')');
+await p.fill('#llmKey','sk-bad');await W(1200);
+s=await st();ok(s.box==='fail'&&/Tidak terhubung/.test(s.txt)&&/ditolak/.test(s.txt),'wrong key: "Tidak terhubung" with reason ('+s.txt.slice(0,80)+')');
+await p.fill('#llmKey','sk-good');await W(1200);
+s=await st();ok(s.box==='ok'&&/Terhubung/.test(s.txt),'valid key: "Terhubung" ('+s.txt.slice(0,60)+')');
+await p.fill('#llmModel','gpt-9-imaginary');await W(1200);
+s=await st();ok(s.box==='warn'&&/tidak ada di daftar/.test(s.txt),'unknown model: warning names the model');
+await p.fill('#llmModel','gpt-4o-mini');await W(1200);
+await p.click('#llmSave');await W(600);
+s=await st();ok(s.dot==='ok','after saving, the AI button dot is green ('+s.dot+')');
+ok(await p.evaluate(()=>/Terhubung/.test(document.getElementById('btnLlm').title)),'AI button tooltip says Terhubung');
+// typing quickly never leaves a stale result: only the last config counts
+await p.click('#btnLlm');await p.click('[data-nvm="set"]');await W(200);
+await p.fill('#llmKey','sk-bad');await W(100);await p.fill('#llmKey','sk-good');await W(1300);
+s=await st();ok(s.box==='ok','fast typing: final status matches the final key');
+ok(hits>0,'checks used the free /models endpoint ('+hits+' calls), no generation');
+console.log(R.join('\n'),'\nerrors',errs);await b.close()})();

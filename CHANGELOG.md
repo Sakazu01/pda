@@ -2,6 +2,11 @@
 
 All notable changes are listed here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions follow [SemVer](https://semver.org/).
 
+## [1.1.0] - 2026-10-23
+
+### Added
+- AI connection status: "Terhubung / Tidak terhubung" in the AI dialog and a status dot on the AI button. It is checked through the free list-models endpoint, as you type.
+
 ## [1.0.0] - 2026-10-21
 
 First public release as **PDA: Plan & Design Anything** (previously developed as *Rancang Studio*).
@@ -26,4 +31,5 @@ First public release as **PDA: Plan & Design Anything** (previously developed as
 - HTTPS-only AI endpoints (localhost excepted). Session-only API keys by default.
 - 25 MB import cap. Sanitization of every import and of rendered SVG.
 
+[1.1.0]: https://github.com/Sakazu01/pda/releases/tag/v1.1.0
 [1.0.0]: https://github.com/Sakazu01/pda/releases/tag/v1.0.0

@@ -28,7 +28,7 @@ function typeOptions(n){
     s+='<optgroup label="Tech stack">'+TECH.map(function(x){var k='c-'+techKey(x[1]);return '<option value="'+k+'"'+(k===n.t?' selected':'')+'>'+esc(x[1])+'</option>'}).join('')+'</optgroup>';
     return s;
   }
-  Object.keys(T).forEach(function(k){if(T[k].f===f)s+='<option value="'+k+'"'+(k===n.t?' selected':'')+'>'+esc(T[k].n)+'</option>'});
+  Object.keys(T).forEach(function(k){if(T[k].f===f&&(!T[k].logoOnly||k===n.t))s+='<option value="'+k+'"'+(k===n.t?' selected':'')+'>'+esc(T[k].n)+'</option>'});
   return s;
 }
 function badgeFor(n){

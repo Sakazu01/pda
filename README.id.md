@@ -30,7 +30,7 @@ PDA dikirim sebagai **satu file HTML mandiri**. File itu bisa dibuka langsung da
 - **PRD → semua kanvas**: tulis `## Aktor`, `## Alur`, `## Entitas Data`, `## Arsitektur`, lalu PDA membangun setiap halaman dan mengecek konsistensinya.
 - **Buat dengan AI di setiap kanvas**: jenis diagram bisa dipilih sendiri atau ditentukan AI. Hasilnya diletakkan *di sebelah* hasil sebelumnya, dan Ctrl+Z membatalkannya. Pakai Claude bawaan atau model milikmu (OpenAI, Anthropic, Gemini, Groq, OpenRouter, DeepSeek, Ollama, LM Studio). Status **Terhubung / Tidak terhubung** langsung muncul begitu kunci API dimasukkan.
 - **Garis yang rapi**: router ortogonal A*. Pada graf padat (200 bentuk, 300 garis) tidak ada satu pun garis yang menembus bentuk. Label duduk di atas garis seperti di Excalidraw dan bisa digeser. Segmen bisa diseret dan tekukan bisa ditambah.
-- **150+ logo tech stack asli** dari tech-stack-icons (MIT). Produk yang belum punya logo diberi lencana monogram.
+- **Semua 694 logo** dari tech-stack-icons (MIT), versi terang dan gelap. Semuanya bisa dicari di palet atau dibuka lewat bagian *Semua logo tech*. Produk yang belum punya logo diberi lencana monogram.
 - **Folder proyek**: proyek disimpan sebagai file `.pda.json` di folder pilihanmu. Daftarnya bisa di-scroll dan langsung dibuka.
 
 ## Mulai cepat

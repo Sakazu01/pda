@@ -40,7 +40,7 @@ It ships as **one self-contained HTML file**. Open it from your disk, host it on
 | **PRD → every canvas** | Write `## Aktor`, `## Alur`, `## Entitas Data`, `## Arsitektur`… and PDA builds and cross-checks every page from it |
 | **AI generate, anywhere** | Every canvas has an AI button. It picks the right diagram type for you (or you choose), places the result *beside* earlier ones, and Ctrl+Z undoes it. Use the built-in Claude or bring your own model (OpenAI, Anthropic, Gemini, Groq, OpenRouter, DeepSeek, Ollama, LM Studio). A live status shows whether your key connects |
 | **Lines that behave** | Orthogonal router with A* search. In dense graphs (200 shapes, 300 lines) **no line passes through a shape**. Labels sit *on* the line like Excalidraw and slide along it. Drag segments, add bends, and switch between straight, elbow and curve |
-| **150+ real tech logos** | From [tech-stack-icons](https://www.tech-stack-icons.com/) (MIT), with light/dark variants. Products without a logo in the pack get a clean monogram badge |
+| **All 694 tech logos** | The whole [tech-stack-icons](https://www.tech-stack-icons.com/) pack (MIT) in light and dark. Search any of them, or browse *Semua logo tech*. The section loads only when opened. Catalog items without a logo in the pack get a monogram badge |
 | **Present it** | Pitch-deck slides with charts and tables, PowerPoint export, step-through simulation of flows |
 | **Yours, on your disk** | Projects can live in a folder you pick as plain `.pda.json` files. They also export to PNG, SVG and JSON |
 

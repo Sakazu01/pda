@@ -42,8 +42,9 @@ PDA dikirim sebagai **satu file HTML mandiri**. File itu bisa dibuka langsung da
 ```bash
 git clone https://github.com/Sakazu01/pda.git
 cd pda
-npm install          # hanya alat tes: Playwright, axe-core
-npm run build        # src/ → dist/index.html
+npm install          # alat pengembangan: TypeScript, esbuild, Playwright
+npm run typecheck    # tsc, nol error
+npm run build        # src/**/*.ts → dist/index.html
 npm run test:quick   # tes cepat ~1 menit
 npm test             # semua tes browser (400+ cek)
 ```

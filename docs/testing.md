@@ -9,7 +9,7 @@ node tests/run.mjs wp perf   # named suites
 `tests/run.mjs` builds two pages:
 
 - `tests/page.html`: the app exactly as shipped, CSP included;
-- `tests/page-hook.html`: the same app plus `window.__RS`, a handle to internals (`buildGraph`, `route`, `S()`, `compImg`, …) defined in `tests/hook.txt`.
+- `tests/page-hook.html`: the same app plus `window.__RS`, a handle to internals (`buildGraph`, `route`, `S()`, `compImg`, …) defined in `tests/hook.ts` (bundled only into the test page).
 
 Each suite is a plain Playwright script that prints `PASS …` / `FAIL …` lines and `errors [...]`. The runner counts them, and any page error fails the suite.
 

@@ -19,7 +19,7 @@ const SHOTS = [
 
 const browser = await chromium.launch();
 for (const s of SHOTS) {
-  const ctx = await browser.newContext({ viewport: { width: 1440, height: 860 }, deviceScaleFactor: 2, colorScheme: s.theme });
+  const ctx = await browser.newContext({ viewport: { width: 1440, height: 860 }, deviceScaleFactor: 2, colorScheme: s.theme, locale: 'en-US' });
   const p = await ctx.newPage();
   await p.goto(url);
   await p.evaluate((t) => { localStorage.clear(); localStorage.setItem('rancang:theme', t) }, s.theme);

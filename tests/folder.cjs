@@ -1,6 +1,6 @@
 // Project folder: save, list (scrollable), rename, open, with a fake directory handle.
 const { chromium } = require('playwright');const path=require('path');
-(async()=>{const b=await chromium.launch();const p=await (await b.newContext({viewport:{width:1440,height:900}})).newPage();const errs=[];p.on('pageerror',e=>errs.push(e.message));
+(async()=>{const b=await chromium.launch();const p=await (await b.newContext({locale:'id-ID',viewport:{width:1440,height:900}})).newPage();const errs=[];p.on('pageerror',e=>errs.push(e.message));
 await p.addInitScript(()=>{
   const files=new Map();window.__files=files;
   const fh=(name)=>({kind:'file',name,getFile:async()=>new File([files.get(name)||''],name,{lastModified:Date.now()}),

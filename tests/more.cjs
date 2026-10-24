@@ -1,5 +1,5 @@
 const { chromium } = require('playwright');const path=require('path');
-(async()=>{const b=await chromium.launch();const p=await (await b.newContext({viewport:{width:1440,height:900}})).newPage();
+(async()=>{const b=await chromium.launch();const p=await (await b.newContext({locale:'id-ID',viewport:{width:1440,height:900}})).newPage();
 const errs=[];p.on('pageerror',e=>errs.push(e.message));
 await p.goto('file://'+path.join(__dirname,'page.html'));await p.evaluate(()=>localStorage.clear());await p.reload();await p.waitForTimeout(700);
 await p.click('#btnLib');await p.waitForTimeout(150);await p.click('#libNew');await p.waitForTimeout(300);

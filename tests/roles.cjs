@@ -5,7 +5,7 @@ const srv=http.createServer((q,r)=>{r.setHeader('Access-Control-Allow-Origin','*
     let out;if(b.includes('Reply with only this JSON'))out='{"ok":true}';else if(b.includes('format templat PDA'))out=JSON.stringify({markdown:AI_MD});else if(b.includes('memeriksa konsistensi'))out=JSON.stringify({issues:[{severity:'warn',category:'Alur',message:'Alur Booking studio menyebut WhatsApp tapi Otomasi tidak punya langkah gagal kirim.',pages:['n8n Workflow','BPMN']}]});else out='{}';
     r.end(JSON.stringify({choices:[{message:{content:out}}]}))})});
 srv.listen(8798,async()=>{
-const b=await chromium.launch();const ctx=await b.newContext({viewport:{width:1440,height:900}});const p=await ctx.newPage();
+const b=await chromium.launch();const ctx=await b.newContext({locale:'id-ID',viewport:{width:1440,height:900}});const p=await ctx.newPage();
 const errs=[];p.on('pageerror',e=>errs.push(e.message));p.on('console',m=>{if(m.type()==='error'&&!/ERR_TUNNEL|fonts|ERR_CONNECTION/.test(m.text()))errs.push('console: '+m.text())});
 await p.goto('file://'+path.join(__dirname,'page.html'));await p.evaluate(()=>localStorage.clear());await p.reload();await p.waitForTimeout(700);
 let pass=0,fail=0;const ok=(n,c)=>{c?pass++:fail++;console.log((c?'PASS ':'FAIL ')+n)};const ev=(f,a)=>p.evaluate(f,a);const W=ms=>p.waitForTimeout(ms);

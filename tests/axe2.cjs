@@ -1,7 +1,7 @@
 const { chromium } = require('playwright');const path=require('path');
 (async()=>{const b=await chromium.launch();
 for(const [w,h,sc] of [[1440,900,'light'],[1440,900,'dark'],[400,800,'light'],[400,800,'dark']]){
- const p=await (await b.newContext({viewport:{width:w,height:h},colorScheme:sc,bypassCSP:true})).newPage();
+ const p=await (await b.newContext({locale:'id-ID',viewport:{width:w,height:h},colorScheme:sc,bypassCSP:true})).newPage();
  await p.goto('file://'+path.join(__dirname,'page.html'));await p.waitForTimeout(600);
  const all=new Map();
  for(const v of ['o2c','usecase:Sistem POS Biliar','n8n','swot:Biliar & Kafe']){await p.selectOption('#tplSel',v);await p.waitForTimeout(250);

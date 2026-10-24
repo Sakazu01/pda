@@ -11,7 +11,7 @@ const only = process.argv[2] || '';
 
 (async () => {
   const browser = await chromium.launch();
-  const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, acceptDownloads: true });
+  const ctx = await browser.newContext({locale:'id-ID', viewport: { width: 1440, height: 900 }, acceptDownloads: true });
   const page = await ctx.newPage();
   const errors = [];
   page.on('pageerror', (e) => errors.push('pageerror: ' + e.message + ' @ ' + (e.stack || '').split('\n').slice(0, 3).join(' | ')));

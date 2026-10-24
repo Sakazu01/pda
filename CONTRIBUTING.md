@@ -26,7 +26,7 @@ Open `dist/index.html` in a browser to try your change.
 
 - A new diagram type or framework (see `src/diagrams/business.ts` for the pattern).
 - Missing tech logos: add an MIT/ISC-licensed SVG to `src/vendor/tech-stack-icons.ts`.
-- Translations and UX copy fixes in `src/i18n/id.ts`.
+- Translations and UX copy fixes in `src/i18n/` (see [docs/i18n.md](docs/i18n.md)).
 - Accessibility issues reported by `tests/axe2.cjs`.
 
 ## Reporting bugs

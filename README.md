@@ -43,6 +43,7 @@ It ships as **one self-contained HTML file**. Open it from your disk, host it on
 | **Lines that behave** | Orthogonal router with A* search. In dense graphs (200 shapes, 300 lines) **no line passes through a shape**. Labels sit *on* the line like Excalidraw and slide along it. Drag segments, add bends, and switch between straight, elbow and curve |
 | **All 694 tech logos** | The whole [tech-stack-icons](https://www.tech-stack-icons.com/) pack (MIT) in light and dark. Search any of them, or browse *Semua logo tech*. The section loads only when opened. Catalog items without a logo in the pack get a monogram badge |
 | **Present it** | Pitch-deck slides with charts and tables, PowerPoint export, step-through simulation of flows |
+| **English or Indonesian** | The interface follows your browser's language and switches from the ⋯ menu (*Language*). The choice is remembered |
 | **Yours, on your disk** | Projects can live in a folder you pick as plain `.pda.json` files. They also export to PNG, SVG and JSON |
 
 <p align="center">
@@ -129,6 +130,7 @@ See [SECURITY.md](SECURITY.md) to report a vulnerability, and [docs/security.md]
 | [docs/line-routing.md](docs/line-routing.md) | The router, labels, waypoints and keyboard shortcuts for lines |
 | [docs/project-folder.md](docs/project-folder.md) | Saving projects to a folder, the `.pda.json` format |
 | [docs/architecture.md](docs/architecture.md) | Source layout, ES modules and install order, extension setters, types, build |
+| [docs/i18n.md](docs/i18n.md) | Interface languages, adding a translation |
 | [docs/security.md](docs/security.md) | Threat model, CSP, sanitization, key handling |
 | [docs/testing.md](docs/testing.md) | Test suites and how to add one |
 | [AGENTS.md](AGENTS.md) | Rules for humans and coding agents working on this repo |
@@ -142,7 +144,7 @@ Yes. `dist/index.html` holds the app, the icons (Lucide), the tech logos and the
 
 <details><summary><b>Do I need an API key for AI?</b></summary>
 
-Not when PDA runs inside Claude, which provides the built-in model. Standalone, pick a provider under **AI** and paste your key, or run a local model with Ollama or LM Studio for free.
+It depends where PDA runs. **Inside Claude** (as an artifact), the built-in model uses your Claude account, so no key is needed. **Standalone** (`dist/index.html`, GitHub Pages), there is no Claude connection: `npm install` only installs developer tools, and building with Claude Code does not link the app to Claude either. Pick a provider under **AI** and paste a key (an Anthropic API key gives you Claude), or run a local model with Ollama or LM Studio for free. The status dot tells you whether it connects.
 </details>
 
 <details><summary><b>Where is my work saved?</b></summary>

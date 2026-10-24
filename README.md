@@ -11,6 +11,7 @@
 [![CI](https://github.com/Sakazu01/pda/actions/workflows/ci.yml/badge.svg)](https://github.com/Sakazu01/pda/actions/workflows/ci.yml)
 [![Release](https://img.shields.io/github/v/release/Sakazu01/pda?color=0f6b73)](https://github.com/Sakazu01/pda/releases)
 [![License: MIT](https://img.shields.io/badge/license-MIT-ffb84d)](LICENSE)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.6-3178c6?logo=typescript&logoColor=white)
 ![Single file](https://img.shields.io/badge/runtime-one%20HTML%20file-0f6b73)
 ![No build needed](https://img.shields.io/badge/install-none-0f6b73)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen)](CONTRIBUTING.md)
@@ -64,8 +65,9 @@ Download [`dist/index.html`](dist/index.html) (or the release asset) and double-
 ```bash
 git clone https://github.com/Sakazu01/pda.git
 cd pda
-npm install          # dev tools only: Playwright, axe-core
-npm run build        # src/ → dist/index.html
+npm install          # dev tools only: TypeScript, esbuild, Playwright
+npm run typecheck    # tsc, zero errors
+npm run build        # src/**/*.ts → dist/index.html
 npm run test:quick   # ~1 min smoke suite
 npm test             # full browser suite (400+ checks)
 ```
@@ -126,7 +128,7 @@ See [SECURITY.md](SECURITY.md) to report a vulnerability, and [docs/security.md]
 | [docs/ai.md](docs/ai.md) | AI generate, intent detection, bring-your-own-model setup |
 | [docs/line-routing.md](docs/line-routing.md) | The router, labels, waypoints and keyboard shortcuts for lines |
 | [docs/project-folder.md](docs/project-folder.md) | Saving projects to a folder, the `.pda.json` format |
-| [docs/architecture.md](docs/architecture.md) | Source layout, module order, the override pattern, build |
+| [docs/architecture.md](docs/architecture.md) | Source layout, ES modules and install order, extension setters, types, build |
 | [docs/security.md](docs/security.md) | Threat model, CSP, sanitization, key handling |
 | [docs/testing.md](docs/testing.md) | Test suites and how to add one |
 | [AGENTS.md](AGENTS.md) | Rules for humans and coding agents working on this repo |
@@ -150,7 +152,7 @@ It saves to browser storage automatically. In Chrome or Edge you can also pick a
 
 <details><summary><b>Why no React, no bundler?</b></summary>
 
-The app must open from a USB stick with no network and no install. Plain browser JavaScript plus a small Node build script gives that. See [docs/architecture.md](docs/architecture.md).
+The app must open from a USB stick with no network and no install. It is written in TypeScript and bundled by esbuild into one HTML file, with no runtime dependencies. See [docs/architecture.md](docs/architecture.md).
 </details>
 
 <details><summary><b>Can I use it for coursework or at work?</b></summary>

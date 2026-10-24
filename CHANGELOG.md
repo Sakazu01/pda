@@ -2,6 +2,14 @@
 
 All notable changes are listed here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions follow [SemVer](https://semver.org/).
 
+## [1.2.0] - 2026-10-24
+
+### Added
+- All 694 logos from tech-stack-icons (was 150). Every logo is searchable in the palette, and a new *Semua logo tech* section renders only when opened, so startup stays fast.
+
+### Changed
+- Linux and Zod now show their real logos instead of monograms.
+
 ## [1.1.0] - 2026-10-23
 
 ### Added
@@ -31,5 +39,6 @@ First public release as **PDA: Plan & Design Anything** (previously developed as
 - HTTPS-only AI endpoints (localhost excepted). Session-only API keys by default.
 - 25 MB import cap. Sanitization of every import and of rendered SVG.
 
+[1.2.0]: https://github.com/Sakazu01/pda/releases/tag/v1.2.0
 [1.1.0]: https://github.com/Sakazu01/pda/releases/tag/v1.1.0
 [1.0.0]: https://github.com/Sakazu01/pda/releases/tag/v1.0.0

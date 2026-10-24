@@ -4,6 +4,29 @@ TECH_EXTRA.forEach(function(x){
   var sec=['ai','agent','rag','safe','trigger'].indexOf(x[0])>=0?'tech-ai':(x[0]==='data'||x[0]==='msg')?'tech-data':(x[0]==='compute'||x[0]==='client')?'tech-app':'tech-cloud';
   if(SEC[sec]&&SEC[sec].keys.indexOf(k)<0)SEC[sec].keys.push(k);
 });
+// Every other logo in the pack becomes a component too: found by search and in
+// the "Semua logo tech" palette section, which only renders when opened.
+// catalog names that share a logo with another entry in the pack
+var TSI_ALIAS={'GitHub Actions':'GitHub'};Object.keys(TSI_ALIAS).forEach(function(a){if(!TSI[a]&&TSI[TSI_ALIAS[a]])TSI[a]=TSI[TSI_ALIAS[a]]});
+var TSI_ALL=[];
+Object.keys(TSI).forEach(function(name){
+  var k='c-'+techKey(name);if(T[k])return;
+  T[k]={f:'comp',n:name,icon:'box',cat:'ext',tech:1,logoOnly:1,kw:'tech stack logo '+String(TSI[name].id||'')};TSI_ALL.push(k);
+});
+SEC['tech-all']={n:'Semua logo tech ('+Object.keys(TSI).length+')',keys:TSI_ALL,cat:'ext',lazy:1};
+var tsiWsSections0=wsSections;
+wsSections=function(ws){var o=tsiWsSections0(ws);if((ws==='sys'||ws==='ai')&&o.indexOf('tech-all')<0)o.push('tech-all');return o};
+var tsiSecHtml0=secHtml;
+secHtml=function(id,open,title){
+  if(!SEC[id]||!SEC[id].lazy)return tsiSecHtml0(id,open,title);
+  if(open)return tsiSecHtml0(id,open,title);
+  // closed: no items yet, so 500+ logos cost nothing until someone opens the section
+  return '<details class="pal-sec" data-sec="'+id+'" data-lazy="1"><summary>'+ic('chevron-right')+esc(title||SEC[id].n)+'<span class="dot" style="background:'+catColor(SEC[id].cat)+'"></span></summary><div class="pal-grid"></div></details>';
+};
+document.addEventListener('toggle',function(ev){
+  var d=ev.target;if(!d||!d.matches||!d.matches('details[data-lazy]')||!d.open)return;
+  d.removeAttribute('data-lazy');var g=d.querySelector('.pal-grid');if(g&&!g.children.length)g.innerHTML=SEC[d.getAttribute('data-sec')].keys.map(palItem).join('');
+},true);
 var TSI_URI={},TSI_BYNORM={};Object.keys(TSI).forEach(function(n){TSI_BYNORM[normName(n)]=n});
 function tsiUri(name,dark){var e=TSI[name];if(!e)return null;var dk=!!(dark&&e.k),key=name+(dk?'|d':'');
   if(!TSI_URI[key]){try{TSI_URI[key]={name:name,data:'data:image/svg+xml;base64,'+btoa(unescape(encodeURIComponent(dk?e.k:e.s))),builtin:1}}catch(err){return null}}return TSI_URI[key]}

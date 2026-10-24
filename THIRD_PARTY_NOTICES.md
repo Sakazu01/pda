@@ -5,7 +5,7 @@
 | Asset | Where | License |
 |---|---|---|
 | [Lucide](https://lucide.dev) icons | `src/vendor/lucide-icons.js` | ISC |
-| [tech-stack-icons](https://www.tech-stack-icons.com/) v3.7.1 (150 logos) | `src/vendor/tech-stack-icons.js` | MIT |
+| [tech-stack-icons](https://www.tech-stack-icons.com/) v3.7.1 (all 694 logos) | `src/vendor/tech-stack-icons.js` | MIT |
 | [Excalifont](https://github.com/excalidraw/excalidraw) (from @excalidraw/excalidraw 0.18.0) | `src/vendor/excalifont.js` | SIL Open Font License 1.1 |
 | [Virgil](https://github.com/excalidraw/virgil) by Ellinor Rapp (sketch style) | `src/vendor/virgil-font.js` | SIL Open Font License 1.1 |
 

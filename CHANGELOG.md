@@ -2,6 +2,15 @@
 
 All notable changes are listed here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions follow [SemVer](https://semver.org/).
 
+## [1.4.0] - 2026-10-24
+
+### Added
+- **English interface**, with Indonesian still available. The language follows the browser, switches from the ⋯ menu or `Ctrl+K`, and is remembered. The PRD template and the PRD headings PDA writes follow the language too.
+- `tests/lang.cjs`: fails if any Indonesian text is left in the English interface.
+
+### Changed
+- README: explains when AI connects by itself (inside Claude) and when it needs a key (standalone).
+
 ## [1.3.0] - 2026-10-24
 
 ### Changed
@@ -48,6 +57,7 @@ First public release as **PDA: Plan & Design Anything** (previously developed as
 - HTTPS-only AI endpoints (localhost excepted). Session-only API keys by default.
 - 25 MB import cap. Sanitization of every import and of rendered SVG.
 
+[1.4.0]: https://github.com/Sakazu01/pda/releases/tag/v1.4.0
 [1.3.0]: https://github.com/Sakazu01/pda/releases/tag/v1.3.0
 [1.2.0]: https://github.com/Sakazu01/pda/releases/tag/v1.2.0
 [1.1.0]: https://github.com/Sakazu01/pda/releases/tag/v1.1.0

@@ -18,6 +18,7 @@ import { install as installDiagramsBusiness } from './diagrams/business';
 import { install as installProjectsProjects } from './projects/projects';
 import { install as installEditorNavigation } from './editor/navigation';
 import { install as installSlidesDeck } from './slides/deck';
+import { install as installI18nLang } from './i18n/lang';
 import { install as installI18nId } from './i18n/id';
 import { install as installEditorCanvasFont } from './editor/canvas-font';
 import { install as installLinesLabels } from './lines/labels';
@@ -50,6 +51,7 @@ const INSTALL_ORDER: Array<() => void> = [
   installProjectsProjects,
   installEditorNavigation,
   installSlidesDeck,
+  installI18nLang,
   installI18nId,
   installEditorCanvasFont,
   installLinesLabels,

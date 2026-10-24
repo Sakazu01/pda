@@ -1,5 +1,5 @@
 const { chromium } = require('playwright');const path=require('path');
-(async()=>{const b=await chromium.launch();const p=await (await b.newContext({viewport:{width:1500,height:950}})).newPage();const errs=[];p.on('pageerror',e=>errs.push(e.message));
+(async()=>{const b=await chromium.launch();const p=await (await b.newContext({locale:'id-ID',viewport:{width:1500,height:950}})).newPage();const errs=[];p.on('pageerror',e=>errs.push(e.message));
 await p.goto('file://'+path.join(__dirname,'page-hook.html'));await p.evaluate(()=>localStorage.clear());await p.reload();await p.waitForTimeout(900);
 const R=[];const ok=(c,m)=>R.push((c?'PASS ':'FAIL ')+m);
 await p.selectOption('#tplSel','web3');await p.waitForTimeout(500);

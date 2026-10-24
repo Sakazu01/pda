@@ -11,7 +11,7 @@ const srv=http.createServer((q,r)=>{
     if(q.url.endsWith('/chat/completions')){if(/bad/.test(q.headers.authorization||'')){r.statusCode=401;return r.end(JSON.stringify({error:{message:'bad key'}}))}return r.end(JSON.stringify({choices:[{message:{content:'Here you go: '+rev}}]}))}
     r.statusCode=404;r.end('{}')})});
 srv.listen(8799,async()=>{
-const b=await chromium.launch();const p=await (await b.newContext({viewport:{width:1440,height:900}})).newPage();
+const b=await chromium.launch();const p=await (await b.newContext({locale:'id-ID',viewport:{width:1440,height:900}})).newPage();
 const errs=[];p.on('pageerror',e=>errs.push(e.message));
 await p.goto('file://'+path.join(__dirname,'page.html'));await p.waitForTimeout(600);
 const ok=(n,c)=>console.log((c?'PASS ':'FAIL ')+n);

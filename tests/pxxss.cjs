@@ -1,5 +1,5 @@
 const { chromium } = require('playwright');const path=require('path');
-(async()=>{const b=await chromium.launch();const p=await (await b.newContext()).newPage();const errs=[];p.on('pageerror',e=>errs.push(e.message));
+(async()=>{const b=await chromium.launch();const p=await (await b.newContext({locale:'id-ID'})).newPage();const errs=[];p.on('pageerror',e=>errs.push(e.message));
 await p.goto('file://'+path.join(__dirname,'page.html'));await p.waitForTimeout(500);
 const doc={title:'x',nodes:[
  {id:'a',t:'media-img',x:0,y:0,w:100,h:80,src:'data:image/png;base64,AAAA" onload="window.__x=1'},

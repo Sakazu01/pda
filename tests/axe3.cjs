@@ -1,7 +1,7 @@
 const { chromium } = require('playwright');const path=require('path');
 (async()=>{const b=await chromium.launch();
 for(const [w,h,sc] of [[1440,900,'light'],[1440,900,'dark'],[400,800,'light']]){
- const p=await (await b.newContext({viewport:{width:w,height:h},colorScheme:sc,bypassCSP:true})).newPage();
+ const p=await (await b.newContext({locale:'id-ID',viewport:{width:w,height:h},colorScheme:sc,bypassCSP:true})).newPage();
  await p.goto('file://'+path.join(__dirname,'page.html'));await p.waitForTimeout(600);
  // narrow layouts hide some top-bar buttons behind a menu, so press them directly
  const press=async(ids)=>{for(const id of ids){await p.evaluate(i=>document.getElementById(i).click(),id);await p.waitForTimeout(200)}};

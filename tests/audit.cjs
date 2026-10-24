@@ -1,7 +1,7 @@
 const TMP=(f)=>require('path').join(require('os').tmpdir(),'pda-'+f);
 const { chromium } = require('playwright');const path=require('path');const fs=require('fs');
 (async()=>{const b=await chromium.launch();
-const ctx=await b.newContext({viewport:{width:1440,height:900},bypassCSP:true});const p=await ctx.newPage();
+const ctx=await b.newContext({locale:'id-ID',viewport:{width:1440,height:900},bypassCSP:true});const p=await ctx.newPage();
 const errs=[];p.on('pageerror',e=>errs.push('pageerror: '+e.message));p.on('console',m=>{if(m.type()==='error'&&!/ERR_TUNNEL|Failed to load resource/.test(m.text()))errs.push('console: '+m.text())});
 await p.goto('file://'+path.join(__dirname,'page.html'));await p.waitForTimeout(600);
 const R=(n,c,extra)=>console.log((c?'PASS ':'FAIL ')+n+(extra?' :: '+extra:''));
@@ -27,7 +27,7 @@ fs.writeFileSync(TMP('evil.svg'),svg);
 await p.click('#btnLib').catch(()=>{});await p.keyboard.press('Escape');
 const hasIconBtn=await p.evaluate(()=>!!document.querySelector('[data-open-icons], #palUpload, [data-act="icons"]'));
 // 4. storage failure
-const c2=await b.newContext({viewport:{width:1440,height:900}});await c2.addInitScript(()=>{const t=()=>{throw new Error('blocked')};Object.defineProperty(window,'localStorage',{get:t});Object.defineProperty(window,'sessionStorage',{get:t});});
+const c2=await b.newContext({locale:'id-ID',viewport:{width:1440,height:900}});await c2.addInitScript(()=>{const t=()=>{throw new Error('blocked')};Object.defineProperty(window,'localStorage',{get:t});Object.defineProperty(window,'sessionStorage',{get:t});});
 const q=await c2.newPage();const e2=[];q.on('pageerror',e=>e2.push(e.message));
 await q.goto('file://'+path.join(__dirname,'page.html'));await q.waitForTimeout(700);await q.selectOption('#tplSel','o2c');await q.waitForTimeout(300);
 R('works with storage blocked',!e2.length&&await q.evaluate(()=>document.querySelectorAll('#content > g[data-id]').length>5),e2.join('|'));

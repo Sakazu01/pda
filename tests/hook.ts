@@ -1,0 +1,99 @@
+import { EDGE, S, T, cam, route, snap } from '../src/core/core';
+import { DT } from '../src/diagrams/catalog';
+import { compImg } from '../src/diagrams/draw';
+import { addNode, doUndo, renderAll, setSel } from '../src/core/ui';
+import { exportSvgString, importFile, layered, payload } from '../src/core/features';
+import { FW, buildGraph, buildSequence, insertBlock } from '../src/diagrams/frameworks';
+import { applyOutline, prepOutline } from '../src/editor/workspaces';
+import { PROJ, pjSwitch, pjView } from '../src/projects/projects';
+import { RT, tidyLayout } from '../src/lines/router';
+
+export function install(): void {
+  window.__RS = {
+    compImg: function (n) {
+      return compImg(n);
+    },
+    buildGraph: buildGraph,
+    buildSequence: buildSequence,
+    insertBlock: insertBlock,
+    FW: FW,
+    pjSwitch: pjSwitch,
+    renderAll: renderAll,
+    S: function () {
+      return S;
+    },
+    P: function () {
+      return PROJ;
+    },
+    payload: payload,
+    prepOutline: prepOutline,
+    applyOutline: applyOutline,
+    addNode: addNode,
+    importFile: importFile,
+    pjView: pjView,
+    svg: exportSvgString,
+    T: T,
+    DT: DT,
+    EDGE: EDGE,
+    route: route,
+    RT: function () {
+      return RT;
+    },
+    tidyLayout: function () {
+      tidyLayout();
+    },
+    undo: function () {
+      doUndo();
+    },
+    cam: function () {
+      return cam;
+    },
+    sel: function (a, e) {
+      setSel(a, e);
+    },
+    svgSub: function (keep) {
+      var a = S.nodes,
+        b = S.edges;
+      var set = {};
+      a.forEach(function (n) {
+        if (keep(n)) set[n.id] = 1;
+      });
+      S.nodes = a.filter(function (n) {
+        return set[n.id];
+      });
+      S.edges = b.filter(function (e) {
+        return set[e.from] && set[e.to];
+      });
+      try {
+        return exportSvgString();
+      } finally {
+        S.nodes = a;
+        S.edges = b;
+      }
+    },
+    relayout: function (dir) {
+      var ns = S.nodes.filter(function (n) {
+          return !/^z-|^b-/.test(n.t);
+        }),
+        ids = ns.map(function (n) {
+          return n.id;
+        }),
+        lay = S.edges
+          .filter(function (e) {
+            return e.from && e.to;
+          })
+          .map(function (e) {
+            return { from: e.from, to: e.to };
+          });
+      var pos = layered(ids, lay, {}, dir, 120);
+      ns.forEach(function (n) {
+        var q = pos[n.id];
+        if (q) {
+          n.x = snap(q.x);
+          n.y = snap(q.y);
+        }
+      });
+      renderAll();
+    },
+  };
+}

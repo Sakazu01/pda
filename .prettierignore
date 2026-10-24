@@ -1,0 +1,6 @@
+dist/
+node_modules/
+src/vendor/
+src/shell/
+tests/page*.html
+*.md

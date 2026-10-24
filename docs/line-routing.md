@@ -2,7 +2,7 @@
 
 ## The router
 
-`src/lines/router.js` routes every elbow line around shapes, a small cousin of libavoid and draw.io's orthogonal router.
+`src/lines/router.ts` routes every elbow line around shapes, a small cousin of libavoid and draw.io's orthogonal router.
 
 1. **Grid.** Shape borders are inflated by 16 px. Their edges, plus a stub point outside each port, form a sparse grid.
 2. **A\***, per line, on states `(grid point, direction)`. Cost = length + 34 per bend + 14 per channel already used by another line (scaled by length). The heuristic is the Manhattan distance to the nearest target stub. Both start and end sides are chosen by the search.

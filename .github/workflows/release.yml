@@ -15,6 +15,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - run: npm ci
       - run: node scripts/build.mjs && cp dist/index.html pda.html
       - name: Publish release with the single-file app
         env:

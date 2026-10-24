@@ -1,5 +1,5 @@
 // Build PDA, then run the browser suites. Usage: node tests/run.mjs [--quick] [suite ...]
-import { writeFileSync, readFileSync } from 'node:fs';
+import { writeFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -16,7 +16,7 @@ const suites = named.length ? named : args.includes('--quick') ? QUICK : ALL;
 
 // page.html is the app as shipped; page-hook.html also exposes internals as window.__RS
 writeFileSync(join(here, 'page.html'), bundle());
-writeFileSync(join(here, 'page-hook.html'), bundle({ inject: readFileSync(join(here, 'hook.txt'), 'utf8') }));
+writeFileSync(join(here, 'page-hook.html'), bundle({ hook: true }));
 
 let pass = 0, fail = 0;
 const failed = [];

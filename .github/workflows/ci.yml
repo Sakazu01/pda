@@ -20,6 +20,10 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npx playwright install --with-deps chromium
+      - name: Format
+        run: npx prettier --check "src/**/*.ts" tests/hook.ts
+      - name: Type check
+        run: npm run typecheck
       - name: Build
         run: npm run build
       - name: dist/index.html is up to date

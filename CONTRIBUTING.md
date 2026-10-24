@@ -19,14 +19,14 @@ Open `dist/index.html` in a browser to try your change.
 1. Branch from `dev`: `git switch dev && git switch -c feat/my-change`.
 2. Change files in `src/`, then `npm run build`.
 3. Add or update a test in `tests/` (see [docs/testing.md](docs/testing.md)).
-4. `npm run test:quick`, and `npm test` if you touched rendering, routing or import.
+4. `npm run check` (type check + quick tests), and `npm test` if you touched rendering, routing or import.
 5. Open a pull request into `dev` and fill in the template.
 
 ## Good first contributions
 
-- A new diagram type or framework (see `src/diagrams/business.js` for the pattern).
-- Missing tech logos: add an MIT/ISC-licensed SVG to `src/vendor/tech-stack-icons.js`.
-- Translations and UX copy fixes in `src/i18n/id.js`.
+- A new diagram type or framework (see `src/diagrams/business.ts` for the pattern).
+- Missing tech logos: add an MIT/ISC-licensed SVG to `src/vendor/tech-stack-icons.ts`.
+- Translations and UX copy fixes in `src/i18n/id.ts`.
 - Accessibility issues reported by `tests/axe2.cjs`.
 
 ## Reporting bugs

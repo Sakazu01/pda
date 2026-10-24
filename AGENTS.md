@@ -7,7 +7,7 @@ Rules for anyone (human or coding agent) changing PDA.
 - The product is **one HTML file that works offline**. Do not add runtime dependencies or frameworks. TypeScript, esbuild and Prettier are build-time only.
 - Edit `src/`, never `dist/`. Run `npm run build` to regenerate `dist/index.html`, and commit both.
 - Run `npm run check` (type check + quick tests) before every commit, and `npm test` before a release.
-- UI copy is Indonesian first. English strings get a translation in `src/i18n/id.ts`.
+- The interface speaks English and Indonesian ([docs/i18n.md](docs/i18n.md)). New text built in code uses `L('English', 'Indonesia')` from `src/i18n/lang.ts`; fixed English text gets an Indonesian entry in `src/i18n/id.ts`. `tests/lang.cjs` fails if any Indonesian is left in the English interface.
 
 ## Write the least code that solves it (Ponytail)
 

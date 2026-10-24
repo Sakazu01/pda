@@ -19,7 +19,7 @@ src/
   ai/           generation, intent detection, providers, connection status, AI button
   projects/     multi-page projects, PRD, project folder
   slides/       pitch deck and PPTX export
-  i18n/         Indonesian UI strings
+  i18n/         interface language: lang.ts (choice), en.ts / id.ts (dictionaries)
 scripts/build.mjs   esbuild bundle → CSP-hashed dist/index.html
 tests/              Playwright suites, runner, hook.ts (test-only internals)
 ```

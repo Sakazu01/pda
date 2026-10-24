@@ -23,6 +23,7 @@ Each suite is a plain Playwright script that prints `PASS …` / `FAIL …` line
 | axe2, axe3 | Accessibility (axe-core, light and dark, narrow and wide) |
 | ux2, wp, rtdrag, layout, perf | Labels, waypoints, routing while dragging, re-layout, router invariants |
 | theme, tech | Theme switching, tech logos |
+| lang | English/Indonesian interface, nothing left untranslated, switching is remembered |
 
 ## Adding a suite
 

@@ -2,6 +2,15 @@
 
 All notable changes are listed here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions follow [SemVer](https://semver.org/).
 
+## [1.3.0] - 2026-10-24
+
+### Changed
+- The codebase is now **TypeScript with ES modules**, bundled by esbuild into the same single HTML file. Load-time code moved into ordered `install()` functions, cross-module overrides go through typed setters, and the model and registries are typed in `src/core/types.ts`.
+- `tsc` passes with zero errors (`noImplicitThis`, `noUnusedLocals`, `noImplicitReturns`, `strictFunctionTypes`). CI runs the type check and Prettier.
+
+### Fixed
+- Dead code that the type check found: unused variables in the ERD/deployment examples, the box renderer and the waypoint handles. Duplicate entries removed from the Indonesian dictionary.
+
 ## [1.2.0] - 2026-10-24
 
 ### Added
@@ -39,6 +48,7 @@ First public release as **PDA: Plan & Design Anything** (previously developed as
 - HTTPS-only AI endpoints (localhost excepted). Session-only API keys by default.
 - 25 MB import cap. Sanitization of every import and of rendered SVG.
 
+[1.3.0]: https://github.com/Sakazu01/pda/releases/tag/v1.3.0
 [1.2.0]: https://github.com/Sakazu01/pda/releases/tag/v1.2.0
 [1.1.0]: https://github.com/Sakazu01/pda/releases/tag/v1.1.0
 [1.0.0]: https://github.com/Sakazu01/pda/releases/tag/v1.0.0

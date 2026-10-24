@@ -1,6 +1,6 @@
 const { chromium } = require('playwright');const path=require('path');
 (async()=>{const b=await chromium.launch();const R=[];const ok=(c,m)=>R.push((c?'PASS ':'FAIL ')+m);
-const ctx=await b.newContext({viewport:{width:1500,height:950},colorScheme:'dark'});const p=await ctx.newPage();const errs=[];p.on('pageerror',e=>errs.push(e.message));
+const ctx=await b.newContext({locale:'id-ID',viewport:{width:1500,height:950},colorScheme:'dark'});const p=await ctx.newPage();const errs=[];p.on('pageerror',e=>errs.push(e.message));
 await p.goto('file://'+path.join(__dirname,'page-hook.html'));await p.evaluate(()=>localStorage.clear());await p.reload();await p.waitForTimeout(900);
 const bg=()=>p.evaluate(()=>getComputedStyle(document.body).backgroundColor);
 const dark0=await bg();ok(true,'auto on dark device bg='+dark0);

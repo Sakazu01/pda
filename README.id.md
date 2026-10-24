@@ -31,6 +31,7 @@ PDA dikirim sebagai **satu file HTML mandiri**. File itu bisa dibuka langsung da
 - **Buat dengan AI di setiap kanvas**: jenis diagram bisa dipilih sendiri atau ditentukan AI. Hasilnya diletakkan *di sebelah* hasil sebelumnya, dan Ctrl+Z membatalkannya. Pakai Claude bawaan atau model milikmu (OpenAI, Anthropic, Gemini, Groq, OpenRouter, DeepSeek, Ollama, LM Studio). Status **Terhubung / Tidak terhubung** langsung muncul begitu kunci API dimasukkan.
 - **Garis yang rapi**: router ortogonal A*. Pada graf padat (200 bentuk, 300 garis) tidak ada satu pun garis yang menembus bentuk. Label duduk di atas garis seperti di Excalidraw dan bisa digeser. Segmen bisa diseret dan tekukan bisa ditambah.
 - **Semua 694 logo** dari tech-stack-icons (MIT), versi terang dan gelap. Semuanya bisa dicari di palet atau dibuka lewat bagian *Semua logo tech*. Produk yang belum punya logo diberi lencana monogram.
+- **Bahasa Inggris atau Indonesia**: antarmuka mengikuti bahasa browser dan bisa diganti dari menu ⋯ (*Bahasa*). Pilihannya diingat.
 - **Folder proyek**: proyek disimpan sebagai file `.pda.json` di folder pilihanmu. Daftarnya bisa di-scroll dan langsung dibuka.
 
 ## Mulai cepat
@@ -60,6 +61,10 @@ npm test             # semua tes browser (400+ cek)
 | **AI & Automation** | n8n, LangGraph agent, RAG pipeline, Multi-agent, ML pipeline |
 | **Produk & UX** | User flow, Wireframe, Customer journey, Sitemap, Persona, Empathy map, Kano, MoSCoW, RICE, Roadmap, Service blueprint |
 | **Whiteboard** | Papan bebas, Mind map, Pitch deck |
+
+## Apakah AI langsung terhubung ke Claude?
+
+Tergantung di mana PDA dibuka. **Di dalam Claude** (sebagai artifact), model bawaan memakai akun Claude-mu, jadi tidak perlu kunci. **Di luar Claude** (`dist/index.html` atau GitHub Pages), PDA tidak terhubung ke Claude. `npm install` hanya memasang alat pengembangan, dan dibuat dengan Claude Code pun tidak membuat aplikasinya terhubung. Pilih penyedia di menu **AI** lalu tempel kunci API (kunci Anthropic API = Claude), atau jalankan model lokal gratis dengan Ollama/LM Studio. Titik status di tombol AI menunjukkan terhubung atau tidak.
 
 ## Keamanan & datamu
 

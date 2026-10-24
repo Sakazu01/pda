@@ -1,6 +1,6 @@
 // AI connection status: checked without generating, visible in the dialog and on the AI button.
 const { chromium } = require('playwright');const path=require('path');
-(async()=>{const b=await chromium.launch();const p=await (await b.newContext({viewport:{width:1440,height:900}})).newPage();const errs=[];p.on('pageerror',e=>errs.push(e.message));
+(async()=>{const b=await chromium.launch();const p=await (await b.newContext({locale:'id-ID',viewport:{width:1440,height:900}})).newPage();const errs=[];p.on('pageerror',e=>errs.push(e.message));
 let hits=0;
 await p.route('https://api.openai.com/v1/models',r=>{hits++;const ok=r.request().headers().authorization==='Bearer sk-good';
   r.fulfill({status:ok?200:401,contentType:'application/json',headers:{'Access-Control-Allow-Origin':'*','Access-Control-Allow-Headers':'*'},body:ok?JSON.stringify({data:[{id:'gpt-4o-mini'},{id:'gpt-4.1'}]}):JSON.stringify({error:{message:'Incorrect API key'}})})});

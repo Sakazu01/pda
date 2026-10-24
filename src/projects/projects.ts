@@ -1,6 +1,7 @@
 // ================= project: one canvas per diagram type, shared PRD + glossary, cross-page integration =================
 // A project holds every page (one per diagram type, grouped by workspace), a PRD in Markdown and a shared glossary.
 // S is always the active page; the others wait in PROJ.pages.
+import { L, LANG } from '../i18n/lang';
 import type { Project } from '../core/types';
 import { SKETCH_FONT_URI } from '../vendor/virgil-font';
 import {
@@ -1019,7 +1020,9 @@ export function integAi() {
       .join('; ') +
     '\n\nDiagram:\n' +
     parts.join('\n\n').slice(0, 24000) +
-    '\n\nBalas HANYA JSON: {"issues":[{"severity":"warn"|"info","category":"teks pendek","message":"kalimat bahasa Indonesia yang menyebut nama elemen dan halaman","pages":["nama halaman persis seperti di atas"]}]} maksimal 12 butir.';
+    '\n\nBalas HANYA JSON: {"issues":[{"severity":"warn"|"info","category":"teks pendek","message":"kalimat ' +
+    L('dalam bahasa Inggris', 'bahasa Indonesia') +
+    ' yang menyebut nama elemen dan halaman","pages":["nama halaman persis seperti di atas"]}]} maksimal 12 butir.';
   var b = $('integAi');
   b.disabled = true;
   var lab = b.innerHTML;
@@ -1427,6 +1430,27 @@ export var PRD_TPL0 =
   '## Otomasi\n- Booking dibuat → Kirim WhatsApp konfirmasi → Simpan ke Google Sheets\n- Setiap hari jam 22:00 → Rekap pendapatan → Kirim email ke Owner\n\n' +
   '## Desain\n- Primer: #0e6169\n- Aksen: #f5c26b\n- Teks: #1b2230\n- Latar: #f5f7f7\n- Font: Geist\n- Gaya: minimal, sudut membulat 10px, banyak ruang kosong\n\n' +
   '## Kamus\n- **Booking** (alias: pemesanan, reservasi): satu pesanan studio untuk rentang jam tertentu.\n- **Slot**: satu jam yang bisa dipesan.\n';
+export var PRD_TPL0_EN =
+  '# Music Studio Booking App\n\n## Summary\nCustomers book a studio and pay online, admins manage the schedule, the owner tracks revenue.\n\n## Goals\n- No more double bookings\n- Every payment recorded automatically\n\n' +
+  '## Actors\n- **Customer**: books a studio and pays.\n- **Admin**: manages the schedule and confirmations.\n- **Owner**: tracks revenue reports.\n\n' +
+  '## Features\n- **Book studio** (Customer): choose a studio, date and time. [include: Login]\n- **Pay booking** (Customer): pay with QRIS. [include: Login]\n- **Upload transfer proof** (Customer): upload proof for a manual transfer. [extend: Pay booking]\n- **Manage schedule** (Admin): open and close slots. [include: Login]\n- **View reports** (Owner): daily and monthly revenue. [include: Login]\n- **Login**: sign in with a phone number.\n\n' +
+  '## Data Entities\n### Customer\n- id: int [PK]\n- name: varchar(80)\n- phone: varchar(20)\n### Studio\n- id: int [PK]\n- name: varchar(40)\n- hourly_rate: int\n### Booking\n- id: int [PK]\n- customer_id: int [FK → Customer]\n- studio_id: int [FK → Studio]\n- starts_at: timestamp\n- hours: int\n- status: varchar(20)\n### Payment\n- id: int [PK]\n- booking_id: int [FK → Booking]\n- method: varchar(20)\n- amount: int\n\n' +
+  '## Flows\n### Book studio\n1. Customer: Choose studio and time\n2. System: Check slot availability\n3. Customer: Pay with QRIS\n4. System: Send WhatsApp confirmation\n5. Admin: Prepare the studio\n\n' +
+  '## Screens\n- **Home**: studio list, Book button, bottom menu\n- **Choose time**: calendar, time list, Next button\n- **Payment**: booking summary, QRIS image, I have paid button\n- **Booking confirmed**: confirmation text, Back to home button\n\n' +
+  '## Automation\n- Booking created → Send WhatsApp confirmation → Save to Google Sheets\n- Every day at 22:00 → Revenue summary → Email the Owner\n\n' +
+  '## Design\n- Primary: #0e6169\n- Accent: #f5c26b\n- Text: #1b2230\n- Background: #f5f7f7\n- Font: Geist\n- Style: minimal, 10px rounded corners, plenty of white space\n\n' +
+  '## Glossary\n- **Booking** (alias: reservation): one studio order for a time range.\n- **Slot**: one bookable hour.\n';
+export var PRD_HEAD_EN = {
+  actors: 'Actors',
+  features: 'Features',
+  entities: 'Data Entities',
+  flows: 'Flows',
+  screens: 'Screens',
+  auto: 'Automation',
+  arch: 'Architecture',
+  design: 'Design',
+  dict: 'Glossary',
+};
 export var PRD_TPL: string;
 
 export function pjAdoptTitle(t) {
@@ -2687,7 +2711,13 @@ export function prdMerge(md, R) {
     have = {},
     out = [];
   if (!String(md || '').trim()) {
-    out.push('# ' + (DOC.title || 'Produk'), '', '## Ringkasan', '_Tulis ringkasan produk di sini._', '');
+    out.push(
+      '# ' + (DOC.title || L('Product', 'Produk')),
+      '',
+      '## ' + L('Summary', 'Ringkasan'),
+      L('_Write the product summary here._', '_Tulis ringkasan produk di sini._'),
+      '',
+    );
   }
   sp.secs.forEach(function (sec, i) {
     if (sec.key && !have[sec.key]) {
@@ -2914,7 +2944,7 @@ export function prdRenderMap() {
           .map(function (d) {
             return DT[d].n;
           })
-          .join(', ') || 'kamus',
+          .join(', ') || L('glossary', 'kamus'),
       ) +
       '"><b>' +
       n[k] +
@@ -3456,10 +3486,17 @@ export function install(): void {
       if (PJ_VIEW === 'integ') integRender();
     }, 400);
   });
-  PRD_TPL = PRD_TPL0.replace(
-    '## Otomasi',
-    '## Arsitektur\n- Pelanggan → CDN → Load balancer → API booking: HTTPS\n- API booking → Cache jadwal (Redis): cek slot, TTL 60 detik\n- API booking → Database (PostgreSQL): simpan booking\n- API booking → Queue notifikasi → Worker WhatsApp\n\n## Otomasi',
-  );
+  if (LANG === 'en') {
+    PRD_HEAD = PRD_HEAD_EN;
+    PRD_TPL = PRD_TPL0_EN.replace(
+      '## Automation',
+      '## Architecture\n- Customer → CDN → Load balancer → Booking API: HTTPS\n- Booking API → Schedule cache (Redis): check slots, 60 s TTL\n- Booking API → Database (PostgreSQL): store bookings\n- Booking API → Notification queue → WhatsApp worker\n\n## Automation',
+    );
+  } else
+    PRD_TPL = PRD_TPL0.replace(
+      '## Otomasi',
+      '## Arsitektur\n- Pelanggan → CDN → Load balancer → API booking: HTTPS\n- API booking → Cache jadwal (Redis): cek slot, TTL 60 detik\n- API booking → Database (PostgreSQL): simpan booking\n- API booking → Queue notifikasi → Worker WhatsApp\n\n## Otomasi',
+    );
   pjStartNew0 = startNew;
   set_startNew(function (dt) {
     pjStartNew0(dt);

@@ -1,6 +1,10 @@
-// ================= bahasa antarmuka: Indonesia =================
-// Satu kamus untuk teks UI (bukan isi diagram). Cocok persis untuk string tetap, regex untuk string dinamis.
+// Interface translation. The UI source mixes English (older modules) and
+// Indonesian (newer ones). In Indonesian mode I18N maps English text to
+// Indonesian; in English mode en.ts maps the Indonesian text to English.
+// Exact matches for fixed strings, regexes for dynamic ones; never the canvas.
 import type { Dict } from '../core/types';
+import { LANG } from './lang';
+import { trEn, EN_SKIP } from './en';
 export var I18N: Dict<string> = {
   Size: 'Ukuran',
   Align: 'Rata',
@@ -603,6 +607,7 @@ export var I18N_RE = [
   ],
 ];
 export function trT(s) {
+  if (LANG === 'en') return trEn(s);
   if (typeof s !== 'string' || s.length < 2) return s;
   var k = s.replace(/\s+/g, ' ').trim();
   if (!k) return s;
@@ -623,7 +628,7 @@ export function trDom(root) {
     list = [];
   while ((n = w.nextNode())) {
     var pe = n.parentElement;
-    if (!pe || pe.closest(I18N_SKIP)) continue;
+    if (!pe || pe.closest(LANG === 'en' ? EN_SKIP : I18N_SKIP)) continue;
     list.push(n);
   }
   list.forEach(function (n) {
@@ -634,7 +639,7 @@ export function trDom(root) {
     [].slice.call(root.querySelectorAll ? root.querySelectorAll('[title],[aria-label],[placeholder]') : []),
   );
   els.forEach(function (e) {
-    if (e.closest('#svg,#content,#miniSvg,.pal-item')) return;
+    if (e.closest(LANG === 'en' ? '#svg,#content,#miniSvg' : '#svg,#content,#miniSvg,.pal-item')) return;
     ['title', 'aria-label', 'placeholder'].forEach(function (a) {
       var v = e.getAttribute && e.getAttribute(a);
       if (v) {
@@ -670,6 +675,5 @@ export function install(): void {
       attributeFilter: ['title', 'aria-label', 'placeholder'],
     });
     run();
-    document.documentElement.lang = 'id';
   })();
 }

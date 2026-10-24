@@ -7,9 +7,13 @@ import { FW, buildGraph, buildSequence, insertBlock } from '../src/diagrams/fram
 import { applyOutline, prepOutline } from '../src/editor/workspaces';
 import { PROJ, pjSwitch, pjView } from '../src/projects/projects';
 import { RT, tidyLayout } from '../src/lines/router';
+import { I18N } from '../src/i18n/id';
+import { EN } from '../src/i18n/en';
 
 export function install(): void {
   window.__RS = {
+    I18N: I18N,
+    EN: EN,
     compImg: function (n) {
       return compImg(n);
     },

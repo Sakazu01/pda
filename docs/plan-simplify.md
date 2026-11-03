@@ -129,8 +129,8 @@ Skills: `superpowers:using-git-worktrees`, `superpowers:finishing-a-development-
 ## Execution checklist (run in this order)
 
 - [x] P1 Purpose page `docs/product-purpose.md` (§1), draft written, owner to confirm its 3 open points
-- [ ] P2 Control inventory and keep/move/remove table (§2)
-- [ ] P3 Moodboard + design tokens (§0.5 A, B)
+- [x] P2 Control inventory and keep/move/remove table (§2): `docs/design/control-inventory.md`
+- [x] P3 Moodboard + design tokens (§0.5 A, B): `docs/design/refs.md`, `docs/design/tokens.md`
 - [ ] P4 Figma mocks: empty state, canvas, 375 px, dark (§0.5 C, D); **owner approves**
 - [ ] P5 Logo categories, remove "Semua logo tech" (§3), on `feat/logo-categories`
 - [ ] P6 Build the new shell and front door (§0.5 G), on `feat/simplify-ui`

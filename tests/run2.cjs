@@ -107,6 +107,8 @@ const only = process.argv[2] || '';
     moved >= before.length - 1 ? ok('drag moves whole framework (' + moved + '/' + before.length + ')') : bad('group drag moved ' + moved + '/' + before.length);
     await page.keyboard.press('Control+z');
     // insert another framework from palette
+    // the Library is an accordion now, so open the section that holds the framework first
+    await page.evaluate(() => { document.querySelector('#palBody [data-add="fw:bmc"]').closest('details').open = true; });
     await page.click('#palBody [data-add="fw:bmc"]');
     await page.waitForTimeout(200);
     c = await count();
@@ -210,6 +212,7 @@ const only = process.argv[2] || '';
     const f = path.join(shots, 'gemini-logo.png'); fs.writeFileSync(f, Buffer.from(b64, 'base64'));
     const svgF = path.join(shots, 'qwen.svg'); fs.writeFileSync(svgF, '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><script>alert(1)</script><circle cx="32" cy="32" r="28" fill="#615ced" onclick="x()"/><path d="M20 32h24" stroke="#fff" stroke-width="6"/></svg>');
     await newType('ai', 'n8n');
+    await page.evaluate(() => { document.querySelector('#palBody details[data-sec="my"]').open = true; });
     await page.click('#palBody [data-pal="icons"]');
     await page.waitForTimeout(150);
     await page.setInputFiles('#iconFile', [f, svgF]);

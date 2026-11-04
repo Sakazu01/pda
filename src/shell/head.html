@@ -682,6 +682,38 @@ button.iv-dot.on:hover{transform:scale(1.15)}
 .undo{left:10px;bottom:10px}
 .zoombar{left:auto;right:10px;bottom:10px}
 .minimap{bottom:56px}
+/* layout v2: Library and inspector float over the canvas; one workspace pill replaces the tab row */
+.pal,.insp{background:color-mix(in srgb,var(--panel) 94%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);box-shadow:var(--shadow-lg);border-radius:var(--r-lg)}
+@media (min-width:821px){
+  .stage{grid-column:1/-1;grid-row:3}
+  .pal{grid-column:1;grid-row:3;z-index:6;margin:10px}
+  .undo{left:274px}
+  .pxstrip{left:354px;max-width:calc(100% - 366px)}
+}
+@media (min-width:1181px){
+  .insp{grid-column:3;grid-row:3;z-index:6;margin:10px;align-self:start;max-height:calc(100% - 20px)}
+  .zoombar,.minimap{right:322px}
+  .pxstrip{max-width:calc(100% - 676px)}
+  body.px-strip-on .zoombar{bottom:64px}
+}
+.ws-tabs{position:relative;flex-direction:column;height:34px;padding:0;border:0;background:none;box-shadow:none;border-radius:0}
+.ws-tabs.open{z-index:40}
+.ws-tabs button[aria-selected="true"]{order:-1;height:34px;padding:0 10px;border:0;border-radius:var(--r-sm);background:transparent;color:var(--ink);font-size:var(--fs-md)}
+.ws-tabs button[aria-selected="true"]:hover{background:var(--panel-2)}
+.ws-tabs button[aria-selected="true"]::after{content:"";width:6px;height:6px;border:solid currentColor;border-width:0 1.5px 1.5px 0;transform:rotate(45deg);margin:-3px 0 0 4px}
+.ws-tabs button:not([aria-selected="true"]){display:none}
+.ws-tabs.open button:not([aria-selected="true"]){display:inline-flex;flex:none;height:34px;border-radius:0;background:var(--panel);border:1px solid var(--line);border-top:0;color:var(--ink);box-shadow:var(--shadow-lg)}
+.ws-tabs button:not([aria-selected="true"]) .lbl{display:inline}
+.ws-tabs .pj-cnt{display:inline-block}
+/* no AI-slop tells: sentence-case sans labels instead of tracked mono caps, no pills, no dashed dividers, no tight kerning */
+.pt-ex>span,.pt-t small,.pal-sec>summary,.pal-more,.quick .qh,.ih small,.sec>.st,.px-mean b,.iv-col h2,.iv-cat,.iv-mx .iv-grp th,.nv-grp h3,.nv-cg,.find .sev{font-family:var(--font-ui);font-size:var(--fs-sm);font-weight:500;letter-spacing:0;text-transform:none;color:var(--muted)}
+.pal-sec,.pal-sec:last-child{border:0}
+.pal-sub{padding-left:14px}
+.pal-group>summary{color:var(--ink)}
+.pal-more{border-top:0}
+.pal,.insp{border:0}
+.chip-auto,.empty-card.door .nv-start .door-chip{border-radius:var(--r-sm)}
+.empty-card.door h2,.md h1{letter-spacing:0}
 .empty-card.door{max-width:680px;background:transparent;border:0;padding:0;gap:16px}
 .empty-card.door h2{font-size:var(--fs-xl);line-height:34px;font-weight:600;letter-spacing:-.01em}
 .empty-card.door .row{display:none}
@@ -689,11 +721,11 @@ button.iv-dot.on:hover{transform:scale(1.15)}
 .door-box{width:min(620px,92vw);background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow-lg);padding:12px;display:grid;gap:12px;text-align:left;pointer-events:auto}
 .door-box textarea{width:100%;min-height:64px;resize:none;border:0;outline:0;background:transparent;color:var(--ink);font:inherit;padding:8px}
 .door-row{display:flex;align-items:center;justify-content:space-between;gap:8px}
-.chip-auto{border:1px solid var(--line);border-radius:99px;padding:3px 10px;font-size:var(--fs-sm);color:var(--muted)}
+.chip-auto{border:1px solid var(--line);border-radius:var(--r-sm);padding:3px 10px;font-size:var(--fs-sm);color:var(--muted)}
 .empty-card.door .nv-start .door-go{width:36px;height:36px;padding:0;border-radius:50%;border:0;background:var(--accent);color:var(--accent-ink);flex-direction:row;align-items:center;justify-content:center}
 .empty-card.door .nv-start .door-go .i{color:var(--accent-ink)}
 .door-goals,.door-quiet{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
-.empty-card.door .nv-start .door-chip{flex-direction:row;align-items:center;padding:6px 14px;border-radius:99px;font-size:var(--fs-md)}
+.empty-card.door .nv-start .door-chip{flex-direction:row;align-items:center;padding:6px 14px;border-radius:var(--r-sm);font-size:var(--fs-md)}
 .door-quiet{gap:16px}
 .empty-card.door .nv-start .door-quiet button{flex-direction:row;border:0;background:transparent;padding:0;color:var(--faint);font-size:var(--fs-sm);text-decoration:underline;text-underline-offset:3px}
 .empty-card.door .nv-start button:focus-visible,.door-box textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px}

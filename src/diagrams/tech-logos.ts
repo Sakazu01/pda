@@ -116,6 +116,7 @@ export function install(): void {
   TECH_SECTION_ORDER.forEach(function (id) {
     if (!SEC[id]) SEC[id] = { n: '', keys: [], cat: SEC_CAT[id] || 'ext' };
     SEC[id].n = TECH_SECTION_NAMES[id];
+    SEC[id].group = 'Tech stack';
     SEC[id].lazy = 1;
   });
   Object.keys(TSI).forEach(function (name) {
@@ -136,10 +137,10 @@ export function install(): void {
   tsiWsSections0 = wsSections;
   set_wsSections(function (ws) {
     var o = tsiWsSections0(ws);
-    if (ws === 'sys' || ws === 'ai')
-      TECH_SECTION_ORDER.forEach(function (id) {
-        if (SEC[id].keys.length && o.indexOf(id) < 0) o.push(id);
-      });
+    // one Library for every workspace: the tech stack is never tucked behind a mode
+    TECH_SECTION_ORDER.forEach(function (id) {
+      if (SEC[id].keys.length && o.indexOf(id) < 0) o.push(id);
+    });
     return o;
   });
   tsiSecHtml0 = secHtml;

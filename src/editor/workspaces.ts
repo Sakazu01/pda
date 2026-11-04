@@ -171,6 +171,7 @@ export function renderWsTabs__base() {
       w.id +
       '" aria-selected="' +
       on +
+      (on ? '" aria-haspopup="true" aria-expanded="false' : '') +
       '" title="' +
       esc(w.n) +
       '">' +
@@ -514,13 +515,43 @@ export var secHtml: typeof secHtml__base = secHtml__base;
 export function set_secHtml(v: typeof secHtml__base) {
   return (secHtml = v);
 }
-export function myIconsSec() {
+// Sections that name a `group` (SEC[id].group) are folded under one parent row, e.g. "Tech stack".
+// Only one section is open at a time per level, so the Library stays short.
+function groupedSecs(ids: string[], openId: string) {
+  var groups: Record<string, string[]> = {},
+    s = '';
+  ids.forEach(function (id) {
+    var g = SEC[id] && SEC[id].group;
+    if (!g) s += secHtml(id, id === openId);
+    else (groups[g] = groups[g] || []).push(id);
+  });
+  Object.keys(groups).forEach(function (g) {
+    var key = 'grp:' + g.toLowerCase().replace(/\W+/g, '-');
+    s +=
+      '<details class="pal-sec pal-group" data-sec="' +
+      key +
+      '"' +
+      (secOpen[key] || groups[g].indexOf(openId) >= 0 ? ' open' : '') +
+      '><summary>' +
+      ic('chevron-right') +
+      esc(g) +
+      '</summary><div class="pal-sub">' +
+      groups[g]
+        .map(function (id) {
+          return secHtml(id, id === openId);
+        })
+        .join('') +
+      '</div></details>';
+  });
+  return s;
+}
+export function myIconsSec(open?: boolean) {
   var ids = Object.keys(ICONLIB).sort(function (a, b) {
     return String(ICONLIB[a].name).localeCompare(String(ICONLIB[b].name));
   });
   var s =
     '<details class="pal-sec" data-sec="my"' +
-    (secOpen.my !== false ? ' open' : '') +
+    (open ? ' open' : '') +
     '><summary>' +
     ic('chevron-right') +
     'My icons' +
@@ -567,20 +598,21 @@ export function buildPalette() {
         '”. Try a product name such as Redis, Kafka, n8n or LangGraph, or a notation such as actor, entity or swot.</p>';
   } else {
     var prim = primarySecs(dt);
-    prim.forEach(function (id) {
-      s += secHtml(id, secOpen[id] !== false);
-    });
     var ws = uiWs || DT[dt].ws,
       more = wsSections(ws).filter(function (id) {
         return prim.indexOf(id) < 0;
       });
+    // one section open: the one the user opened last, else the first of this diagram type
+    var openId =
+      prim.concat(more, 'my').filter(function (id) {
+        return secOpen[id] === true;
+      })[0] || (secOpen[prim[0]] === false ? '' : prim[0]);
+    s += groupedSecs(prim, openId);
     if (more.length) {
       s += '<div class="pal-more">' + (ws === DT[dt].ws ? 'More in ' : 'From ') + esc(WS_BY[ws].n) + '</div>';
-      more.forEach(function (id) {
-        s += secHtml(id, !!secOpen[id]);
-      });
+      s += groupedSecs(more, openId);
     }
-    s += myIconsSec();
+    s += myIconsSec(openId === 'my');
     if (dt === 'bpmn') s += '<p class="pal-foot">Add lanes from the properties panel after you select a pool.</p>';
     if (dt === 'n8n' || dt === 'agent')
       s +=
@@ -2319,7 +2351,20 @@ export function typeChecks(out, nm) {
 }
 
 // ================= wiring =================
+// The workspace list is one button that opens a menu; keep the class and aria-expanded in step.
+export function setWsOpen(open: boolean) {
+  var box = $('wsTabs');
+  box.classList.toggle('open', open);
+  var cur = box.querySelector('[aria-selected="true"]');
+  if (cur) cur.setAttribute('aria-expanded', String(open));
+}
 export function bindDomain() {
+  document.addEventListener('click', function (ev) {
+    if (!(ev.target as Element).closest('#wsTabs')) setWsOpen(false);
+  });
+  document.addEventListener('keydown', function (ev) {
+    if (ev.key === 'Escape' && $('wsTabs').classList.contains('open')) setWsOpen(false);
+  });
   $('wsTabs').addEventListener('click', function (ev) {
     var b = ev.target.closest('[data-ws]');
     if (!b) return;
@@ -2376,6 +2421,20 @@ export function bindDomain() {
         secOpen[(d as HTMLInputElement).getAttribute('data-sec')] = (d as HTMLDetailsElement).open;
     }, 0);
   });
+  // accordion: opening a section closes its open siblings (toggle does not bubble, so capture)
+  palBody.addEventListener(
+    'toggle',
+    function (ev) {
+      var d = ev.target as HTMLDetailsElement;
+      if (!d.open || !d.matches('details.pal-sec')) return;
+      [].forEach.call(d.parentElement.children, function (o: HTMLDetailsElement) {
+        if (o === d || !o.matches('details.pal-sec[open]')) return;
+        o.open = false;
+        secOpen[o.getAttribute('data-sec')] = false;
+      });
+    },
+    true,
+  );
   var pal = $('pal');
   pal.addEventListener('dragover', function (ev) {
     if ([].slice.call(ev.dataTransfer.types || []).indexOf('Files') >= 0) {

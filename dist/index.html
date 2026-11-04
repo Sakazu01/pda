@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-gSAeklEEVUxqdSLW3vvE5oNKyJN2AgOpwNzKnYL1j/M=' https://cdn.jsdelivr.net https://unpkg.com; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com data:; img-src 'self' data: blob: https:; connect-src https: data: blob: http://localhost:* http://127.0.0.1:*; worker-src blob:; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-ZCfwnw4SGcSCs0aK4+0yQNguIcWcycDFSGOzG2v4nEI=' https://cdn.jsdelivr.net https://unpkg.com; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com data:; img-src 'self' data: blob: https:; connect-src https: data: blob: http://localhost:* http://127.0.0.1:*; worker-src blob:; base-uri 'none'; form-action 'none'; object-src 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="description" content="PDA: Plan &amp; Design Anything. Diagram studio for business strategy, process modeling, software architecture, AI and automation.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2230%22%20height%3D%2230%22%20rx%3D%229%22%20fill%3D%22%230f6b73%22%2F%3E%3Cpath%20d%3D%22M10.5%2024.5V8.5h6.2a4.6%204.6%200%200%201%200%209.2h-6.2M16.7%2017.7h3.3a2%202%200%200%201%202%202v1.6%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222.6%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3Ccircle%20cx%3D%2222%22%20cy%3D%2224.4%22%20r%3D%222.7%22%20fill%3D%22%23ffb84d%22%2F%3E%3C%2Fsvg%3E">
@@ -691,6 +691,38 @@ button.iv-dot.on:hover{transform:scale(1.15)}
 .undo{left:10px;bottom:10px}
 .zoombar{left:auto;right:10px;bottom:10px}
 .minimap{bottom:56px}
+/* layout v2: Library and inspector float over the canvas; one workspace pill replaces the tab row */
+.pal,.insp{background:color-mix(in srgb,var(--panel) 94%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);box-shadow:var(--shadow-lg);border-radius:var(--r-lg)}
+@media (min-width:821px){
+  .stage{grid-column:1/-1;grid-row:3}
+  .pal{grid-column:1;grid-row:3;z-index:6;margin:10px}
+  .undo{left:274px}
+  .pxstrip{left:354px;max-width:calc(100% - 366px)}
+}
+@media (min-width:1181px){
+  .insp{grid-column:3;grid-row:3;z-index:6;margin:10px;align-self:start;max-height:calc(100% - 20px)}
+  .zoombar,.minimap{right:322px}
+  .pxstrip{max-width:calc(100% - 676px)}
+  body.px-strip-on .zoombar{bottom:64px}
+}
+.ws-tabs{position:relative;flex-direction:column;height:34px;padding:0;border:0;background:none;box-shadow:none;border-radius:0}
+.ws-tabs.open{z-index:40}
+.ws-tabs button[aria-selected="true"]{order:-1;height:34px;padding:0 10px;border:0;border-radius:var(--r-sm);background:transparent;color:var(--ink);font-size:var(--fs-md)}
+.ws-tabs button[aria-selected="true"]:hover{background:var(--panel-2)}
+.ws-tabs button[aria-selected="true"]::after{content:"";width:6px;height:6px;border:solid currentColor;border-width:0 1.5px 1.5px 0;transform:rotate(45deg);margin:-3px 0 0 4px}
+.ws-tabs button:not([aria-selected="true"]){display:none}
+.ws-tabs.open button:not([aria-selected="true"]){display:inline-flex;flex:none;height:34px;border-radius:0;background:var(--panel);border:1px solid var(--line);border-top:0;color:var(--ink);box-shadow:var(--shadow-lg)}
+.ws-tabs button:not([aria-selected="true"]) .lbl{display:inline}
+.ws-tabs .pj-cnt{display:inline-block}
+/* no AI-slop tells: sentence-case sans labels instead of tracked mono caps, no pills, no dashed dividers, no tight kerning */
+.pt-ex>span,.pt-t small,.pal-sec>summary,.pal-more,.quick .qh,.ih small,.sec>.st,.px-mean b,.iv-col h2,.iv-cat,.iv-mx .iv-grp th,.nv-grp h3,.nv-cg,.find .sev{font-family:var(--font-ui);font-size:var(--fs-sm);font-weight:500;letter-spacing:0;text-transform:none;color:var(--muted)}
+.pal-sec,.pal-sec:last-child{border:0}
+.pal-sub{padding-left:14px}
+.pal-group>summary{color:var(--ink)}
+.pal-more{border-top:0}
+.pal,.insp{border:0}
+.chip-auto,.empty-card.door .nv-start .door-chip{border-radius:var(--r-sm)}
+.empty-card.door h2,.md h1{letter-spacing:0}
 .empty-card.door{max-width:680px;background:transparent;border:0;padding:0;gap:16px}
 .empty-card.door h2{font-size:var(--fs-xl);line-height:34px;font-weight:600;letter-spacing:-.01em}
 .empty-card.door .row{display:none}
@@ -698,11 +730,11 @@ button.iv-dot.on:hover{transform:scale(1.15)}
 .door-box{width:min(620px,92vw);background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow-lg);padding:12px;display:grid;gap:12px;text-align:left;pointer-events:auto}
 .door-box textarea{width:100%;min-height:64px;resize:none;border:0;outline:0;background:transparent;color:var(--ink);font:inherit;padding:8px}
 .door-row{display:flex;align-items:center;justify-content:space-between;gap:8px}
-.chip-auto{border:1px solid var(--line);border-radius:99px;padding:3px 10px;font-size:var(--fs-sm);color:var(--muted)}
+.chip-auto{border:1px solid var(--line);border-radius:var(--r-sm);padding:3px 10px;font-size:var(--fs-sm);color:var(--muted)}
 .empty-card.door .nv-start .door-go{width:36px;height:36px;padding:0;border-radius:50%;border:0;background:var(--accent);color:var(--accent-ink);flex-direction:row;align-items:center;justify-content:center}
 .empty-card.door .nv-start .door-go .i{color:var(--accent-ink)}
 .door-goals,.door-quiet{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
-.empty-card.door .nv-start .door-chip{flex-direction:row;align-items:center;padding:6px 14px;border-radius:99px;font-size:var(--fs-md)}
+.empty-card.door .nv-start .door-chip{flex-direction:row;align-items:center;padding:6px 14px;border-radius:var(--r-sm);font-size:var(--fs-md)}
 .door-quiet{gap:16px}
 .empty-card.door .nv-start .door-quiet button{flex-direction:row;border:0;background:transparent;padding:0;color:var(--faint);font-size:var(--fs-sm);text-decoration:underline;text-underline-offset:3px}
 .empty-card.door .nv-start button:focus-visible,.door-box textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
@@ -758,9 +790,7 @@ svg.lab-drag,svg.lab-drag *{cursor:grabbing!important}
     <h1 class="sr">PDA, Plan &amp; Design Anything</h1>
     <div class="brand" aria-label="PDA, Plan &amp; Design Anything">
       <svg viewBox="0 0 32 32" aria-hidden="true" class="brand-mark">
-        <defs><linearGradient id="rgBrand" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#14868f"/><stop offset="1" stop-color="#0b4f56"/></linearGradient></defs>
-        <rect x="1" y="1" width="30" height="30" rx="9" fill="url(#rgBrand)"/>
-        <path d="M1 22.5C9 26 22 26 31 17.5V22a9 9 0 0 1-9 9H10a9 9 0 0 1-9-9z" fill="#ffffff" fill-opacity=".07"/>
+        <rect x="1" y="1" width="30" height="30" rx="8" fill="#5b5bd6"/>
         <path d="M10.5 24.5V8.5h6.2a4.6 4.6 0 0 1 0 9.2h-6.2" fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
         <path d="M16.7 17.7h3.3a2 2 0 0 1 2 2v1.6" fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
         <circle cx="22" cy="24.4" r="2.7" fill="#ffb84d"/>
@@ -4139,7 +4169,7 @@ svg.lab-drag,svg.lab-drag *{cursor:grabbing!important}
     var cur = DT[dtOf()].ws;
     $("wsTabs").innerHTML = WS.map(function(w) {
       var on = w.id === uiWs;
-      return '<button type="button" role="tab" data-ws="' + w.id + '" aria-selected="' + on + '" title="' + esc(w.n) + '">' + ic(w.icon) + '<span class="lbl">' + esc(w.n) + "</span>" + (w.id === cur && !on ? '<span class="cur" title="Current diagram"></span>' : "") + "</button>";
+      return '<button type="button" role="tab" data-ws="' + w.id + '" aria-selected="' + on + (on ? '" aria-haspopup="true" aria-expanded="false' : "") + '" title="' + esc(w.n) + '">' + ic(w.icon) + '<span class="lbl">' + esc(w.n) + "</span>" + (w.id === cur && !on ? '<span class="cur" title="Current diagram"></span>' : "") + "</button>";
     }).join("");
   }
   var renderWsTabs = renderWsTabs__base;
@@ -4353,11 +4383,26 @@ svg.lab-drag,svg.lab-drag *{cursor:grabbing!important}
   function set_secHtml(v) {
     return secHtml = v;
   }
-  function myIconsSec() {
+  function groupedSecs(ids, openId) {
+    var groups = {}, s = "";
+    ids.forEach(function(id) {
+      var g = SEC[id] && SEC[id].group;
+      if (!g) s += secHtml(id, id === openId);
+      else (groups[g] = groups[g] || []).push(id);
+    });
+    Object.keys(groups).forEach(function(g) {
+      var key = "grp:" + g.toLowerCase().replace(/\W+/g, "-");
+      s += '<details class="pal-sec pal-group" data-sec="' + key + '"' + (secOpen[key] || groups[g].indexOf(openId) >= 0 ? " open" : "") + "><summary>" + ic("chevron-right") + esc(g) + '</summary><div class="pal-sub">' + groups[g].map(function(id) {
+        return secHtml(id, id === openId);
+      }).join("") + "</div></details>";
+    });
+    return s;
+  }
+  function myIconsSec(open) {
     var ids = Object.keys(ICONLIB).sort(function(a, b) {
       return String(ICONLIB[a].name).localeCompare(String(ICONLIB[b].name));
     });
-    var s = '<details class="pal-sec" data-sec="my"' + (secOpen.my !== false ? " open" : "") + "><summary>" + ic("chevron-right") + "My icons" + (ids.length ? '<span class="cnt">' + ids.length + "</span>" : "") + '</summary><div class="pal-grid">' + ids.map(function(id) {
+    var s = '<details class="pal-sec" data-sec="my"' + (open ? " open" : "") + "><summary>" + ic("chevron-right") + "My icons" + (ids.length ? '<span class="cnt">' + ids.length + "</span>" : "") + '</summary><div class="pal-grid">' + ids.map(function(id) {
       return palItem("u:" + id);
     }).join("") + '<button type="button" class="pal-item up" data-pal="icons">' + ic("image-plus") + "<span>Upload logos</span></button></div>";
     if (!ids.length)
@@ -4382,19 +4427,18 @@ svg.lab-drag,svg.lab-drag *{cursor:grabbing!important}
       s = res.length ? '<div class="pal-grid" style="padding-top:8px">' + res.slice(0, 84).map(palItem).join("") + "</div>" : '<p class="pal-empty">Nothing matches “' + esc(q) + "”. Try a product name such as Redis, Kafka, n8n or LangGraph, or a notation such as actor, entity or swot.</p>";
     } else {
       var prim = primarySecs(dt);
-      prim.forEach(function(id) {
-        s += secHtml(id, secOpen[id] !== false);
-      });
       var ws = uiWs || DT[dt].ws, more = wsSections(ws).filter(function(id) {
         return prim.indexOf(id) < 0;
       });
+      var openId = prim.concat(more, "my").filter(function(id) {
+        return secOpen[id] === true;
+      })[0] || (secOpen[prim[0]] === false ? "" : prim[0]);
+      s += groupedSecs(prim, openId);
       if (more.length) {
         s += '<div class="pal-more">' + (ws === DT[dt].ws ? "More in " : "From ") + esc(WS_BY[ws].n) + "</div>";
-        more.forEach(function(id) {
-          s += secHtml(id, !!secOpen[id]);
-        });
+        s += groupedSecs(more, openId);
       }
-      s += myIconsSec();
+      s += myIconsSec(openId === "my");
       if (dt === "bpmn") s += '<p class="pal-foot">Add lanes from the properties panel after you select a pool.</p>';
       if (dt === "n8n" || dt === "agent")
         s += '<p class="pal-foot">Components land as n8n-style tiles in n8n diagrams. Use START, END and conditional routes for LangGraph-style graphs.</p>';
@@ -5717,7 +5761,19 @@ svg.lab-drag,svg.lab-drag *{cursor:grabbing!important}
       }
     });
   }
+  function setWsOpen(open) {
+    var box = $("wsTabs");
+    box.classList.toggle("open", open);
+    var cur = box.querySelector('[aria-selected="true"]');
+    if (cur) cur.setAttribute("aria-expanded", String(open));
+  }
   function bindDomain() {
+    document.addEventListener("click", function(ev) {
+      if (!ev.target.closest("#wsTabs")) setWsOpen(false);
+    });
+    document.addEventListener("keydown", function(ev) {
+      if (ev.key === "Escape" && $("wsTabs").classList.contains("open")) setWsOpen(false);
+    });
     $("wsTabs").addEventListener("click", function(ev) {
       var b = ev.target.closest("[data-ws]");
       if (!b) return;
@@ -5770,6 +5826,19 @@ svg.lab-drag,svg.lab-drag *{cursor:grabbing!important}
           secOpen[d.getAttribute("data-sec")] = d.open;
       }, 0);
     });
+    palBody.addEventListener(
+      "toggle",
+      function(ev) {
+        var d = ev.target;
+        if (!d.open || !d.matches("details.pal-sec")) return;
+        [].forEach.call(d.parentElement.children, function(o) {
+          if (o === d || !o.matches("details.pal-sec[open]")) return;
+          o.open = false;
+          secOpen[o.getAttribute("data-sec")] = false;
+        });
+      },
+      true
+    );
     var pal = $("pal");
     pal.addEventListener("dragover", function(ev) {
       if ([].slice.call(ev.dataTransfer.types || []).indexOf("Files") >= 0) {
@@ -17503,6 +17572,11 @@ svg.lab-drag,svg.lab-drag *{cursor:grabbing!important}
           var b = ev.target.closest("[data-ws]");
           if (!b) return;
           ev.stopImmediatePropagation();
+          if (!$("wsTabs").classList.contains("open") && b.getAttribute("aria-selected") === "true") {
+            setWsOpen(true);
+            return;
+          }
+          setWsOpen(false);
           pjSwitch(pjWsDefault(b.getAttribute("data-ws")));
         },
         true
@@ -25112,16 +25186,16 @@ svg.lab-drag,svg.lab-drag *{cursor:grabbing!important}
   // src/diagrams/tech-categories.ts
   var L2 = (s) => s.split("|");
   var TECH_SECTION_NAMES = {
-    "tech-ai": "Tech stack · AI & automation",
-    "tech-data": "Tech stack · data",
-    "tech-app": "Tech stack · backend",
-    "tech-web": "Tech stack · frontend & UI",
-    "tech-lang": "Tech stack · languages",
-    "tech-cloud": "Tech stack · cloud & ops",
-    "tech-tools": "Tech stack · dev tools & OS",
-    "tech-design": "Tech stack · design & game",
-    "tech-saas": "Tech stack · apps & services",
-    "tech-more": "Tech stack · more"
+    "tech-ai": "AI & automation",
+    "tech-data": "Data",
+    "tech-app": "Backend",
+    "tech-web": "Frontend & UI",
+    "tech-lang": "Programming languages",
+    "tech-cloud": "Cloud & DevOps",
+    "tech-tools": "Developer tools & OS",
+    "tech-design": "Design & game",
+    "tech-saas": "Apps & services",
+    "tech-more": "More"
   };
   var TECH_SECTION_ORDER = Object.keys(TECH_SECTION_NAMES);
   var LISTS = {
@@ -25241,6 +25315,7 @@ svg.lab-drag,svg.lab-drag *{cursor:grabbing!important}
     TECH_SECTION_ORDER.forEach(function(id) {
       if (!SEC[id]) SEC[id] = { n: "", keys: [], cat: SEC_CAT[id] || "ext" };
       SEC[id].n = TECH_SECTION_NAMES[id];
+      SEC[id].group = "Tech stack";
       SEC[id].lazy = 1;
     });
     Object.keys(TSI).forEach(function(name) {
@@ -25261,10 +25336,9 @@ svg.lab-drag,svg.lab-drag *{cursor:grabbing!important}
     tsiWsSections0 = wsSections;
     set_wsSections(function(ws) {
       var o = tsiWsSections0(ws);
-      if (ws === "sys" || ws === "ai")
-        TECH_SECTION_ORDER.forEach(function(id) {
-          if (SEC[id].keys.length && o.indexOf(id) < 0) o.push(id);
-        });
+      TECH_SECTION_ORDER.forEach(function(id) {
+        if (SEC[id].keys.length && o.indexOf(id) < 0) o.push(id);
+      });
       return o;
     });
     tsiSecHtml0 = secHtml;

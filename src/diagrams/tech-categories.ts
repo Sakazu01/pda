@@ -4,16 +4,16 @@
 const L = (s: string): string[] => s.split('|');
 
 export var TECH_SECTION_NAMES: Record<string, string> = {
-  'tech-ai': 'Tech stack · AI & automation',
-  'tech-data': 'Tech stack · data',
-  'tech-app': 'Tech stack · backend',
-  'tech-web': 'Tech stack · frontend & UI',
-  'tech-lang': 'Tech stack · languages',
-  'tech-cloud': 'Tech stack · cloud & ops',
-  'tech-tools': 'Tech stack · dev tools & OS',
-  'tech-design': 'Tech stack · design & game',
-  'tech-saas': 'Tech stack · apps & services',
-  'tech-more': 'Tech stack · more',
+  'tech-ai': 'AI & automation',
+  'tech-data': 'Data',
+  'tech-app': 'Backend',
+  'tech-web': 'Frontend & UI',
+  'tech-lang': 'Programming languages',
+  'tech-cloud': 'Cloud & DevOps',
+  'tech-tools': 'Developer tools & OS',
+  'tech-design': 'Design & game',
+  'tech-saas': 'Apps & services',
+  'tech-more': 'More',
 };
 
 export var TECH_SECTION_ORDER = Object.keys(TECH_SECTION_NAMES);

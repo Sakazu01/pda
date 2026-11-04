@@ -100,6 +100,8 @@ export interface PaletteSection {
   keys: string[];
   cat?: string;
   lazy?: number;
+  /** Parent row this section is folded under in the Library, e.g. "Tech stack". */
+  group?: string;
 }
 
 export interface Project {

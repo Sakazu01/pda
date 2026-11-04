@@ -23,6 +23,14 @@ function patch(page) {
   // top-bar buttons and the floating AI button now live in the ⋯ menu or the front door
   const MOVED = ['#btnTheme', '#btnSim', '#btnCheck', '#btnSlides', '#aiFab'];
   P.click = function (sel, opts) {
+    // the workspace tabs are one pill now: open the list, then pick the entry
+    if (typeof sel === 'string' && sel.indexOf('#wsTabs [data-ws=') === 0)
+      return this.evaluate(function (s) {
+        const cur = document.querySelector('#wsTabs [aria-selected="true"]');
+        if (cur) cur.click();
+        const t = document.querySelector(s);
+        if (t) t.click();
+      }, sel);
     if (MOVED.indexOf(sel) < 0) return click.call(this, sel, opts);
     return this.evaluate(function (id) {
       document.querySelector(id).click();

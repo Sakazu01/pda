@@ -101,6 +101,7 @@ import {
   set_startNew,
   set_uiWs,
   set_usedIcons,
+  setWsOpen,
   startNew,
   syncDomain,
   uiWs,
@@ -3517,6 +3518,12 @@ export function install(): void {
         var b = ev.target.closest('[data-ws]');
         if (!b) return;
         ev.stopImmediatePropagation();
+        // collapsed to one button: the current workspace opens the list, any other entry picks and closes it
+        if (!$('wsTabs').classList.contains('open') && b.getAttribute('aria-selected') === 'true') {
+          setWsOpen(true);
+          return;
+        }
+        setWsOpen(false);
         pjSwitch(pjWsDefault(b.getAttribute('data-ws')));
       },
       true,

@@ -79,7 +79,7 @@ Result: toolbar of **4 tools + optional context chips**, down from 19 controls.
 
 ## 7. Copy and language problems found while inventorying
 
-- Mixed English and Indonesian **in the source HTML itself** (e.g. "Slide", "Simulasi", "Warna: tenang", "Sisipkan gambar", "Templat", "Integrasi"). `AGENTS.md` says fixed English text should be English with an Indonesian entry in `src/i18n/id.ts`. These should be English in `body.html` and translated by the dictionary. Fix in P6/P7.
+- Correction found while implementing: much of the source text (`body.html` titles, `navigation.ts` menus) is **Indonesian on purpose**, and `src/i18n/en-dict.ts` turns it into English for the English interface. So it is not a bug. New text in this work uses `L('English', 'Indonesia')` as `AGENTS.md` asks. Moving the old Indonesian literals to English-first is a separate clean-up and was not done.
 - Several buttons are icon-only with the meaning only in `title`. Visible labels are needed for the five top actions.
 
 ## 8. Summary

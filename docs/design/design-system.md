@@ -40,6 +40,26 @@ Rules:
 - Warning and error colours exist in the app today (`warn`, `bad`); they stay for status messages only.
 - Colours inside a diagram (node fills, calm mode, `uc: 1`) belong to the user's content and are not UI tokens.
 
+### Colour scales
+
+Generated in OKLCH (even lightness steps, chroma peaks mid-scale) and drawn on the Figma page *Design system* (frame "Colour scales"). Use the **role** of a step, not its number, in components: 50-200 soft backgrounds, 300-500 borders and mid fills, 600 solid fills and buttons (white text ≥ 4.5:1 only on Indigo 600 and Danger 600), 700-900 text and strong states.
+
+| Step | Indigo (primary) | Neutral | Success | Warning | Danger | Info |
+|---|---|---|---|---|---|---|
+| 50 | `#f0f5ff` | `#f6f6ff` | `#e9fdef` | `#fff4e4` | `#ffefeb` | `#e7faff` |
+| 100 | `#e1eaff` | `#ececf5` | `#d2f8de` | `#ffe7c8` | `#ffdcd7` | `#cef2ff` |
+| 200 | `#c9d6ff` | `#dbdbe4` | `#adefc3` | `#ffd39b` | `#ffbfb6` | `#a5e5ff` |
+| 300 | `#afbdff` | `#c6c6cf` | `#84dfa5` | `#f9b96c` | `#ff9d95` | `#79d2ff` |
+| 400 | `#909cff` | `#aaaab2` | `#53c582` | `#e39933` | `#ff756f` | `#43b5fb` |
+| 500 | `#757eff` | `#8e8e96` | `#24a965` | `#c87b00` | `#ed5350` | `#0099e0` |
+| 600 | `#6066df` | `#76767e` | `#008f50` | `#ab6500` | `#cc3d3d` | `#0080c2` |
+| 700 | `#4d51b9` | `#5f6067` | `#00753e` | `#8d5000` | `#a92c2d` | `#0067a0` |
+| 800 | `#383b8d` | `#47474e` | `#00572d` | `#6a3b00` | `#801e1f` | `#004d7a` |
+| 900 | `#252764` | `#2f3036` | `#003c1d` | `#4a2700` | `#5a1113` | `#003455` |
+
+The app accent `#5b5bd6` sits between Indigo 600 and 700 (white text on it measures about 5.4:1, on Indigo 600 about 4.7:1). Status tokens in the app (`good`, `warn`, `bad`) should move to these scales: light mode uses step 700, dark mode step 300.
+
+**60 · 30 · 10.** About 60% of any screen is neutral (`bg`, `canvas`), about 30% is `panel` and soft tints, and about 10% is accent. If a screen has more accent than that, something is shouting.
 ## 3. Typography
 
 | Role | Family | Size / line | Weight | Letter spacing |

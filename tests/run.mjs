@@ -21,7 +21,7 @@ writeFileSync(join(here, 'page-hook.html'), bundle({ hook: true }));
 let pass = 0, fail = 0;
 const failed = [];
 for (const s of suites) {
-  const r = spawnSync(process.execPath, [join(here, s + '.cjs')], { cwd: here, encoding: 'utf8', timeout: 600000 });
+  const r = spawnSync(process.execPath, ['--require', join(here, 'hidden-controls.cjs'), join(here, s + '.cjs')], { cwd: here, encoding: 'utf8', timeout: 600000 });
   const out = (r.stdout || '') + (r.stderr || '');
   const lines = out.split('\n');
   const p = lines.filter((l) => /^PASS|^ {2}ok|: no violations/.test(l)).length;

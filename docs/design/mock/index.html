@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PDA design mock (P4)</title>
+<style>
+/* tokens from docs/design/tokens.md */
+:root{
+  --bg:#f5f7f7;--panel:#fff;--panel-2:#eceff0;--line:#dde2e4;--line-2:#c3cbce;
+  --ink:#192023;--muted:#4b585d;--faint:#627075;
+  --accent:#0e6169;--accent-ink:#fff;--accent-soft:#e8f4f5;--accent-line:#a0d2d6;
+  --good:#1b6e46;--canvas:#fff;
+  --shadow:0 2px 8px rgba(15,20,22,.08),0 0 0 1px rgba(15,20,22,.04);--shadow-sm:0 1px 2px rgba(15,20,22,.06);--shadow-lg:0 12px 32px rgba(15,20,22,.14);
+  --font-ui:"Geist",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --r-sm:6px;--r:10px;--r-lg:16px;--r-pill:999px;
+  --fs-xs:11px;--fs-sm:12.5px;--fs-md:14px;--fs-lg:17px;--fs-xl:28px;
+  --s-1:4px;--s-2:8px;--s-3:12px;--s-4:16px;--s-5:24px;--s-6:32px;--ctl:36px;--ic:18px;
+  --grid-dot:color-mix(in srgb,var(--ink) 14%,transparent);
+  --t-fast:120ms;--t-med:180ms;--ease:cubic-bezier(.2,.7,.2,1);
+}
+[data-theme=dark]{
+  --bg:#0f1416;--panel:#192023;--panel-2:#283034;--line:#2a3337;--line-2:#3a4448;
+  --ink:#e8eced;--muted:#a7b2b6;--faint:#8a969b;
+  --accent:#6db5bb;--accent-ink:#06191b;--accent-soft:#12292c;--accent-line:#1f7b84;
+  --good:#6fcb9a;--canvas:#0f1416;
+  --shadow:0 2px 8px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.05);--shadow-lg:0 12px 32px rgba(0,0,0,.55);
+}
+@media (prefers-reduced-motion:reduce){:root{--t-fast:0ms;--t-med:0ms}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 var(--fs-md)/20px var(--font-ui)}
+button{font:inherit;color:inherit;cursor:pointer}
+svg{width:var(--ic);height:var(--ic);fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;flex:none}
+
+/* viewer chrome (not part of the design) */
+.viewer{position:sticky;top:0;z-index:20;display:flex;gap:var(--s-2);align-items:center;flex-wrap:wrap;padding:var(--s-2) var(--s-4);background:var(--panel);border-bottom:1px solid var(--line)}
+.viewer b{font-size:var(--fs-sm);color:var(--muted);margin-right:var(--s-2)}
+.viewer button{border:1px solid var(--line);background:var(--panel);border-radius:var(--r-pill);padding:4px 12px;font-size:var(--fs-sm)}
+.viewer button[aria-pressed=true]{background:var(--accent-soft);border-color:var(--accent-line);color:var(--accent)}
+.viewer .sp{flex:1}
+.stage{padding:var(--s-4);display:flex;justify-content:center}
+.note{max-width:960px;margin:0 auto;padding:0 var(--s-4) var(--s-6);color:var(--muted);font-size:var(--fs-sm)}
+.note li{margin:2px 0}
+
+/* app frame */
+.app{width:min(1280px,100%);height:720px;background:var(--bg);border:1px solid var(--line-2);border-radius:var(--r);overflow:hidden;display:grid;grid-template-rows:52px auto 1fr;box-shadow:var(--shadow-lg);position:relative}
+.app.mobile{width:375px;height:700px}
+.top{display:flex;align-items:center;gap:var(--s-3);padding:0 var(--s-4);background:var(--panel);border-bottom:1px solid var(--line)}
+.logo{display:flex;align-items:center;gap:var(--s-2);font-weight:600}
+.logo i{width:28px;height:28px;border-radius:8px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-style:normal;font-weight:700;font-size:var(--fs-sm)}
+.logo small{display:block;font-weight:400;font-size:var(--fs-xs);color:var(--faint);line-height:12px}
+.doc{display:flex;align-items:center;gap:var(--s-2);margin-left:var(--s-3);font-weight:500}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--good)}
+.doc span.s{font-size:var(--fs-xs);color:var(--faint);font-weight:400}
+.sp{flex:1}
+.btn{display:inline-flex;align-items:center;gap:6px;height:var(--ctl);padding:0 var(--s-3);border:1px solid var(--line);background:var(--panel);border-radius:var(--r-sm);font-size:var(--fs-sm);font-weight:500;transition:background var(--t-fast) var(--ease)}
+.btn:hover{background:var(--panel-2)}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.ghost{border-color:transparent;background:transparent}
+.btn.icon{width:var(--ctl);padding:0;justify-content:center}
+.btn:focus-visible,.tb:focus-visible,.chip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.sub{display:flex;align-items:center;gap:var(--s-2);padding:6px var(--s-4);background:var(--panel);border-bottom:1px solid var(--line);font-size:var(--fs-sm)}
+.sub .tab{padding:4px 10px;border-radius:var(--r-pill);border:1px solid transparent;color:var(--muted)}
+.sub .tab.on{background:var(--accent-soft);border-color:var(--accent-line);color:var(--accent);font-weight:600}
+.sub .sep{width:1px;height:18px;background:var(--line);margin:0 var(--s-2)}
+.body{display:flex;min-height:0}
+.canvas{position:relative;flex:1;background-color:var(--canvas);background-image:radial-gradient(var(--grid-dot) 1px,transparent 1px);background-size:20px 20px;overflow:hidden}
+
+/* floating islands */
+.island{position:absolute;background:color-mix(in srgb,var(--panel) 94%,transparent);backdrop-filter:blur(8px);border-radius:var(--r);box-shadow:var(--shadow);display:flex;align-items:center;gap:2px;padding:4px}
+.tb{width:32px;height:32px;border:0;background:transparent;border-radius:var(--r-sm);display:grid;place-items:center;color:var(--muted);transition:background var(--t-fast) var(--ease)}
+.tb:hover{background:var(--panel-2)}
+.tb.on{background:var(--accent-soft);color:var(--accent)}
+.toolbar{top:var(--s-4);left:50%;transform:translateX(-50%)}
+.undo{left:var(--s-4);bottom:var(--s-4)}
+.zoom{right:var(--s-4);bottom:var(--s-4);font-size:var(--fs-xs);color:var(--muted)}
+.zoom span{padding:0 6px}
+.chips{top:64px;left:50%;transform:translateX(-50%);padding:4px 6px;gap:var(--s-2);font-size:var(--fs-sm)}
+.chip{border:1px solid var(--line);background:var(--panel);border-radius:var(--r-pill);padding:3px 10px;font-size:var(--fs-sm)}
+.chip.on{background:var(--accent-soft);border-color:var(--accent-line);color:var(--accent)}
+
+/* front door */
+.door{position:absolute;inset:0;display:grid;place-content:center;justify-items:center;gap:var(--s-4);text-align:center;padding:var(--s-4)}
+.door h1{margin:0;font-size:var(--fs-xl);line-height:34px;font-weight:600;letter-spacing:-.01em}
+.door p{margin:0;color:var(--muted)}
+.box{width:min(620px,92vw);background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow-lg);padding:var(--s-3);display:grid;gap:var(--s-3);text-align:left}
+.box .in{min-height:64px;color:var(--faint);padding:var(--s-2)}
+.box .row{display:flex;align-items:center;gap:var(--s-2)}
+.go{width:36px;height:36px;border-radius:50%;border:0;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center}
+.goals{display:flex;gap:var(--s-2);flex-wrap:wrap;justify-content:center}
+.goals .chip{padding:6px 14px;font-size:var(--fs-md)}
+.quiet{display:flex;gap:var(--s-4);font-size:var(--fs-sm);color:var(--faint)}
+.quiet u{text-underline-offset:3px;cursor:pointer}
+
+/* diagram nodes (canvas content, not UI chrome) */
+.node{position:absolute;background:#fff;color:#192023;border:1.5px solid #0e6169;border-radius:10px;padding:8px 12px;font:500 13px/16px "Excalifont","Segoe Print","Comic Sans MS",cursive;box-shadow:0 1px 2px rgba(0,0,0,.08);text-align:center}
+.node small{display:block;font:400 11px/13px var(--font-ui);color:#4b585d}
+[data-theme=dark] .node{background:#192023;color:#e8eced;border-color:#6db5bb}
+[data-theme=dark] .node small{color:#a7b2b6}
+.node.sel{outline:2px solid var(--accent);outline-offset:3px}
+.lines{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.lines path{fill:none;stroke:var(--faint);stroke-width:1.6}
+
+/* inspector + palette */
+.side{width:264px;background:var(--panel);border-left:1px solid var(--line);padding:var(--s-4);display:grid;align-content:start;gap:var(--s-4)}
+.side.left{border-left:0;border-right:1px solid var(--line);width:248px}
+.side h3{margin:0;font-size:var(--fs-lg);line-height:24px;font-weight:600}
+.fld{display:grid;gap:4px;font-size:var(--fs-xs);color:var(--faint);text-transform:uppercase;letter-spacing:.04em}
+.fld .v{height:var(--ctl);border:1px solid var(--line);border-radius:var(--r-sm);padding:0 var(--s-3);display:flex;align-items:center;font-size:var(--fs-md);text-transform:none;letter-spacing:0;color:var(--ink);background:var(--panel)}
+.sw{display:flex;gap:var(--s-2)}
+.sw i{width:22px;height:22px;border-radius:50%;border:1px solid var(--line-2)}
+.sw i.on{outline:2px solid var(--accent);outline-offset:2px}
+.search{height:var(--ctl);border:1px solid var(--line);border-radius:var(--r-sm);display:flex;align-items:center;gap:var(--s-2);padding:0 var(--s-3);color:var(--faint);font-size:var(--fs-sm)}
+.sec{font-size:var(--fs-xs);text-transform:uppercase;letter-spacing:.05em;color:var(--faint);display:flex;justify-content:space-between}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s-2)}
+.it{display:grid;justify-items:center;gap:4px;font-size:var(--fs-xs);color:var(--muted);text-align:center}
+.it b{width:44px;height:44px;border-radius:var(--r);display:grid;place-items:center;color:#fff;font-size:13px;font-weight:700}
+.menu{position:absolute;top:56px;right:var(--s-4);width:240px;background:var(--panel);border-radius:var(--r);box-shadow:var(--shadow-lg);border:1px solid var(--line);padding:6px;font-size:var(--fs-sm);display:grid}
+.menu div{padding:7px 10px;border-radius:var(--r-sm);display:flex;justify-content:space-between}
+.menu div:hover{background:var(--panel-2)}
+.menu small{color:var(--faint)}
+.menu hr{border:0;border-top:1px solid var(--line);margin:4px 0;width:100%}
+.mobile .top .lbl,.mobile .doc .s,.mobile .logo small{display:none}
+.mobile .top{gap:var(--s-2);padding:0 var(--s-3)}
+.mobile .door h1{font-size:22px;line-height:28px}
+.mobile .box{width:calc(100% - 8px)}
+.mobile .quiet{flex-direction:column;gap:6px;align-items:center}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<div class="viewer" role="toolbar" aria-label="Mock viewer">
+  <b>PDA design mock · P4</b>
+  <button data-f="empty" aria-pressed="true">1 Empty (front door)</button>
+  <button data-f="canvas" aria-pressed="false">2 Canvas</button>
+  <button data-f="selected" aria-pressed="false">3 Selected</button>
+  <button data-f="palette" aria-pressed="false">4 Palette + logos</button>
+  <button data-f="menu" aria-pressed="false">5 ⋯ menu</button>
+  <button data-f="mobile" aria-pressed="false">6 Mobile 375</button>
+  <span class="sp"></span>
+  <button id="theme" aria-pressed="false">Dark</button>
+</div>
+<div class="stage" id="stage"></div>
+<div class="note">
+  <ul>
+    <li>Static mock for review, not the product. Colours, sizes and motion come from <code>docs/design/tokens.md</code>.</li>
+    <li>Top bar: <b>Open · AI · Present · Export · ⋯</b> (5). Present shows only when a deck exists; here it is shown in frames 2-5 for sizing.</li>
+    <li>Toolbar: 4 tools. Undo/redo bottom-left, zoom bottom-right, minimap off. Inspector appears only on selection (frame 3).</li>
+    <li>Palette (frame 4) shows logos by category, no separate "all logos" section; the search box finds any of them.</li>
+  </ul>
+</div>
+<script>
+const I={
+ ptr:'<svg viewBox="0 0 24 24"><path d="M5 3l14 8-6 2-2 6z"/></svg>',
+ hand:'<svg viewBox="0 0 24 24"><path d="M8 13V6a1.5 1.5 0 013 0v5m0-6a1.5 1.5 0 013 0v6m0-4a1.5 1.5 0 013 0v7a6 6 0 01-6 6h-1a6 6 0 01-5-3l-2-4a1.5 1.5 0 012.5-1.5L8 15"/></svg>',
+ link:'<svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 007 0l3-3a5 5 0 00-7-7l-1 1M14 11a5 5 0 00-7 0l-3 3a5 5 0 007 7l1-1"/></svg>',
+ pen:'<svg viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg>',
+ undo:'<svg viewBox="0 0 24 24"><path d="M9 14L4 9l5-5M4 9h10a6 6 0 010 12h-3"/></svg>',
+ redo:'<svg viewBox="0 0 24 24"><path d="M15 14l5-5-5-5M20 9H10a6 6 0 000 12h3"/></svg>',
+ plus:'<svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>',
+ minus:'<svg viewBox="0 0 24 24"><path d="M5 12h14"/></svg>',
+ fit:'<svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>',
+ spark:'<svg viewBox="0 0 24 24"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg>',
+ down:'<svg viewBox="0 0 24 24"><path d="M12 4v11m0 0l-4-4m4 4l4-4M5 20h14"/></svg>',
+ more:'<svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></svg>',
+ open:'<svg viewBox="0 0 24 24"><path d="M3 7a2 2 0 012-2h4l2 2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>',
+ pres:'<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 21l4-5 4 5"/></svg>',
+ search:'<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>',
+ arrow:'<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'
+};
+const topbar=(o={})=>`<header class="top"><div class="logo"><i>P</i><span>PDA<small>plan &amp; design anything</small></span></div>
+ <div class="doc">${o.title||'Untitled project'}<span class="dot"></span><span class="s">Saved</span></div><span class="sp"></span>
+ <button class="btn ghost">${I.open}<span class="lbl">Open</span></button>
+ <button class="btn">${I.spark}<span class="lbl">AI</span></button>
+ ${o.pres?`<button class="btn">${I.pres}<span class="lbl">Present</span></button>`:''}
+ <button class="btn pri">${I.down}<span class="lbl">Export</span></button>
+ <button class="btn icon ghost" aria-label="More">${I.more}</button></header>`;
+const sub=`<div class="sub"><span class="tab">PRD</span><span class="tab">Consistency</span><span class="sep"></span>
+ <span class="tab">Use case</span><span class="tab on">Architecture</span><span class="tab">ERD</span><span class="tab">+ Add page</span></div>`;
+const tools=`<div class="island toolbar" role="toolbar" aria-label="Canvas tools"><button class="tb on" aria-label="Select">${I.ptr}</button><button class="tb" aria-label="Pan">${I.hand}</button><button class="tb" aria-label="Connect">${I.link}</button><button class="tb" aria-label="Pen">${I.pen}</button></div>`;
+const corners=`<div class="island undo"><button class="tb" aria-label="Undo">${I.undo}</button><button class="tb" aria-label="Redo">${I.redo}</button></div>
+ <div class="island zoom"><button class="tb" aria-label="Zoom out">${I.minus}</button><span>85%</span><button class="tb" aria-label="Zoom in">${I.plus}</button><button class="tb" aria-label="Fit">${I.fit}</button></div>`;
+const diagram=(sel)=>`<svg class="lines" aria-hidden="true"><path d="M250 190 H330"/><path d="M510 190 H590"/><path d="M770 190 H830 V300 H760"/><path d="M420 225 V300 H500"/></svg>
+ <div class="node" style="left:70px;top:160px;width:180px">Web app<small>React</small></div>
+ <div class="node${sel?' sel':''}" style="left:330px;top:160px;width:180px">API gateway<small>Node.js</small></div>
+ <div class="node" style="left:590px;top:160px;width:180px">Orders service<small>Go</small></div>
+ <div class="node" style="left:500px;top:285px;width:260px">PostgreSQL<small>orders, customers</small></div>`;
+const door=(m)=>`<div class="door"><h1>What do you want to design?</h1><p>Describe it in a sentence, or pick a starting point.</p>
+ <div class="box"><div class="in">e.g. A cafe ordering app with cashier, kitchen and stock…</div>
+  <div class="row"><span class="chip">${m?'Auto':'Auto: picks the right diagram'}</span><span class="sp"></span><button class="go" aria-label="Create">${I.arrow}</button></div></div>
+ <div class="goals"><button class="chip">An app</button><button class="chip">A business process</button><button class="chip">Cloud infrastructure</button><button class="chip">An AI agent</button></div>
+ <div class="quiet"><u>Paste a PRD</u><u>Open an example</u><u>Blank canvas</u></div></div>`;
+const logos=(a)=>a.map(([n,c])=>`<div class="it"><b style="background:${c}">${n.slice(0,2)}</b>${n}</div>`).join('');
+const F={
+ empty:()=>`<div class="app">${topbar()}<span></span><div class="body"><div class="canvas">${door()}${corners}</div></div></div>`,
+ canvas:()=>`<div class="app">${topbar({pres:1,title:'Cafe ordering'})}${sub}<div class="body"><div class="canvas">${tools}${diagram()}${corners}</div></div></div>`,
+ selected:()=>`<div class="app">${topbar({pres:1,title:'Cafe ordering'})}${sub}<div class="body"><div class="canvas">${tools}
+   <div class="island chips"><span class="chip on">Rounded</span><span class="chip">Dashed</span><span class="chip">Sketch</span></div>${diagram(1)}${corners}</div>
+   <aside class="side"><h3>API gateway</h3><div class="fld">Label<div class="v">API gateway</div></div><div class="fld">Subtitle<div class="v">Node.js</div></div>
+   <div class="fld">Accent<div class="sw"><i style="background:#0e6169" class="on"></i><i style="background:#2f6db5"></i><i style="background:#b0271c"></i><i style="background:#8f5a0b"></i><i style="background:#1b6e46"></i></div></div>
+   <div class="fld">Logo<div class="v">Node.js · automatic</div></div></aside></div></div>`,
+ palette:()=>`<div class="app">${topbar({pres:1,title:'Cafe ordering'})}${sub}<div class="body">
+   <aside class="side left"><div class="search">${I.search}Search shapes and logos…</div>
+   <div class="sec"><span>Backend</span><span>12</span></div><div class="grid">${logos([['Node.js','#3c873a'],['Go','#00acd7'],['FastAPI','#009688'],['Spring','#4f8a10'],['Django','#0c4b33'],['Laravel','#e0382b']])}</div>
+   <div class="sec"><span>Database</span><span>18</span></div><div class="grid">${logos([['Postgres','#336791'],['MySQL','#00758f'],['Redis','#c3302b']])}</div>
+   <div class="sec"><span>Cloud</span><span>9</span></div></aside>
+   <div class="canvas">${tools}${diagram()}${corners}</div></div></div>`,
+ menu:()=>`<div class="app">${topbar({pres:1,title:'Cafe ordering'})}${sub}<div class="body"><div class="canvas">${tools}${diagram()}${corners}</div></div>
+   <div class="menu"><div>Review with AI</div><div>Check for mistakes</div><div>Simulate flow <small>Alt+S</small></div><hr><div>Colour: calm <small>On</small></div><div>Canvas style <small>Sketch</small></div><div>Minimap <small>Off</small></div><hr><div>Library · My icons</div><div>Project folder</div><div>Language <small>English</small></div><div>Theme <small>Light</small></div><div>Shortcuts <small>?</small></div></div></div>`,
+ mobile:()=>`<div class="app mobile">${topbar()}<span></span><div class="body"><div class="canvas">${door(1)}</div></div></div>`
+};
+const stage=document.getElementById('stage');
+function show(f){stage.innerHTML=F[f]();document.querySelectorAll('.viewer [data-f]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.f===f));location.hash=f}
+document.querySelectorAll('.viewer [data-f]').forEach(b=>b.addEventListener('click',()=>show(b.dataset.f)));
+const th=document.getElementById('theme');
+th.addEventListener('click',()=>{const d=document.documentElement.dataset.theme!=='dark';document.documentElement.dataset.theme=d?'dark':'light';th.setAttribute('aria-pressed',d);th.textContent=d?'Light':'Dark'});
+show(F[location.hash.slice(1)]?location.hash.slice(1):'empty');
+</script>
+</body>
+</html>

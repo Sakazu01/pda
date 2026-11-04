@@ -3,6 +3,7 @@
 // what earlier ones set up (shapes, menus, renderers), so the order matters.
 
 import { install as installCoreCore } from './core/core';
+import { install as installDiagramsPdaIcons } from './diagrams/pda-icons';
 import { install as installDiagramsCatalog } from './diagrams/catalog';
 import { install as installDiagramsTechLogos } from './diagrams/tech-logos';
 import { install as installCoreUi } from './core/ui';
@@ -36,6 +37,7 @@ import { install as installCoreBoot } from './core/boot';
 
 const INSTALL_ORDER: Array<() => void> = [
   installCoreCore,
+  installDiagramsPdaIcons,
   installDiagramsCatalog,
   installDiagramsTechLogos,
   installCoreUi,

@@ -421,21 +421,21 @@ export var COMPS = [
   ['l-sub', 'Sub-workflow', 'workflow', 'logic'],
   ['l-retry', 'Retry / backoff', 'rotate-ccw', 'logic'],
   ['l-respond', 'Respond to webhook', 'arrow-left-right', 'logic'],
-  ['a-agent', 'AI agent', 'bot', 'agent'],
-  ['a-super', 'Supervisor', 'crown', 'agent'],
-  ['a-planner', 'Planner', 'list-todo', 'agent'],
-  ['a-research', 'Research agent', 'telescope', 'agent'],
-  ['a-coder', 'Coding agent', 'square-terminal', 'agent'],
-  ['a-writer', 'Writer agent', 'pen-line', 'agent'],
-  ['a-critic', 'Critic / reviewer', 'scale', 'agent'],
-  ['a-router', 'LLM router', 'route', 'agent'],
-  ['a-handoff', 'Handoff', 'arrow-right-left', 'agent'],
-  ['a-human', 'Human in the loop', 'user-check', 'agent'],
-  ['a-tool', 'Tool', 'wrench', 'agent'],
-  ['a-mcp', 'MCP server', 'plug-2', 'agent'],
-  ['a-sandbox', 'Code sandbox', 'terminal', 'agent'],
-  ['a-browser', 'Browser tool', 'globe', 'agent'],
-  ['a-chatbot', 'Chat assistant', 'bot-message-square', 'agent'],
+  ['a-agent', 'AI agent', 'pda-agent', 'agent'],
+  ['a-super', 'Supervisor', 'pda-supervisor', 'agent'],
+  ['a-planner', 'Planner', 'pda-planner', 'agent'],
+  ['a-research', 'Research agent', 'pda-research', 'agent'],
+  ['a-coder', 'Coding agent', 'pda-coder', 'agent'],
+  ['a-writer', 'Writer agent', 'pda-writer', 'agent'],
+  ['a-critic', 'Critic / reviewer', 'pda-critic', 'agent'],
+  ['a-router', 'LLM router', 'pda-router', 'agent'],
+  ['a-handoff', 'Handoff', 'pda-handoff', 'agent'],
+  ['a-human', 'Human in the loop', 'pda-human', 'agent'],
+  ['a-tool', 'Tool', 'pda-tool', 'agent'],
+  ['a-mcp', 'MCP server', 'pda-mcp', 'agent'],
+  ['a-sandbox', 'Code sandbox', 'pda-sandbox', 'agent'],
+  ['a-browser', 'Browser tool', 'pda-browser', 'agent'],
+  ['a-chatbot', 'Chat assistant', 'pda-chat', 'agent'],
   ['llm', 'LLM', 'sparkles', 'ai'],
   ['chat', 'Chat model', 'message-square-text', 'ai'],
   ['embed', 'Embedding model', 'binary', 'ai'],
@@ -1893,7 +1893,8 @@ export function iconG(name, x, y, sc, color, sw) {
     '" stroke-width="' +
     (sw || 2) +
     '" stroke-linecap="round" stroke-linejoin="round">' +
-    (ICONS[name] || ICONS.box) +
+    // own icons use currentColor; here the colour is a literal, so substitute it
+    (ICONS[name] || ICONS.box).replace(/currentColor/g, color) +
     '</g>'
   );
 }

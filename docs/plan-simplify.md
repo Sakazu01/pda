@@ -131,7 +131,7 @@ Skills: `superpowers:using-git-worktrees`, `superpowers:finishing-a-development-
 - [x] P1 Purpose page `docs/product-purpose.md` (§1), draft written, owner to confirm its 3 open points
 - [x] P2 Control inventory and keep/move/remove table (§2): `docs/design/control-inventory.md`
 - [x] P3 Moodboard + design tokens (§0.5 A, B): `docs/design/refs.md`, `docs/design/tokens.md`
-- [ ] P4 Figma mocks: empty state, canvas, 375 px, dark (§0.5 C, D); **owner approves**
+- [ ] P4 Mocks: empty state, canvas, selected, palette, ⋯ menu, 375 px, dark (§0.5 C, D): built as static HTML in `docs/design/mock/index.html` (Figma was not authorised in this session); **waiting for owner approval**
 - [ ] P5 Logo categories, remove "Semua logo tech" (§3), on `feat/logo-categories`
 - [ ] P6 Build the new shell and front door (§0.5 G), on `feat/simplify-ui`
 - [ ] P7 Motion and copy pass (§0.5 E, F)

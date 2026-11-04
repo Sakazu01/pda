@@ -8,6 +8,8 @@ import { closeModal, doExport, newDiagram, openModal, revealTarget, runCheck, se
 import { EX } from '../diagrams/frameworks';
 import { renderInsp, toggleGrid, toggleSketch } from './inspector';
 import { runReview } from '../ai/generate';
+import { L } from '../i18n/lang';
+import { guideOpen } from '../guide/goals';
 import {
   DT_ICON,
   WS_BY,
@@ -616,6 +618,29 @@ export function nvAiItems() {
     ['set', 'plug', 'Pengaturan model & API key', 'Sekarang: ' + prov],
   ];
 }
+function byId(id: string) {
+  return function () {
+    $(id).click();
+  };
+}
+// Front-door box: hand the sentence to the AI generator. The intent step picks
+// the diagram type; we only click Generate once it has finished choosing.
+export function doorRun(): void {
+  var t = ($('doorText') as HTMLTextAreaElement).value.trim();
+  if (!t) return $('doorText').focus();
+  if (!aiReady())
+    return toast(
+      L(
+        'Connect an AI model first (AI menu), or pick a goal below.',
+        'Hubungkan model AI dulu lewat menu AI, atau pilih tujuan di bawah.',
+      ),
+    );
+  $('btnGen').click();
+  ($('genText') as HTMLTextAreaElement).value = t;
+  setTimeout(function () {
+    if (!($('genGo') as HTMLButtonElement).disabled) $('genGo').click();
+  }, 700);
+}
 export function nvMoreItems__base() {
   return [
     ['cmd', 'search', 'Cari & lompat…', 'Ctrl + K'],
@@ -629,6 +654,16 @@ export function nvMoreItems__base() {
     ['calm', 'brush', CALM ? 'Warna penuh per kategori' : 'Warna tenang', 'Mode warna diagram'],
     ['sketch', 'pen-line', S.style === 'sketch' ? 'Gaya bersih' : 'Gaya sketsa', 'Disimpan bersama proyek'],
     ['legend', 'info', 'Sisipkan legenda', 'Arti garis dan simbol'],
+    '-',
+    // tools moved out of the canvas toolbar and top bar; each clicks the original control
+    ['slides', 'monitor', L('Slides', 'Slide'), L('16:9 frame for presenting', 'Bingkai 16:9 untuk presentasi')],
+    ['image', 'image-plus', L('Insert image', 'Sisipkan gambar'), ''],
+    ['line', 'minus', L('Free line', 'Garis bebas'), ''],
+    ['arrow', 'route', L('Free arrow', 'Panah bebas'), ''],
+    ['autoc', 'wand-sparkles', L('Auto-connect', 'Hubungkan otomatis'), ''],
+    ['snap', 'magnet', L('Snap to grid', 'Tempel ke grid'), ''],
+    ['flow', 'play', L('Animate flows', 'Animasikan alur'), ''],
+    ['mini', 'map', L('Minimap', 'Peta mini'), ''],
     '-',
     ['keys', 'keyboard', 'Pintasan keyboard', ''],
   ];
@@ -734,24 +769,56 @@ export function install(): void {
         box.className = 'nv-start';
         card.appendChild(box);
       }
-      $('emptyT').textContent = 'Mulai proyek';
-      $('emptyP').textContent =
-        'Satu proyek menyatukan PRD, diagram bisnis, software, sistem, AI, dan UX. Pilih cara mulai:';
+      // front door: one question, one box, four goals, three quiet links
+      var kept = $('doorText') ? $('doorText').value : '';
+      $('emptyT').textContent = L('What do you want to design?', 'Mau merancang apa?');
+      $('emptyP').textContent = L(
+        'Describe it in a sentence, or pick a starting point.',
+        'Jelaskan dalam satu kalimat, atau pilih titik awal.',
+      );
+      var goals: string[][] = [
+        ['app', L('An app', 'Aplikasi')],
+        ['biz', L('A business process', 'Proses bisnis')],
+        ['arch', L('Cloud infrastructure', 'Infrastruktur cloud')],
+        ['ai', L('An AI agent', 'Agen AI')],
+      ];
       box.innerHTML =
-        '<button type="button" data-nvs="prd">' +
-        ic('file-text') +
-        '<b>Dari PRD</b><small>Tulis atau impor .md, lalu bangun semua kanvas sekaligus</small></button><button type="button" data-nvs="pick">' +
-        ic('layout-grid') +
-        '<b>Pilih jenis diagram</b><small>' +
-        Object.keys(DT).length +
-        ' jenis: BPMN, ERD, SWOT, System Design…</small></button><button type="button" data-nvs="ex">' +
-        ic('sparkles') +
-        '<b>Lihat contoh</b><small>Buka contoh lengkap untuk dipelajari</small></button>';
+        '<div class="door-box"><textarea id="doorText" rows="2" aria-label="' +
+        esc(L('Describe what you want to design', 'Jelaskan yang mau dirancang')) +
+        '" placeholder="' +
+        esc(
+          L(
+            'e.g. A cafe ordering app with cashier, kitchen and stock…',
+            'mis. Aplikasi pemesanan kafe dengan kasir, dapur, dan stok…',
+          ),
+        ) +
+        '"></textarea><div class="door-row"><span class="chip-auto">' +
+        L('Auto: picks the right diagram', 'Otomatis: memilih diagram yang tepat') +
+        '</span><button type="button" class="door-go" id="doorGo" aria-label="' +
+        esc(L('Create with AI', 'Buat dengan AI')) +
+        '">' +
+        ic('chevron-right') +
+        '</button></div></div><div class="door-goals">' +
+        goals
+          .map(function (g) {
+            return '<button type="button" class="door-chip" data-door="' + g[0] + '">' + esc(g[1]) + '</button>';
+          })
+          .join('') +
+        '</div><div class="door-quiet"><button type="button" data-nvs="prd">' +
+        L('Paste a PRD', 'Tempel PRD') +
+        '</button><button type="button" data-nvs="ex">' +
+        L('Open an example', 'Buka contoh') +
+        '</button><button type="button" data-nvs="pick">' +
+        L('All ' + Object.keys(DT).length + ' diagram types', 'Semua ' + Object.keys(DT).length + ' jenis diagram') +
+        '</button><button type="button" data-nvs="goal">' +
+        L('More goals', 'Tujuan lain') +
+        '</button></div>';
+      if (kept) $('doorText').value = kept;
       box.hidden = false;
-      card.classList.add('wide');
+      card.classList.add('door');
     } else if (box) {
       box.hidden = true;
-      card.classList.remove('wide');
+      card.classList.remove('wide', 'door');
     }
   });
   (function nvInit() {
@@ -858,6 +925,14 @@ export function install(): void {
           keys: function () {
             openModal('mKeys');
           },
+          slides: byId('btnSlides'),
+          image: byId('tImg'),
+          line: byId('tLine'),
+          arrow: byId('tArrow'),
+          autoc: byId('tAuto'),
+          snap: byId('tGrid'),
+          flow: byId('tFlow'),
+          mini: byId('zMini'),
         })[a]();
         return;
       }
@@ -881,6 +956,18 @@ export function install(): void {
         return;
       }
       if (!$('nvPick').hidden && !(ev.target as HTMLInputElement).closest('#nvPick')) nvPickClose();
+      var dg = (ev.target as HTMLInputElement).closest('[data-door]');
+      if (dg) {
+        // reuse the goal guide's own "use this set" action
+        guideOpen();
+        var gu = $('mGuide').querySelector('[data-gset="' + dg.getAttribute('data-door') + '"]') as HTMLElement;
+        if (gu) gu.click();
+        return;
+      }
+      if ((ev.target as HTMLInputElement).closest('#doorGo')) {
+        doorRun();
+        return;
+      }
       var st = (ev.target as HTMLInputElement).closest('[data-nvs]');
       if (st) {
         var v = st.getAttribute('data-nvs');
@@ -893,6 +980,13 @@ export function install(): void {
       }
     });
     $('nvPickX').onclick = nvPickClose;
+    document.addEventListener('keydown', function (ev) {
+      var t = ev.target as HTMLElement;
+      if (t && t.id === 'doorText' && ev.key === 'Enter' && !ev.shiftKey) {
+        ev.preventDefault();
+        doorRun();
+      }
+    });
     $('nvPickQ').addEventListener('input', nvPickRender);
     $('nvPickQ').addEventListener('keydown', function (ev) {
       if (ev.key === 'Escape') {

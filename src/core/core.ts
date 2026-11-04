@@ -743,7 +743,7 @@ export var animate = false;
 export function set_animate(v: typeof animate) {
   return (animate = v);
 }
-export var showMini = true;
+export var showMini = false;
 export function set_showMini(v: typeof showMini) {
   return (showMini = v);
 }

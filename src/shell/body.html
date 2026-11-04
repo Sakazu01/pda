@@ -108,8 +108,14 @@
       <button class="tb" type="button" data-tool="hand" title="Pan the canvas (H, or hold Space)" aria-label="Pan tool"><i data-ic="hand"></i></button>
       <button class="tb" type="button" data-tool="connect" title="Connect mode: click a source, then a target (C)" aria-label="Connect tool"><i data-ic="link-2"></i></button>
       <button class="tb" type="button" data-tool="pen" title="Pen: draw freehand (P)" aria-label="Pen tool"><i data-ic="pencil"></i></button>
-      <span class="tsep"></span>
       <select class="tsel" id="flowSel" title="Line type for new connections" aria-label="Line type for new connections"><option value="auto">Auto line type</option></select>
+    </div>
+    <div class="island undo" id="undoBar" role="group" aria-label="History">
+      <button class="tb" type="button" id="tUndo" title="Undo (Ctrl+Z)" aria-label="Undo"><i data-ic="undo-2"></i></button>
+      <button class="tb" type="button" id="tRedo" title="Redo (Ctrl+Y)" aria-label="Redo"><i data-ic="redo-2"></i></button>
+    </div>
+    <!-- tools that moved into the ⋯ menu; the menu clicks these, so the ids stay -->
+    <div id="toolOverflow" hidden>
       <button class="tb" type="button" id="tLine" title="Add a free line" aria-label="Add a free line"><i data-ic="minus"></i></button>
       <button class="tb" type="button" id="tArrow" title="Add a free arrow" aria-label="Add a free arrow"><i data-ic="route"></i></button>
       <button class="tb" type="button" id="tImg" title="Sisipkan gambar (atau seret file / tempel Ctrl+V)" aria-label="Sisipkan gambar"><i data-ic="image-plus"></i></button>
@@ -118,9 +124,6 @@
       <button class="tb on" type="button" id="tGrid" title="Snap to grid and alignment guides" aria-label="Snap to grid"><i data-ic="magnet"></i></button>
       <button class="tb" type="button" id="tFlow" title="Animate the flow along lines" aria-label="Animate flows"><i data-ic="play"></i></button>
       <button class="tb" type="button" id="tSketch" title="Hand-drawn sketch style (saved with the diagram)" aria-label="Sketch style"><i data-ic="brush"></i></button>
-      <span class="tsep"></span>
-      <button class="tb" type="button" id="tUndo" title="Undo (Ctrl+Z)" aria-label="Undo"><i data-ic="undo-2"></i></button>
-      <button class="tb" type="button" id="tRedo" title="Redo (Ctrl+Y)" aria-label="Redo"><i data-ic="redo-2"></i></button>
       <button class="tb" type="button" id="tLayout" title="Auto-arrange left to right (selection, or everything)" aria-label="Auto-arrange"><i data-ic="list-tree"></i></button>
       <span class="tsep"></span>
       <select class="tsel" id="tplSel" title="Open an example as a new diagram" aria-label="Open an example"><option value="">Examples…</option></select>
@@ -132,9 +135,9 @@
       <button class="tb zl" type="button" id="zReset" title="Reset to 100% (Ctrl+0)">100%</button>
       <button class="tb" type="button" id="zIn" title="Zoom in (+)" aria-label="Zoom in"><i data-ic="zoom-in"></i></button>
       <button class="tb" type="button" id="zFit" title="Fit diagram to screen (Shift+1)" aria-label="Fit to screen"><i data-ic="maximize"></i></button>
-      <button class="tb on" type="button" id="zMini" title="Show minimap" aria-label="Toggle minimap"><i data-ic="map"></i></button>
+      <button class="tb" type="button" id="zMini" title="Show minimap" aria-label="Toggle minimap"><i data-ic="map"></i></button>
     </div>
-    <div class="island minimap" id="mini"><svg id="miniSvg" aria-label="Minimap" role="img"></svg></div>
+    <div class="island minimap" id="mini" hidden><svg id="miniSvg" aria-label="Minimap" role="img"></svg></div>
     <div class="hintbar" id="hint">Double-click empty canvas to add · drag a blue port to connect · Space + drag to pan · Ctrl + scroll to zoom</div>
     <div class="empty" id="empty" hidden>
       <div class="empty-card">

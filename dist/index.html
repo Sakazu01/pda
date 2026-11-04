@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-KTqfbcU1zaiHjSsSu+nRHh9b91JXd0o6LFnEAiIz/QQ=' https://cdn.jsdelivr.net https://unpkg.com; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com data:; img-src 'self' data: blob: https:; connect-src https: data: blob: http://localhost:* http://127.0.0.1:*; worker-src blob:; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-6/X3HA6WjWpLgH7rLj00D5PsrBXfvzAb1LklfdonTs0=' https://cdn.jsdelivr.net https://unpkg.com; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com data:; img-src 'self' data: blob: https:; connect-src https: data: blob: http://localhost:* http://127.0.0.1:*; worker-src blob:; base-uri 'none'; form-action 'none'; object-src 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="description" content="PDA: Plan &amp; Design Anything. Diagram studio for business strategy, process modeling, software architecture, AI and automation.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2230%22%20height%3D%2230%22%20rx%3D%229%22%20fill%3D%22%230f6b73%22%2F%3E%3Cpath%20d%3D%22M10.5%2024.5V8.5h6.2a4.6%204.6%200%200%201%200%209.2h-6.2M16.7%2017.7h3.3a2%202%200%200%201%202%202v1.6%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222.6%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3Ccircle%20cx%3D%2222%22%20cy%3D%2224.4%22%20r%3D%222.7%22%20fill%3D%22%23ffb84d%22%2F%3E%3C%2Fsvg%3E">
@@ -678,6 +678,36 @@ button.iv-dot.on:hover{transform:scale(1.15)}
 .ai-fab:hover{filter:brightness(1.08)}
 .ai-fab:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .app[data-view=prd] .ai-fab,.app[data-view=integ] .ai-fab{display:none}
+
+/* ---- calmer shell (docs/design/tokens.md, control-inventory.md) ----
+   The tools below still exist: the ⋯ menu clicks them by id. */
+:root{--fs-xs:11px;--fs-sm:12.5px;--fs-md:14px;--fs-lg:17px;--fs-xl:28px;--r-lg:16px;--shadow-lg:0 12px 32px rgba(15,20,22,.14);--t-fast:120ms;--t-med:180ms;--ease:cubic-bezier(.2,.7,.2,1)}
+:root[data-theme=dark]{--shadow-lg:0 12px 32px rgba(0,0,0,.55)}
+@media (prefers-reduced-motion:reduce){:root{--t-fast:0ms;--t-med:0ms}}
+#btnSlides,#btnSim,#btnCheck,#btnTheme{display:none}
+.hintbar,.ai-fab,#zMini{display:none}
+#flowSel{display:none}
+#toolbar:has([data-tool=connect].on) #flowSel{display:inline-block}
+.undo{left:10px;bottom:10px}
+.zoombar{left:auto;right:10px;bottom:10px}
+.minimap{bottom:56px}
+.empty-card.door{max-width:680px;background:transparent;border:0;padding:0;gap:16px}
+.empty-card.door h2{font-size:var(--fs-xl);line-height:34px;font-weight:600;letter-spacing:-.01em}
+.empty-card.door .row{display:none}
+.empty-card.door .nv-start{display:flex;flex-direction:column;align-items:center;gap:16px;margin:0;grid-template-columns:none}
+.door-box{width:min(620px,92vw);background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow-lg);padding:12px;display:grid;gap:12px;text-align:left;pointer-events:auto}
+.door-box textarea{width:100%;min-height:64px;resize:none;border:0;outline:0;background:transparent;color:var(--ink);font:inherit;padding:8px}
+.door-row{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.chip-auto{border:1px solid var(--line);border-radius:99px;padding:3px 10px;font-size:var(--fs-sm);color:var(--muted)}
+.empty-card.door .nv-start .door-go{width:36px;height:36px;padding:0;border-radius:50%;border:0;background:var(--accent);color:var(--accent-ink);flex-direction:row;align-items:center;justify-content:center}
+.empty-card.door .nv-start .door-go .i{color:var(--accent-ink)}
+.door-goals,.door-quiet{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.empty-card.door .nv-start .door-chip{flex-direction:row;align-items:center;padding:6px 14px;border-radius:99px;font-size:var(--fs-md)}
+.door-quiet{gap:16px}
+.empty-card.door .nv-start .door-quiet button{flex-direction:row;border:0;background:transparent;padding:0;color:var(--faint);font-size:var(--fs-sm);text-decoration:underline;text-underline-offset:3px}
+.empty-card.door .nv-start button:focus-visible,.door-box textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.door-box:focus-within{border-color:var(--accent-line)}
+@media (max-width:820px){.empty-card.door h2{font-size:22px;line-height:28px}.door-quiet{flex-direction:column;align-items:center;gap:6px}}
 @media (max-width:480px){.ai-fab{top:auto;bottom:64px;right:10px;padding:0 11px}.ai-fab span{display:none}}
 /* ux2 · line toolbar, sliding labels, goal guide, intent-aware generate */
 .ebar{position:absolute;z-index:12;display:flex;align-items:center;gap:2px;padding:3px;background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow)}
@@ -830,8 +860,14 @@ svg.lab-drag,svg.lab-drag *{cursor:grabbing!important}
       <button class="tb" type="button" data-tool="hand" title="Pan the canvas (H, or hold Space)" aria-label="Pan tool"><i data-ic="hand"></i></button>
       <button class="tb" type="button" data-tool="connect" title="Connect mode: click a source, then a target (C)" aria-label="Connect tool"><i data-ic="link-2"></i></button>
       <button class="tb" type="button" data-tool="pen" title="Pen: draw freehand (P)" aria-label="Pen tool"><i data-ic="pencil"></i></button>
-      <span class="tsep"></span>
       <select class="tsel" id="flowSel" title="Line type for new connections" aria-label="Line type for new connections"><option value="auto">Auto line type</option></select>
+    </div>
+    <div class="island undo" id="undoBar" role="group" aria-label="History">
+      <button class="tb" type="button" id="tUndo" title="Undo (Ctrl+Z)" aria-label="Undo"><i data-ic="undo-2"></i></button>
+      <button class="tb" type="button" id="tRedo" title="Redo (Ctrl+Y)" aria-label="Redo"><i data-ic="redo-2"></i></button>
+    </div>
+    <!-- tools that moved into the ⋯ menu; the menu clicks these, so the ids stay -->
+    <div id="toolOverflow" hidden>
       <button class="tb" type="button" id="tLine" title="Add a free line" aria-label="Add a free line"><i data-ic="minus"></i></button>
       <button class="tb" type="button" id="tArrow" title="Add a free arrow" aria-label="Add a free arrow"><i data-ic="route"></i></button>
       <button class="tb" type="button" id="tImg" title="Sisipkan gambar (atau seret file / tempel Ctrl+V)" aria-label="Sisipkan gambar"><i data-ic="image-plus"></i></button>
@@ -840,9 +876,6 @@ svg.lab-drag,svg.lab-drag *{cursor:grabbing!important}
       <button class="tb on" type="button" id="tGrid" title="Snap to grid and alignment guides" aria-label="Snap to grid"><i data-ic="magnet"></i></button>
       <button class="tb" type="button" id="tFlow" title="Animate the flow along lines" aria-label="Animate flows"><i data-ic="play"></i></button>
       <button class="tb" type="button" id="tSketch" title="Hand-drawn sketch style (saved with the diagram)" aria-label="Sketch style"><i data-ic="brush"></i></button>
-      <span class="tsep"></span>
-      <button class="tb" type="button" id="tUndo" title="Undo (Ctrl+Z)" aria-label="Undo"><i data-ic="undo-2"></i></button>
-      <button class="tb" type="button" id="tRedo" title="Redo (Ctrl+Y)" aria-label="Redo"><i data-ic="redo-2"></i></button>
       <button class="tb" type="button" id="tLayout" title="Auto-arrange left to right (selection, or everything)" aria-label="Auto-arrange"><i data-ic="list-tree"></i></button>
       <span class="tsep"></span>
       <select class="tsel" id="tplSel" title="Open an example as a new diagram" aria-label="Open an example"><option value="">Examples…</option></select>
@@ -854,9 +887,9 @@ svg.lab-drag,svg.lab-drag *{cursor:grabbing!important}
       <button class="tb zl" type="button" id="zReset" title="Reset to 100% (Ctrl+0)">100%</button>
       <button class="tb" type="button" id="zIn" title="Zoom in (+)" aria-label="Zoom in"><i data-ic="zoom-in"></i></button>
       <button class="tb" type="button" id="zFit" title="Fit diagram to screen (Shift+1)" aria-label="Fit to screen"><i data-ic="maximize"></i></button>
-      <button class="tb on" type="button" id="zMini" title="Show minimap" aria-label="Toggle minimap"><i data-ic="map"></i></button>
+      <button class="tb" type="button" id="zMini" title="Show minimap" aria-label="Toggle minimap"><i data-ic="map"></i></button>
     </div>
-    <div class="island minimap" id="mini"><svg id="miniSvg" aria-label="Minimap" role="img"></svg></div>
+    <div class="island minimap" id="mini" hidden><svg id="miniSvg" aria-label="Minimap" role="img"></svg></div>
     <div class="hintbar" id="hint">Double-click empty canvas to add · drag a blue port to connect · Space + drag to pan · Ctrl + scroll to zoom</div>
     <div class="empty" id="empty" hidden>
       <div class="empty-card">
@@ -17627,6 +17660,1398 @@ svg.lab-drag,svg.lab-drag *{cursor:grabbing!important}
     });
   }
 
+  // src/lines/router.ts
+  var RT = {
+    deep: false,
+    timer: 0,
+    routes: {},
+    margin: 16,
+    bend: 34,
+    used: 14,
+    gap: 9,
+    soft: 520,
+    maxGrid: 4e5,
+    budget: 90,
+    memoKey: "",
+    memo: null
+  };
+  var RT_SIDES = [
+    { s: "R", nx: 1, ny: 0, d: 0 },
+    { s: "L", nx: -1, ny: 0, d: 1 },
+    { s: "B", nx: 0, ny: 1, d: 2 },
+    { s: "T", nx: 0, ny: -1, d: 3 }
+  ];
+  var RT_DX = [1, -1, 0, 0];
+  var RT_DY = [0, 0, 1, -1];
+  var RT_OPP = [1, 0, 3, 2];
+  function rtObstacle(n) {
+    var f = fam(n);
+    if (isCont(n) || isLife(n) || n.t === "u-seq-act") return false;
+    return !(f === "pool" || f === "zone" || f === "box" || f === "group" || f === "text" || f === "draw" || f === "slide" || f === "ann");
+  }
+  function rtEligible__base(e) {
+    if (!e.from || !e.to || e.from === e.to) return null;
+    if (e.route === "straight" || e.route === "curve") return null;
+    if (e.mx != null || e.my != null) return null;
+    var a = byId(e.from), b = byId(e.to);
+    if (!a || !b) return null;
+    if (isLife(a) || isLife(b) || isCont(a) || isCont(b)) return null;
+    var fa = fam(a), fb = fam(b);
+    if (TREEF[fa] || TREEF[fb] || fa === "mind" || fb === "mind") return null;
+    if (!rtObstacle(a) || !rtObstacle(b)) return null;
+    return [a, b];
+  }
+  var rtEligible = rtEligible__base;
+  function set_rtEligible(v) {
+    return rtEligible = v;
+  }
+  function rtKey(e, a, b) {
+    return [
+      a.x,
+      a.y,
+      a.w,
+      a.h,
+      b.x,
+      b.y,
+      b.w,
+      b.h,
+      e.dir || "",
+      e.fromAnchor ? e.fromAnchor.x + "," + e.fromAnchor.y : "",
+      e.toAnchor ? e.toAnchor.x + "," + e.toAnchor.y : ""
+    ].join("|");
+  }
+  function rtPorts(n, anchor) {
+    var m = RT.margin, cx = n.x + n.w / 2, cy = n.y + n.h / 2, out = [];
+    if (anchor) {
+      var px = n.x + n.w * anchor.x, py = n.y + n.h * anchor.y, dl = [Math.abs(px - (n.x + n.w)), Math.abs(px - n.x), Math.abs(py - (n.y + n.h)), Math.abs(py - n.y)], k = dl.indexOf(Math.min.apply(null, dl)), sd = RT_SIDES[k];
+      out.push({ p: { x: px, y: py }, st: { x: px + sd.nx * m, y: py + sd.ny * m }, side: sd });
+      return out;
+    }
+    RT_SIDES.forEach(function(sd2) {
+      var p = sd2.s === "R" ? { x: n.x + n.w, y: cy } : sd2.s === "L" ? { x: n.x, y: cy } : sd2.s === "B" ? { x: cx, y: n.y + n.h } : { x: cx, y: n.y };
+      if (fam(n) === "ev" || fam(n) === "gw" || shapeKind(n) !== "rect") {
+      }
+      out.push({ p, st: { x: p.x + sd2.nx * m, y: p.y + sd2.ny * m }, side: sd2 });
+    });
+    return out;
+  }
+  function rtSidePen(sd, from, to, dir) {
+    var dx = to.x - from.x, dy = to.y - from.y, L3 = Math.hypot(dx, dy) || 1, dot = (sd.nx * dx + sd.ny * dy) / L3, p = (1 - dot) * 55;
+    if (dir === "v" && sd.ny === 0) p += 90;
+    if (dir === "h" && sd.nx === 0) p += 90;
+    return p;
+  }
+  function RtHeap() {
+    this.c = [];
+    this.s = [];
+  }
+  function computeRoutes(nodes, edges) {
+    RT.routes = {};
+    if (!edges.length || nodes.length > 220 || edges.length > 320) return;
+    var todo = [];
+    edges.forEach(function(e) {
+      var ab = rtEligible(e);
+      if (ab) todo.push({ e, a: ab[0], b: ab[1] });
+    });
+    if (!todo.length) return;
+    var mk = nodes.map(function(n) {
+      return n.id + ":" + n.x + "," + n.y + "," + n.w + "," + n.h + (rtObstacle(n) ? "" : "-");
+    }).join("|") + "#" + todo.map(function(t) {
+      var e = t.e;
+      return e.id + ">" + e.from + ">" + e.to + (e.dir || "") + (e.fromAnchor ? e.fromAnchor.x + "," + e.fromAnchor.y : "") + (e.toAnchor ? e.toAnchor.x + "," + e.toAnchor.y : "");
+    }).join("|");
+    if (mk === RT.memoKey && RT.memo) {
+      RT.routes = RT.memo;
+      return;
+    }
+    var m = RT.margin, obs = nodes.filter(rtObstacle).map(function(n) {
+      return { id: n.id, x1: n.x - m, y1: n.y - m, x2: n.x + n.w + m, y2: n.y + n.h + m };
+    });
+    RT.raw = nodes.filter(rtObstacle).map(function(n) {
+      return { id: n.id, x1: n.x - 6, y1: n.y - 6, x2: n.x + n.w + 6, y2: n.y + n.h + 6 };
+    });
+    todo = todo.filter(function(t) {
+      var st = rtStraight(t.e, t.a, t.b);
+      if (st) {
+        RT.routes[t.e.id] = { key: rtKey(t.e, t.a, t.b), pts: st };
+        return false;
+      }
+      return true;
+    });
+    var XS = {}, YS = {}, addX = function(v) {
+      XS[Math.round(v * 2) / 2] = 1;
+    }, addY = function(v) {
+      YS[Math.round(v * 2) / 2] = 1;
+    };
+    obs.forEach(function(o) {
+      addX(o.x1);
+      addX(o.x2);
+      addY(o.y1);
+      addY(o.y2);
+    });
+    todo.forEach(function(t) {
+      t.pa = rtPorts(t.a, t.e.fromAnchor);
+      t.pb = rtPorts(t.b, t.e.toAnchor);
+      t.pa.concat(t.pb).forEach(function(q) {
+        q.st = { x: Math.round(q.st.x * 2) / 2, y: Math.round(q.st.y * 2) / 2 };
+        addX(q.st.x);
+        addY(q.st.y);
+      });
+    });
+    var xs = Object.keys(XS).map(Number).sort(function(a, b) {
+      return a - b;
+    }), ys = Object.keys(YS).map(Number).sort(function(a, b) {
+      return a - b;
+    }), NX = xs.length, NY = ys.length, G2 = NX * NY;
+    if (G2 > RT.maxGrid) return;
+    var xi = {}, yi = {};
+    xs.forEach(function(v, i2) {
+      xi[v] = i2;
+    });
+    ys.forEach(function(v, i2) {
+      yi[v] = i2;
+    });
+    var bad = new Uint8Array(G2), hB = new Uint8Array(G2), vB = new Uint8Array(G2), i, j, k;
+    obs.forEach(function(o) {
+      var i0 = 0;
+      while (i0 < NX && xs[i0] <= o.x1) i0++;
+      var i1 = NX - 1;
+      while (i1 >= 0 && xs[i1] >= o.x2) i1--;
+      var j0 = 0;
+      while (j0 < NY && ys[j0] <= o.y1) j0++;
+      var j1 = NY - 1;
+      while (j1 >= 0 && ys[j1] >= o.y2) j1--;
+      for (j = j0; j <= j1; j++) for (i = i0; i <= i1; i++) bad[j * NX + i] = 1;
+      for (j = j0; j <= j1; j++) for (i = 0; i < NX - 1; i++) if (xs[i] < o.x2 && xs[i + 1] > o.x1) hB[j * NX + i] = 1;
+      for (i = i0; i <= i1; i++) for (j = 0; j < NY - 1; j++) if (ys[j] < o.y2 && ys[j + 1] > o.y1) vB[j * NX + i] = 1;
+    });
+    var used = /* @__PURE__ */ new Map(), segKey = function(idx, h) {
+      return idx * 2 + (h ? 0 : 1);
+    };
+    var cost = new Float64Array(G2 * 4), prev = new Int32Array(G2 * 4), stamp = new Int32Array(G2 * 4), T0 = performance.now(), EI = 0;
+    function search(t, soft) {
+      var e = t.e, ca = { x: t.a.x + t.a.w / 2, y: t.a.y + t.a.h / 2 }, cb = { x: t.b.x + t.b.w / 2, y: t.b.y + t.b.h / 2 }, S2 = ++EI;
+      var H = new RtHeap(), tg = {}, best = Infinity, bestS = -1, bestT = null, TX2 = [], TY = [];
+      var g0 = function(s3) {
+        return stamp[s3] === S2 ? cost[s3] : Infinity;
+      }, hh = function(id2) {
+        var x = xs[id2 % NX], y = ys[id2 / NX | 0], b = Infinity;
+        for (var q = 0; q < TX2.length; q++) {
+          var v = Math.abs(x - TX2[q]) + Math.abs(y - TY[q]);
+          if (v < b) b = v;
+        }
+        return b === Infinity ? 0 : b;
+      };
+      var wall = function(id2) {
+        return bad[id2] ? soft ? RT.soft : -1 : 0;
+      };
+      t.pb.forEach(function(q) {
+        var id2 = yi[q.st.y] * NX + xi[q.st.x], w2 = wall(id2);
+        if (w2 < 0) return;
+        TX2.push(q.st.x);
+        TY.push(q.st.y);
+        (tg[id2] = tg[id2] || []).push({ q, pen: rtSidePen(q.side, cb, ca, e.dir) + w2, need: RT_OPP[q.side.d] });
+      });
+      t.pa.forEach(function(q) {
+        var id2 = yi[q.st.y] * NX + xi[q.st.x], w2 = wall(id2);
+        if (w2 < 0) return;
+        var st = id2 * 4 + q.side.d, c2 = rtSidePen(q.side, ca, cb, e.dir) + m + w2;
+        if (c2 < g0(st)) {
+          stamp[st] = S2;
+          cost[st] = c2;
+          prev[st] = -2 - t.pa.indexOf(q);
+          H.push(c2 + hh(id2), st);
+        }
+      });
+      while (H.size()) {
+        var s = H.pop(), f = H.lastCost, c = g0(s);
+        if (f >= best) break;
+        var id = s >> 2;
+        if (f > c + hh(id) + 1e-6) continue;
+        var d = s & 3, px = id % NX, py = id / NX | 0;
+        var Tg = tg[id];
+        if (Tg)
+          Tg.forEach(function(g) {
+            var fc = c + (d === g.need ? 0 : d === RT_OPP[g.need] ? 1e6 : RT.bend) + g.pen + m;
+            if (fc < best) {
+              best = fc;
+              bestS = s;
+              bestT = g;
+            }
+          });
+        for (var nd = 0; nd < 4; nd++) {
+          if (nd === RT_OPP[d]) continue;
+          var nx = px + RT_DX[nd], ny = py + RT_DY[nd];
+          if (nx < 0 || ny < 0 || nx >= NX || ny >= NY) continue;
+          var nid2 = ny * NX + nx, w = wall(nid2);
+          if (w < 0) continue;
+          var hor = nd < 2, lo = hor ? nd === 0 ? id : nid2 : nd === 2 ? id : nid2, blk = hor ? hB[lo] : vB[lo];
+          if (blk && !soft) continue;
+          var len = hor ? Math.abs(xs[nx] - xs[px]) : Math.abs(ys[ny] - ys[py]), u = used.get(segKey(lo, hor)) || 0;
+          var nc = c + len + (nd === d ? 0 : RT.bend) + u * RT.used * (1 + len / 80) + w + (blk ? RT.soft : 0), ns = nid2 * 4 + nd;
+          if (nc < g0(ns)) {
+            stamp[ns] = S2;
+            cost[ns] = nc;
+            prev[ns] = s;
+            H.push(nc + hh(nid2), ns);
+          }
+        }
+      }
+      if (bestS < 0) return false;
+      var chain = [], s2 = bestS, guard = 0, startQ = null;
+      while (s2 >= 0 && guard++ < G2 * 4) {
+        chain.push(s2 >> 2);
+        var pv = prev[s2];
+        if (pv < -1) {
+          startQ = t.pa[-2 - pv];
+          break;
+        }
+        s2 = pv;
+      }
+      chain.reverse();
+      if (!startQ) return false;
+      for (k = 1; k < chain.length; k++) {
+        var a1 = chain[k - 1], b1 = chain[k], h1 = a1 % NX !== b1 % NX, lo1 = Math.min(a1, b1);
+        used.set(segKey(lo1, h1), (used.get(segKey(lo1, h1)) || 0) + 1);
+      }
+      var pts = [startQ.p];
+      chain.forEach(function(id2) {
+        pts.push({ x: xs[id2 % NX], y: ys[id2 / NX | 0] });
+      });
+      pts.push(bestT.q.p);
+      RT.routes[e.id] = {
+        key: rtKey(e, t.a, t.b),
+        pts: rtCenterJog(rtSimplify(pts), t.a.id, t.b.id),
+        soft,
+        ia: t.a.id,
+        ib: t.b.id
+      };
+      return true;
+    }
+    var overBudget = function() {
+      return performance.now() - T0 > (RT.deep ? 4e3 : RT.budget);
+    };
+    todo.forEach(function(t) {
+      if (overBudget()) {
+        t.skip = 1;
+        return;
+      }
+      t.done = search(t, false);
+    });
+    todo.forEach(function(t) {
+      if (t.skip || t.done) return;
+      if (overBudget()) {
+        t.skip = 1;
+        return;
+      }
+      search(t, true);
+    });
+    rtNudge();
+    var unfinished = todo.some(function(t) {
+      return t.skip;
+    });
+    if (!unfinished) {
+      RT.memoKey = mk;
+      RT.memo = RT.routes;
+    } else {
+      RT.memoKey = "";
+      RT.memo = null;
+      if (!RT.deep && !RT.timer)
+        RT.timer = setTimeout(function() {
+          RT.timer = 0;
+          if (drag && drag.moved) return;
+          RT.deep = true;
+          try {
+            render();
+            renderOver();
+          } catch (err) {
+          }
+          RT.deep = false;
+        }, 60);
+    }
+  }
+  function rtSimplify(p) {
+    var o = [p[0]];
+    for (var i = 1; i < p.length; i++) {
+      var q = p[i], l = o[o.length - 1];
+      if (Math.abs(q.x - l.x) < 0.01 && Math.abs(q.y - l.y) < 0.01) continue;
+      o.push({ x: q.x, y: q.y });
+    }
+    var r = [o[0]];
+    for (i = 1; i < o.length - 1; i++) {
+      var a = r[r.length - 1], b = o[i], c = o[i + 1];
+      if (Math.abs(a.x - b.x) < 0.01 && Math.abs(b.x - c.x) < 0.01 || Math.abs(a.y - b.y) < 0.01 && Math.abs(b.y - c.y) < 0.01)
+        continue;
+      r.push(b);
+    }
+    r.push(o[o.length - 1]);
+    return r;
+  }
+  function rtNudge() {
+    var segs = [];
+    Object.keys(RT.routes).forEach(function(id) {
+      var P = RT.routes[id].pts;
+      for (var i = 1; i < P.length - 2; i++) {
+        var a = P[i], b = P[i + 1], v = Math.abs(a.x - b.x) < 0.01;
+        if (!v && Math.abs(a.y - b.y) >= 0.01) continue;
+        segs.push({
+          id,
+          i,
+          v,
+          c: v ? a.x : a.y,
+          lo: v ? Math.min(a.y, b.y) : Math.min(a.x, b.x),
+          hi: v ? Math.max(a.y, b.y) : Math.max(a.x, b.x)
+        });
+      }
+    });
+    var groups = {};
+    segs.forEach(function(s) {
+      var k = (s.v ? "v" : "h") + Math.round(s.c);
+      (groups[k] = groups[k] || []).push(s);
+    });
+    Object.keys(groups).forEach(function(k) {
+      var g = groups[k].sort(function(a, b) {
+        return a.lo - b.lo;
+      }), cl = [];
+      g.forEach(function(s) {
+        var last = cl[cl.length - 1];
+        if (last && s.lo < last.hi - 1) {
+          last.items.push(s);
+          last.hi = Math.max(last.hi, s.hi);
+        } else cl.push({ hi: s.hi, items: [s] });
+      });
+      cl.forEach(function(c) {
+        var it = c.items.filter(function(s, ix, arr) {
+          return arr.findIndex(function(o) {
+            return o.id === s.id;
+          }) === ix;
+        });
+        if (it.length < 2) return;
+        it.sort(function(a, b) {
+          return a.lo + a.hi - (b.lo + b.hi);
+        });
+        it.forEach(function(s, n) {
+          var off = (n - (it.length - 1) / 2) * RT.gap, r = RT.routes[s.id], P = r.pts, a = P[s.i], b = P[s.i + 1], ax = a.x, ay = a.y, bx = b.x, by = b.y;
+          if (s.v) {
+            a.x += off;
+            b.x += off;
+          } else {
+            a.y += off;
+            b.y += off;
+          }
+          if (!rtClear(P[s.i - 1], a, r.ia, r.ib) || !rtClear(a, b, r.ia, r.ib) || !rtClear(b, P[s.i + 2], r.ia, r.ib)) {
+            a.x = ax;
+            a.y = ay;
+            b.x = bx;
+            b.y = by;
+          }
+        });
+      });
+    });
+  }
+  var rtRoute0;
+  function rtShouldRun() {
+    return !(drag && drag.moved && (drag.kind === "move" || drag.kind === "resize"));
+  }
+  function rtClear(p, q, ia, ib) {
+    var x1 = Math.min(p.x, q.x), x2 = Math.max(p.x, q.x), y1 = Math.min(p.y, q.y), y2 = Math.max(p.y, q.y);
+    return !RT.raw.some(function(o) {
+      return o.id !== ia && o.id !== ib && x1 < o.x2 && x2 > o.x1 && y1 < o.y2 && y2 > o.y1;
+    });
+  }
+  function rtStraight(e, a, b) {
+    if (e.fromAnchor || e.toAnchor) return null;
+    var oy1 = Math.max(a.y, b.y), oy2 = Math.min(a.y + a.h, b.y + b.h), ox1 = Math.max(a.x, b.x), ox2 = Math.min(a.x + a.w, b.x + b.w), p, q, c;
+    if (e.dir !== "v" && oy2 - oy1 >= 14 && (b.x >= a.x + a.w + 12 || a.x >= b.x + b.w + 12)) {
+      c = clamp((a.y + a.h / 2 + b.y + b.h / 2) / 2, oy1 + 7, oy2 - 7);
+      var r = b.x > a.x;
+      p = { x: r ? a.x + a.w : a.x, y: c };
+      q = { x: r ? b.x : b.x + b.w, y: c };
+      if (rtClear(p, q, a.id, b.id)) return [p, q];
+    }
+    if (e.dir !== "h" && ox2 - ox1 >= 14 && (b.y >= a.y + a.h + 12 || a.y >= b.y + b.h + 12)) {
+      c = clamp((a.x + a.w / 2 + b.x + b.w / 2) / 2, ox1 + 7, ox2 - 7);
+      var d = b.y > a.y;
+      p = { x: c, y: d ? a.y + a.h : a.y };
+      q = { x: c, y: d ? b.y : b.y + b.h };
+      if (rtClear(p, q, a.id, b.id)) return [p, q];
+    }
+    return null;
+  }
+  function rtCenterJog(P, ia, ib) {
+    if (P.length !== 4) return P;
+    var h0 = Math.abs(P[0].y - P[1].y) < 0.01, h2 = Math.abs(P[2].y - P[3].y) < 0.01, v1 = Math.abs(P[1].x - P[2].x) < 0.01;
+    if (h0 && v1 && h2) {
+      var mx = (P[0].x + P[3].x) / 2, Q = [P[0], { x: mx, y: P[0].y }, { x: mx, y: P[3].y }, P[3]];
+      if (rtClear(Q[0], Q[1], ia, ib) && rtClear(Q[1], Q[2], ia, ib) && rtClear(Q[2], Q[3], ia, ib)) return Q;
+    }
+    var w0 = Math.abs(P[0].x - P[1].x) < 0.01, w2 = Math.abs(P[2].x - P[3].x) < 0.01, u1 = Math.abs(P[1].y - P[2].y) < 0.01;
+    if (w0 && u1 && w2) {
+      var my = (P[0].y + P[3].y) / 2, R = [P[0], { x: P[0].x, y: my }, { x: P[3].x, y: my }, P[3]];
+      if (rtClear(R[0], R[1], ia, ib) && rtClear(R[1], R[2], ia, ib) && rtClear(R[2], R[3], ia, ib)) return R;
+    }
+    return P;
+  }
+  function tidyLayout() {
+    var ns = S.nodes.filter(function(n) {
+      return !/^z-|^b-/.test(n.t) && !isLife(n);
+    });
+    if (ns.length < 2) {
+      toast("Belum ada cukup bentuk untuk dirapikan.");
+      return;
+    }
+    var ids = ns.map(function(n) {
+      return n.id;
+    }), keep = {};
+    ids.forEach(function(id) {
+      keep[id] = 1;
+    });
+    var lay = S.edges.filter(function(e) {
+      return keep[e.from] && keep[e.to];
+    }).map(function(e) {
+      return { from: e.from, to: e.to };
+    });
+    var x0 = Math.min.apply(
+      null,
+      ns.map(function(n) {
+        return n.x;
+      })
+    ), y0 = Math.min.apply(
+      null,
+      ns.map(function(n) {
+        return n.y;
+      })
+    );
+    var pos = layered(ids, lay, {}, S.dir || "LR", 120);
+    pushUndo();
+    ns.forEach(function(n) {
+      var q = pos[n.id];
+      if (q) {
+        n.x = snap(x0 + q.x);
+        n.y = snap(y0 + q.y);
+      }
+    });
+    S.edges.forEach(function(e) {
+      if (keep[e.from] && keep[e.to]) tidyEdge(e);
+    });
+    renderAll();
+    scheduleSave();
+    toast(ns.length + " bentuk ditata ulang. Ctrl+Z membatalkan.");
+  }
+  var rtMore0;
+  function install12() {
+    RtHeap.prototype.push = function(c, s) {
+      var C2 = this.c, S2 = this.s, i = C2.length;
+      C2.push(c);
+      S2.push(s);
+      while (i > 0) {
+        var p = i - 1 >> 1;
+        if (C2[p] <= c) break;
+        C2[i] = C2[p];
+        S2[i] = S2[p];
+        i = p;
+      }
+      C2[i] = c;
+      S2[i] = s;
+    };
+    RtHeap.prototype.pop = function() {
+      var C2 = this.c, S2 = this.s, top = S2[0], tc = C2[0], lc = C2.pop(), ls = S2.pop(), n = C2.length;
+      if (n) {
+        var i = 0;
+        while (true) {
+          var l = 2 * i + 1, r = l + 1, m = i;
+          var mc = lc;
+          if (l < n && C2[l] < mc) {
+            m = l;
+            mc = C2[l];
+          }
+          if (r < n && C2[r] < mc) {
+            m = r;
+            mc = C2[r];
+          }
+          if (m === i) break;
+          C2[i] = C2[m];
+          S2[i] = S2[m];
+          i = m;
+        }
+        C2[i] = lc;
+        S2[i] = ls;
+      }
+      this.lastCost = tc;
+      return top;
+    };
+    RtHeap.prototype.size = function() {
+      return this.c.length;
+    };
+    rtRoute0 = route;
+    set_route(function(e) {
+      var r = RT.routes[e.id];
+      if (r) {
+        var a = byId(e.from), b = byId(e.to);
+        if (a && b && e.mx == null && e.my == null && e.route !== "straight" && e.route !== "curve" && r.key === rtKey(e, a, b))
+          return r.pts.map(function(p) {
+            return { x: p.x, y: p.y };
+          });
+      }
+      return rtRoute0(e);
+    });
+    rtMore0 = nvMoreItems;
+    set_nvMoreItems(function() {
+      var L3 = rtMore0(), i = L3.findIndex(function(x) {
+        return x[0] === "tidy";
+      });
+      L3.splice(i + 1, 0, ["layout", "workflow", "Rapikan tata letak", "Susun ulang bentuk agar garis tidak bertumpuk"]);
+      return L3;
+    });
+    NV_ACTS.push([
+      "layout",
+      "Rapikan tata letak halaman ini",
+      "workflow",
+      "tata letak layout susun ulang auto arrange rapikan",
+      function() {
+        pjView("canvas");
+        tidyLayout();
+      }
+    ]);
+    document.addEventListener(
+      "click",
+      function(ev) {
+        var m = ev.target.closest && ev.target.closest("[data-nvm=layout]");
+        if (!m) return;
+        ev.stopPropagation();
+        closeMenus();
+        pjView("canvas");
+        tidyLayout();
+      },
+      true
+    );
+  }
+
+  // src/lines/labels.ts
+  var LBLQ = null;
+  var LBLOBS = null;
+  var LBLPL = null;
+  var LBLT = {};
+  var LMSEQ = 0;
+  var LBLSEG = null;
+  function segHitsRect(p, q, r) {
+    var x1 = Math.min(p.x, q.x), x2 = Math.max(p.x, q.x), y1 = Math.min(p.y, q.y), y2 = Math.max(p.y, q.y);
+    if (x2 < r.x || x1 > r.x + r.w || y2 < r.y || y1 > r.y + r.h) return false;
+    if (x1 === x2 || y1 === y2) return true;
+    for (var i = 0; i <= 10; i++) {
+      var t = i / 10, x = p.x + (q.x - p.x) * t, y = p.y + (q.y - p.y) * t;
+      if (x >= r.x && x <= r.x + r.w && y >= r.y && y <= r.y + r.h) return true;
+    }
+    return false;
+  }
+  function lblLineClash(bb, eid) {
+    if (!LBLSEG) return false;
+    for (var i = 0; i < LBLSEG.length; i++) {
+      var s = LBLSEG[i];
+      if (s.id !== eid && segHitsRect(s.p, s.q, bb)) return true;
+    }
+    return false;
+  }
+  function edgePoly__base(e, pts) {
+    if (e.route !== "curve") return pts;
+    var c = curveCtrl(e, pts), o = [];
+    for (var i = 0; i <= 24; i++) {
+      var t = i / 24, u = 1 - t;
+      o.push({
+        x: u * u * u * c[0].x + 3 * u * u * t * c[1].x + 3 * u * t * t * c[2].x + t * t * t * c[3].x,
+        y: u * u * u * c[0].y + 3 * u * u * t * c[1].y + 3 * u * t * t * c[2].y + t * t * t * c[3].y
+      });
+    }
+    return o;
+  }
+  var edgePoly = edgePoly__base;
+  function set_edgePoly(v) {
+    return edgePoly = v;
+  }
+  function lblBase(e) {
+    if (e.lt != null && isFinite(+e.lt)) return clamp(+e.lt, 0.04, 0.96);
+    var a = byId(e.from);
+    return a && fam(a) === "gw" ? 0.35 : 0.5;
+  }
+  function nearestT(poly, p) {
+    var L3 = 0, seg = [], i;
+    for (i = 1; i < poly.length; i++) {
+      var d = Math.hypot(poly[i].x - poly[i - 1].x, poly[i].y - poly[i - 1].y);
+      seg.push(d);
+      L3 += d;
+    }
+    if (!L3) return 0.5;
+    var best = 1e18, bt = 0.5, acc = 0;
+    for (i = 1; i < poly.length; i++) {
+      var a = poly[i - 1], b = poly[i], dx = b.x - a.x, dy = b.y - a.y, l2 = dx * dx + dy * dy, r = l2 ? clamp(((p.x - a.x) * dx + (p.y - a.y) * dy) / l2, 0, 1) : 0, qx = a.x + dx * r, qy = a.y + dy * r, dd = (p.x - qx) * (p.x - qx) + (p.y - qy) * (p.y - qy);
+      if (dd < best) {
+        best = dd;
+        bt = (acc + seg[i - 1] * r) / L3;
+      }
+      acc += seg[i - 1];
+    }
+    return bt;
+  }
+  function lblBox(e, poly, t) {
+    var lines2 = wrapText(e.label, 170, 11), lw = 0;
+    lines2.forEach(function(l) {
+      lw = Math.max(lw, textW(l, 11));
+    });
+    var h = lines2.length * 14 + 2, w = lw + 10, p = along(poly, t);
+    return { x: p.x - w / 2, y: p.y - h / 2, w, h, cx: p.x, cy: p.y, lines: lines2 };
+  }
+  function rectHit(a, b, m) {
+    m = m || 0;
+    return a.x < b.x + b.w + m && a.x + a.w + m > b.x && a.y < b.y + b.h + m && a.y + a.h + m > b.y;
+  }
+  var LDRAG = null;
+  function ldragEnd(ev) {
+    if (!LDRAG) return;
+    ev.stopPropagation();
+    var m = LDRAG.moved;
+    LDRAG = null;
+    svg.classList.remove("lab-drag");
+    if (m) {
+      scheduleSave();
+      renderInsp();
+    }
+    renderOver();
+  }
+  function install13() {
+    set_labelPoint(function(e, pts) {
+      var t = LBLT[e.id] != null && e.lt == null ? LBLT[e.id] : lblBase(e);
+      return along(edgePoly(e, pts), t);
+    });
+    set_drawEdge(function(e) {
+      var pts = route(e);
+      if (!pts) return "";
+      var k = EDGE[e.type] || EDGE.line, c = validColor(e.stroke) ? e.stroke : TH.ink, w = e.width || 1.5, d = edgeD(e, pts);
+      var ea = byId(e.from), eb = byId(e.to);
+      if (!validColor(e.stroke) && ea && eb && fam(ea) === "mind" && fam(eb) === "mind") {
+        c = branchColor(eb);
+        if (!e.width) w = (TREED[eb.id] || 0) <= 1 ? 2.4 : 1.6;
+      } else if (!validColor(e.stroke) && ea && eb && ea.look === "tile" && eb.look === "tile") {
+        c = TH.flow;
+        if (!e.width) w = 2;
+      }
+      var ms = k.cf ? "cf-" + (e.c1 || "only") : k.start, me = k.cf ? "cf-" + (e.c2 || "zmany") : k.end;
+      var at = ' fill="none" stroke="' + c + '" stroke-width="' + w + '" stroke-linecap="round" stroke-linejoin="round"' + (k.dash ? ' stroke-dasharray="' + k.dash + '"' : "") + (me ? ' marker-end="' + mref(me, c, w) + '"' : "") + (ms ? ' marker-start="' + mref(ms, c, w) + '"' : "");
+      var lab = "", mask = "", maskAt = "", tc = validColor(e.textColor) ? e.textColor : TH.text;
+      if (e.label) {
+        var poly = edgePoly(e, pts), B;
+        if (k.above) {
+          var vert = Math.abs(pts[pts.length - 1].x - pts[0].x) < Math.abs(pts[pts.length - 1].y - pts[0].y);
+          B = lblBox(e, poly, lblBase(e));
+          if (!vert) {
+            B.y -= B.h / 2 + 5;
+            B.cy -= B.h / 2 + 5;
+          }
+        } else {
+          var t0 = lblBase(e);
+          B = lblBox(e, poly, t0);
+          if (e.lt == null && LBLOBS) {
+            var cand = [t0, 0.5, 0.38, 0.62, 0.28, 0.72, 0.2, 0.8, 0.14, 0.86], ok = null;
+            for (var ci = 0; ci < cand.length && !ok; ci++) {
+              var bb = lblBox(e, poly, cand[ci]), clash = LBLPL.some(function(r) {
+                return rectHit(bb, r, 4);
+              }) || LBLOBS.some(function(r) {
+                return r.id !== e.from && r.id !== e.to && rectHit(bb, r, 2);
+              }) || lblLineClash({ x: bb.x - 2, y: bb.y - 2, w: bb.w + 4, h: bb.h + 4 }, e.id);
+              if (!clash) ok = [cand[ci], bb];
+            }
+            if (ok) {
+              B = ok[1];
+              LBLT[e.id] = ok[0];
+            } else delete LBLT[e.id];
+          }
+          var minx = 1e9, miny = 1e9, maxx = -1e9, maxy = -1e9;
+          poly.forEach(function(q) {
+            minx = Math.min(minx, q.x);
+            miny = Math.min(miny, q.y);
+            maxx = Math.max(maxx, q.x);
+            maxy = Math.max(maxy, q.y);
+          });
+          var mid = "lm" + ++LMSEQ + "-" + String(e.id).replace(/[^\w-]/g, "");
+          mask = '<mask id="' + mid + '" maskUnits="userSpaceOnUse" x="' + r1(minx - 60) + '" y="' + r1(miny - 60) + '" width="' + r1(maxx - minx + 120) + '" height="' + r1(maxy - miny + 120) + '"><rect x="' + r1(minx - 60) + '" y="' + r1(miny - 60) + '" width="' + r1(maxx - minx + 120) + '" height="' + r1(maxy - miny + 120) + '" fill="#fff"/><rect x="' + r1(B.x - 3) + '" y="' + r1(B.y - 2) + '" width="' + r1(B.w + 6) + '" height="' + r1(B.h + 4) + '" rx="4" fill="#000"/></mask>';
+          maskAt = ' mask="url(#' + mid + ')"';
+        }
+        if (LBLPL) LBLPL.push(B);
+        lab = '<g data-eid="' + e.id + '" data-lab="1" class="elab"><rect x="' + r1(B.x - 4) + '" y="' + r1(B.y - 3) + '" width="' + r1(B.w + 8) + '" height="' + r1(B.h + 6) + '" rx="5" fill="transparent"/>' + tblock(B.cx, B.cy, B.lines, { fs: 11, lh: 14, vcenter: 1, fill: tc }).replace(
+          "<text ",
+          '<text stroke="' + TH.paper + '" stroke-width="3.2" stroke-linejoin="round" paint-order="stroke" '
+        ) + "</g>";
+      }
+      var s = '<g data-eid="' + e.id + '">' + mask + '<path d="' + d + '" fill="none" stroke="transparent" stroke-width="16"/><path d="' + d + '"' + at + maskAt + "/>";
+      if (animate && !exporting && FLOWING[e.type])
+        s += '<path class="flowdot" d="' + d + '" fill="none" stroke="' + (validColor(e.stroke) ? e.stroke : TH.sel) + '" stroke-width="' + (w + 2.2) + '" stroke-linecap="round"' + maskAt + "/>";
+      s += "</g>";
+      if (LBLQ) {
+        if (lab) LBLQ.push(lab);
+        return s;
+      }
+      return s + lab;
+    });
+    set_drawAll(function(nodes, edges) {
+      computeTree();
+      nodes.forEach(autosize);
+      if (typeof computeRoutes === "function" && rtShouldRun())
+        try {
+          computeRoutes(nodes, edges);
+        } catch (err) {
+          RT.routes = {};
+        }
+      var back = [], zones = [], groups = [], others = [];
+      nodes.forEach(function(n) {
+        var f = fam(n);
+        (f === "pool" ? back : f === "zone" || f === "box" ? zones : f === "group" || f === "cell" || isLife(n) || n.t === "u-seq-act" ? groups : others).push(n);
+      });
+      zones.sort(function(a, b) {
+        return b.w * b.h - a.w * a.h;
+      });
+      groups.sort(function(a, b) {
+        var la = isLife(a) ? 1 : a.t === "u-seq-act" ? 2 : 0, lb = isLife(b) ? 1 : b.t === "u-seq-act" ? 2 : 0;
+        if (la !== lb) return la - lb;
+        return b.w * b.h - a.w * a.h;
+      });
+      var s = "";
+      back.concat(zones, groups).forEach(function(n) {
+        s += '<g data-id="' + n.id + '">' + drawNode(n) + "</g>";
+      });
+      LBLSEG = [];
+      edges.forEach(function(e) {
+        var P = route(e);
+        if (!P) return;
+        P = edgePoly(e, P);
+        for (var i = 1; i < P.length; i++) LBLSEG.push({ id: e.id, p: P[i - 1], q: P[i] });
+      });
+      LBLQ = [];
+      LBLPL = [];
+      LBLOBS = others.filter(function(n) {
+        return fam(n) !== "draw" && fam(n) !== "text";
+      }).map(function(n) {
+        var below = (fam(n) === "ev" || fam(n) === "gw" || fam(n) === "data") && n.label ? 18 : 0;
+        return { id: n.id, x: n.x, y: n.y, w: n.w, h: n.h + below };
+      });
+      try {
+        edges.forEach(function(e) {
+          s += drawEdge(e);
+        });
+        others.forEach(function(n) {
+          s += '<g data-id="' + n.id + '">' + drawNode(n) + "</g>";
+        });
+        s += LBLQ.join("");
+      } finally {
+        LBLQ = null;
+        LBLPL = null;
+        LBLOBS = null;
+        LBLSEG = null;
+      }
+      return s;
+    });
+    svg.addEventListener(
+      "pointerdown",
+      function(ev) {
+        if (ev.button !== 0 || tool !== "select" || spaceDown) return;
+        var lb = ev.target.closest && ev.target.closest("[data-lab]");
+        if (!lb) return;
+        var e = eById(lb.getAttribute("data-eid"));
+        if (!e) return;
+        ev.stopPropagation();
+        ev.preventDefault();
+        commitEdit();
+        if (selE !== e.id) setSel([], e.id);
+        LDRAG = { id: e.id, moved: false, sx: ev.clientX, sy: ev.clientY };
+        try {
+          svg.setPointerCapture(ev.pointerId);
+        } catch (_) {
+        }
+      },
+      true
+    );
+    svg.addEventListener(
+      "pointermove",
+      function(ev) {
+        if (!LDRAG) return;
+        ev.stopPropagation();
+        if (!LDRAG.moved && Math.hypot(ev.clientX - LDRAG.sx, ev.clientY - LDRAG.sy) < 3) return;
+        var e = eById(LDRAG.id), pts = e && route(e);
+        if (!pts) return;
+        if (!LDRAG.moved) {
+          pushUndo();
+          LDRAG.moved = true;
+          svg.classList.add("lab-drag");
+        }
+        e.lt = Math.round(clamp(nearestT(edgePoly(e, pts), pt(ev)), 0.04, 0.96) * 1e3) / 1e3;
+        render();
+        renderOver();
+      },
+      true
+    );
+    svg.addEventListener("pointerup", ldragEnd, true);
+    svg.addEventListener("pointercancel", ldragEnd, true);
+  }
+
+  // src/lines/toolbar.ts
+  var EBAR = null;
+  function ebarBuild() {
+    if (EBAR) return EBAR;
+    EBAR = document.createElement("div");
+    EBAR.className = "ebar";
+    EBAR.id = "eBar";
+    EBAR.hidden = true;
+    EBAR.setAttribute("role", "toolbar");
+    EBAR.setAttribute("aria-label", "Atur garis (Alt+L untuk fokus, panah kiri/kanan untuk berpindah)");
+    EBAR.innerHTML = '<button type="button" data-eb="route" data-v="" title="Siku (elbow)" aria-label="Garis siku">' + ic("waypoints") + '</button><button type="button" data-eb="route" data-v="straight" title="Lurus" aria-label="Garis lurus">' + ic("slash") + '</button><button type="button" data-eb="route" data-v="curve" title="Lengkung" aria-label="Garis lengkung">' + ic("spline") + '</button><span class="sep" aria-hidden="true"></span><button type="button" data-eb="label" title="Tulis / ubah label (atau klik dua kali garis)" aria-label="Ubah label">' + ic("type") + '</button><button type="button" data-eb="center" title="Label ke tengah garis" aria-label="Label ke tengah">' + ic("crosshair") + '</button><button type="button" data-eb="flip" title="Balik arah panah" aria-label="Balik arah">' + ic("arrow-left-right") + '</button><button type="button" data-eb="tidy" title="Rapikan: hapus tekukan manual" aria-label="Rapikan garis">' + ic("wand-sparkles") + '</button><span class="sep" aria-hidden="true"></span><button type="button" data-eb="del" class="danger" title="Hapus garis (Delete)" aria-label="Hapus garis">' + ic("trash-2") + "</button>";
+    stage.appendChild(EBAR);
+    EBAR.addEventListener("pointerdown", function(ev) {
+      ev.stopPropagation();
+    });
+    EBAR.addEventListener("keydown", function(ev) {
+      var bs = [].slice.call(EBAR.querySelectorAll("button:not([hidden])")), i = bs.indexOf(document.activeElement);
+      if (ev.key === "Enter" || ev.key === " ") {
+        if (i >= 0) {
+          ev.preventDefault();
+          ev.stopPropagation();
+          bs[i].click();
+          setTimeout(function() {
+            var nb = EBAR.querySelector(
+              '[data-eb="' + bs[i].getAttribute("data-eb") + '"]' + (bs[i].getAttribute("data-v") != null ? '[data-v="' + bs[i].getAttribute("data-v") + '"]' : "")
+            );
+            if (nb && !EBAR.hidden) nb.focus();
+          }, 0);
+        }
+      } else if (ev.key === "Escape") {
+        ev.stopPropagation();
+        svg.focus && svg.focus();
+        document.activeElement.blur();
+      } else if (ev.key === "ArrowRight" || ev.key === "ArrowLeft") {
+        ev.preventDefault();
+        ev.stopPropagation();
+        var n = bs[(i + (ev.key === "ArrowRight" ? 1 : -1) + bs.length) % bs.length];
+        if (n) n.focus();
+      }
+    });
+    EBAR.addEventListener("click", function(ev) {
+      var b = ev.target.closest("[data-eb]");
+      if (!b) return;
+      var e = eById(selE);
+      if (!e) return;
+      var a = b.getAttribute("data-eb");
+      if (a === "label") {
+        startEdit({ k: "e", id: e.id });
+        return;
+      }
+      if (a === "del") {
+        pushUndo();
+        S.edges = S.edges.filter(function(x) {
+          return x.id !== e.id;
+        });
+        setSel([], null);
+        renderAll();
+        scheduleSave();
+        toast("Garis dihapus. Ctrl+Z membatalkan.");
+        return;
+      }
+      pushUndo();
+      if (a === "route") {
+        var v = b.getAttribute("data-v");
+        if (v) e.route = v;
+        else delete e.route;
+        e.mx = e.my = null;
+      } else if (a === "center") {
+        delete e.lt;
+        delete LBLT[e.id];
+      } else if (a === "flip") {
+        var f = e.from;
+        e.from = e.to;
+        e.to = f;
+        var s0 = e.start;
+        e.start = e.end;
+        e.end = s0;
+        var a0 = e.fromAnchor;
+        e.fromAnchor = e.toAnchor;
+        e.toAnchor = a0;
+        ["start", "end", "fromAnchor", "toAnchor"].forEach(function(k) {
+          if (e[k] == null) delete e[k];
+        });
+        if (e.lt != null) e.lt = Math.round((1 - e.lt) * 1e3) / 1e3;
+      } else if (a === "tidy") {
+        tidyEdge(e);
+      }
+      renderAll();
+      scheduleSave();
+    });
+    return EBAR;
+  }
+  function tidyEdge__base(e) {
+    e.mx = e.my = null;
+    delete e.lt;
+    delete LBLT[e.id];
+    var a = byId(e.from), b = byId(e.to);
+    if (a && b && !isLife(a) && !isLife(b)) {
+      delete e.fromAnchor;
+      delete e.toAnchor;
+    }
+  }
+  var tidyEdge = tidyEdge__base;
+  function set_tidyEdge(v) {
+    return tidyEdge = v;
+  }
+  function tidyAllEdges() {
+    var n = 0;
+    pushUndo();
+    S.edges.forEach(function(e) {
+      if (e.mx != null || e.my != null || e.lt != null || e.fromAnchor || e.toAnchor) {
+        var a = byId(e.from), b = byId(e.to);
+        if (a && b && (isLife(a) || isLife(b))) return;
+        tidyEdge(e);
+        n++;
+      }
+    });
+    renderAll();
+    scheduleSave();
+    toast(n ? n + " garis dirapikan. Ctrl+Z membatalkan." : "Semua garis sudah rapi.");
+  }
+  function ebarSync() {
+    var el = ebarBuild(), e = selE && eById(selE), busy = drag && drag.moved || LDRAG && LDRAG.moved || PJ_VIEW !== "canvas";
+    var pts = e && !busy && route(e);
+    if (!pts || selN.length) {
+      el.hidden = true;
+      return;
+    }
+    var r = stage.getBoundingClientRect(), minx = 1e9, miny = 1e9, maxx = -1e9, maxy = -1e9;
+    edgePoly(e, pts).concat(e.wp || []).forEach(function(q) {
+      minx = Math.min(minx, q.x);
+      miny = Math.min(miny, q.y);
+      maxx = Math.max(maxx, q.x);
+      maxy = Math.max(maxy, q.y);
+    });
+    var x = ((minx + maxx) / 2 - cam.x) * cam.z, y0 = (miny - cam.y) * cam.z, y1 = (maxy - cam.y) * cam.z;
+    el.hidden = false;
+    var w = el.offsetWidth || 300, h = el.offsetHeight || 40, top = y0 - h - 26;
+    if (top < 8) top = y1 + 26;
+    if (top + h > r.height - 8) top = Math.max(8, y0 - h - 26);
+    el.style.left = Math.round(clamp(x - w / 2, 8, Math.max(8, r.width - w - 8))) + "px";
+    el.style.top = Math.round(clamp(top, 8, Math.max(8, r.height - h - 8))) + "px";
+    var cur = e.route || "";
+    [].forEach.call(el.querySelectorAll("[data-eb=route]"), function(b) {
+      var on = b.getAttribute("data-v") === cur;
+      b.classList.toggle("on", on);
+      b.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+    el.querySelector("[data-eb=center]").hidden = !(e.label && e.lt != null);
+  }
+  var ux2RenderOver0;
+  function install14() {
+    ux2RenderOver0 = renderOver;
+    set_renderOver(function() {
+      ux2RenderOver0.apply(this, arguments);
+      try {
+        ebarSync();
+      } catch (err) {
+      }
+    });
+  }
+
+  // src/editor/theme.ts
+  var THEME_PREF;
+  var ux2Resolved0;
+  function themeAttrSync() {
+    var el = document.documentElement;
+    if (THEME_PREF === "auto") return;
+    if (el.getAttribute("data-theme") !== THEME_PREF) {
+      el.setAttribute("data-theme", THEME_PREF);
+    }
+    el.setAttribute("data-rt-theme", THEME_PREF);
+  }
+  var THEME_HOST;
+  function themeIcon() {
+    return THEME_PREF === "light" ? "sun" : THEME_PREF === "dark" ? "moon" : "sun-moon";
+  }
+  function themeLabel() {
+    return THEME_PREF === "light" ? "Terang" : THEME_PREF === "dark" ? "Gelap" : "Otomatis";
+  }
+  function setThemePref(v) {
+    THEME_PREF = v === "light" || v === "dark" ? v : "auto";
+    lsSet("rancang:theme", THEME_PREF);
+    var el = document.documentElement;
+    if (THEME_PREF === "auto") {
+      el.removeAttribute("data-rt-theme");
+      if (THEME_HOST) el.setAttribute("data-theme", THEME_HOST);
+      else el.removeAttribute("data-theme");
+    } else themeAttrSync();
+    applyTheme(true);
+    themeBtnSync();
+    toast("Tema: " + themeLabel() + (THEME_PREF === "auto" ? " (ikut perangkat / claude.ai)" : ""));
+  }
+  function cycleTheme() {
+    setThemePref(THEME_PREF === "auto" ? "light" : THEME_PREF === "light" ? "dark" : "auto");
+  }
+  function themeBtnSync() {
+    var b = $("btnTheme");
+    if (!b) return;
+    b.innerHTML = ic(themeIcon());
+    b.title = "Tema: " + themeLabel() + " (klik untuk ganti)";
+    b.setAttribute("aria-label", "Ganti tema, sekarang " + themeLabel());
+  }
+  function install15() {
+    Object.assign(ICONS, {
+      sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>',
+      moon: '<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>',
+      "sun-moon": '<path d="M12 8a2.83 2.83 0 0 0 4 4 4 4 0 1 1-4-4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.9 4.9 1.4 1.4"/><path d="m17.7 17.7 1.4 1.4"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.3 17.7-1.4 1.4"/><path d="m19.1 4.9-1.4 1.4"/>'
+    });
+    THEME_PREF = /* @__PURE__ */ function(v) {
+      return v === "light" || v === "dark" ? v : "auto";
+    }(lsGet0("rancang:theme"));
+    ux2Resolved0 = resolvedTheme;
+    set_resolvedTheme(function() {
+      return THEME_PREF === "auto" ? ux2Resolved0() : THEME_PREF;
+    });
+    new MutationObserver(function() {
+      if (THEME_PREF !== "auto" && document.documentElement.getAttribute("data-theme") !== THEME_PREF) themeAttrSync();
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+    THEME_HOST = document.documentElement.getAttribute("data-theme");
+    (function() {
+      themeAttrSync();
+      try {
+        applyTheme(true);
+      } catch (e) {
+      }
+      var more = $("btnMore");
+      if (more && !$("btnTheme")) {
+        more.parentNode.insertAdjacentHTML(
+          "beforebegin",
+          '<button class="btn ibtn-top" id="btnTheme" type="button"></button>'
+        );
+        $("btnTheme").onclick = cycleTheme;
+        themeBtnSync();
+      }
+    })();
+    NV_ACTS.push(
+      [
+        "theme-l",
+        "Tema terang",
+        "sun",
+        "theme light mode putih",
+        function() {
+          setThemePref("light");
+        }
+      ],
+      [
+        "theme-d",
+        "Tema gelap",
+        "moon",
+        "theme dark mode hitam",
+        function() {
+          setThemePref("dark");
+        }
+      ],
+      [
+        "theme-a",
+        "Tema otomatis (ikut perangkat)",
+        "sun-moon",
+        "theme auto system",
+        function() {
+          setThemePref("auto");
+        }
+      ]
+    );
+  }
+
+  // src/guide/goals.ts
+  var DT_USE = {
+    usecase: "Siapa (aktor) bisa melakukan apa di sistem. Dipakai di awal, untuk menyepakati cakupan fitur.",
+    activity: "Langkah-langkah satu proses beserta percabangannya. Untuk logika alur satu fitur.",
+    sequence: "Urutan pesan antar komponen dalam SATU skenario (request → response). Untuk desain interaksi & API.",
+    class: "Struktur objek di kode: atribut, method, relasi, pewarisan. Untuk desain OOP.",
+    state: "Siklus status satu objek (draft → aktif → selesai) dan pemicunya.",
+    dfd: "Aliran data antara entitas luar, proses, dan penyimpanan. Untuk analisis SI.",
+    erd: "Tabel, kolom, kunci, dan relasi database.",
+    eventstorm: "Peristiwa domain dalam urutan waktu. Untuk menemukan batas layanan (DDD).",
+    component: "Modul software dan antarmuka di antaranya. Untuk memecah sistem jadi bagian.",
+    deploy: "Di mesin/container mana tiap artefak berjalan dan bagaimana tersambung.",
+    api: "Daftar endpoint: method, path, hak akses, request, response, error.",
+    arch: "Gambaran besar komponen sistem dan zona jaringannya.",
+    c4: "Arsitektur bertingkat: konteks → container → komponen.",
+    sysdesign: "Desain untuk skala: load balancer, cache, replika, queue, sharding, angka QPS/latensi.",
+    k8s: "Objek Kubernetes: ingress, service, deployment, config, volume.",
+    network: "Topologi jaringan fisik: router, firewall, switch, perangkat.",
+    dist: "Pola sistem terdistribusi: leader/follower, sharding, konsensus.",
+    threat: "Ancaman keamanan per aliran data (STRIDE) dan batas kepercayaan.",
+    cicd: "Jalur kode dari commit sampai produksi beserta gerbang mutunya.",
+    bpmn: "Proses bisnis lintas peran (pool/lane), keputusan, dan event.",
+    userflow: "Jalan pengguna antar layar untuk mencapai satu tujuan.",
+    wire: "Tata letak tiap layar (low-fi).",
+    sitemap: "Struktur halaman dan navigasi.",
+    journey: "Pengalaman pelanggan per tahap: aksi, perasaan, masalah.",
+    gds: "Warna, tipografi, komponen visual.",
+    n8n: "Otomasi: pemicu → langkah → aplikasi.",
+    agent: "Agen AI berbasis graf dengan node dan rute kondisi.",
+    rag: "Pipeline tanya-jawab dokumen: ingest → retrieve → generate.",
+    multi: "Beberapa agen AI bekerja sama.",
+    mlpipe: "Siklus model ML dari data sampai produksi.",
+    mind: "Peta ide bercabang dari satu topik.",
+    board: "Papan bebas untuk brainstorming.",
+    deck: "Slide presentasi / pitch deck."
+  };
+  var GOALS = [
+    {
+      id: "app",
+      ic: "code-xml",
+      n: "Merancang aplikasi (tugas besar / produk)",
+      q: "Mulai dari kebutuhan sampai layar dan database.",
+      dts: ["usecase", "activity", "erd", "class", "sequence", "api", "sitemap", "wire", "arch"],
+      prd: 1
+    },
+    {
+      id: "sysd",
+      ic: "network",
+      n: "System design (skala & performa)",
+      q: "Cache, load balancer, replika, queue, angka QPS.",
+      dts: ["sysdesign", "sequence", "deploy", "erd", "threat"]
+    },
+    {
+      id: "arch",
+      ic: "server",
+      n: "Arsitektur & deployment",
+      q: "Komponen sistem, tempat berjalan, dan jalur rilis.",
+      dts: ["arch", "c4", "component", "deploy", "k8s", "cicd", "network"]
+    },
+    {
+      id: "data",
+      ic: "database",
+      n: "Desain database",
+      q: "Tabel, relasi, dan aliran data.",
+      dts: ["erd", "class", "dfd"]
+    },
+    {
+      id: "api",
+      ic: "plug-zap",
+      n: "API & integrasi",
+      q: "Endpoint, urutan panggilan, dan modul yang terlibat.",
+      dts: ["api", "sequence", "component", "state"]
+    },
+    {
+      id: "sec",
+      ic: "shield-alert",
+      n: "Keamanan",
+      q: "Ancaman, alur login, dan siklus session.",
+      dts: ["threat", "sequence", "state"]
+    },
+    {
+      id: "biz",
+      ic: "briefcase",
+      n: "Proses bisnis & sistem informasi",
+      q: "Siapa melakukan apa, data mengalir ke mana.",
+      dts: ["bpmn", "dfd", "vc", "swot", "bmc"]
+    },
+    {
+      id: "ux",
+      ic: "layout-template",
+      n: "Riset UX & antarmuka",
+      q: "Pengguna, perjalanannya, dan layarnya.",
+      dts: ["persona", "empathy", "journey", "userflow", "sitemap", "wire", "gds"]
+    },
+    {
+      id: "ai",
+      ic: "sparkles",
+      n: "Sistem AI & otomasi",
+      q: "Agen, RAG, workflow otomatis, pipeline ML.",
+      dts: ["rag", "agent", "multi", "n8n", "mlpipe"]
+    },
+    {
+      id: "pm",
+      ic: "flag",
+      n: "Rencana & manajemen proyek",
+      q: "Jadwal, tugas, peran, risiko.",
+      dts: ["gantt", "kanban", "raci", "risk", "okr"]
+    },
+    {
+      id: "strat",
+      ic: "target",
+      n: "Strategi bisnis",
+      q: "Model bisnis, posisi, dan peluang.",
+      dts: ["bmc", "lean", "swot", "pestel", "ff", "vpc"]
+    },
+    { id: "pitch", ic: "monitor", n: "Pitch & presentasi", q: "Slide untuk lomba atau investor.", dts: ["deck"] }
+  ];
+  function dtUse(k) {
+    return DT_USE[k] || String(DT[k] && DT[k].hint || "").split(". ")[0];
+  }
+  function guideOpen() {
+    var m = $("mGuide");
+    if (!m) {
+      $("scrim").insertAdjacentHTML(
+        "beforeend",
+        '<div class="modal wide" id="mGuide" role="dialog" aria-modal="true" aria-labelledby="mGuideT" hidden><header>' + ic("target") + '<h2 id="mGuideT">Mau merancang apa?</h2><button class="ibtn" type="button" data-close aria-label="Tutup">' + ic("x") + '</button></header><div class="mb"><p class="note">Pilih tujuanmu. Urutan diagram di tiap kartu adalah urutan yang disarankan, dari gambaran besar ke detail. Klik satu diagram untuk membukanya, atau <b>Pakai set ini</b> agar semuanya muncul sebagai saran di navigasi.</p><div class="gd-grid" id="gdGrid"></div></div></div>'
+      );
+      m = $("mGuide");
+      if (MODALS.indexOf("mGuide") < 0) MODALS.push("mGuide");
+      m.addEventListener("click", function(ev) {
+        var d = ev.target.closest("[data-gdt]");
+        if (d) {
+          closeModal();
+          pjSwitch(d.getAttribute("data-gdt"));
+          return;
+        }
+        var u = ev.target.closest("[data-gset]");
+        if (u) {
+          var g = GOALS.filter(function(x) {
+            return x.id === u.getAttribute("data-gset");
+          })[0];
+          if (!g) return;
+          PROJ.plan = g.dts.slice();
+          scheduleSave();
+          closeModal();
+          if (g.prd && !PROJ.prd.trim()) {
+            pjView("prd");
+          } else pjSwitch(g.dts[0]);
+          renderChips();
+          toast("Set “" + g.n + "” dipakai: " + g.dts.length + " halaman muncul sebagai saran di tiap bagian.");
+        }
+      });
+    }
+    $("gdGrid").innerHTML = GOALS.map(function(g) {
+      return '<section class="gd-card"><h3>' + ic(g.ic) + "<span>" + esc(g.n) + "</span></h3><p>" + esc(g.q) + "</p><ol>" + g.dts.map(function(k) {
+        var f = pjFilled(k);
+        return '<li><button type="button" data-gdt="' + k + '" title="' + esc(dtUse(k)) + '">' + ic(DT_ICON[k] || "layout-grid") + "<b>" + esc(DT[k].n) + (f ? "<em>ada isi</em>" : "") + "</b><small>" + esc(dtUse(k)) + "</small></button></li>";
+      }).join("") + '</ol><button type="button" class="btn" data-gset="' + g.id + '">' + ic("list-checks") + "Pakai set ini" + (g.prd ? " (mulai dari PRD)" : "") + "</button></section>";
+    }).join("");
+    openModal("mGuide");
+  }
+  var ux2RenderChips0;
+  var ux2PickRender0;
+  var ux2Empty0;
+  var ux2MoreItems0;
+  function install16() {
+    GOALS.forEach(function(g) {
+      g.dts = g.dts.filter(function(k) {
+        return DT[k];
+      });
+    });
+    ux2RenderChips0 = renderChips;
+    set_renderChips(function() {
+      ux2RenderChips0();
+      var plan = PROJ && PROJ.plan || [];
+      if (!plan.length) return;
+      var dt = dtOf(), ws = uiWs || DT[dt].ws, box = $("dtChips"), have = {};
+      [].forEach.call(box.querySelectorAll("[data-dt]"), function(b) {
+        have[b.getAttribute("data-dt")] = 1;
+      });
+      var add = plan.filter(function(k) {
+        return DT[k] && DT[k].ws === ws && !have[k];
+      });
+      if (!add.length) return;
+      var html = add.map(function(k) {
+        return '<button type="button" class="dt-chip sug plan" data-dt="' + k + '" aria-pressed="false" title="Direncanakan: ' + esc(dtUse(k)) + '">' + ic(DT_ICON[k] || "layout-grid") + "<span>" + esc(DT[k].n) + "</span></button>";
+      }).join("");
+      var more = $("nvMore");
+      if (more)
+        more.insertAdjacentHTML(
+          "beforebegin",
+          (box.querySelector(".nv-sep") ? "" : '<span class="nv-sep" aria-hidden="true"></span>') + html
+        );
+    });
+    ux2PickRender0 = nvPickRender;
+    set_nvPickRender(function() {
+      ux2PickRender0();
+      [].forEach.call($("nvPickBody").querySelectorAll(".nv-card[data-dt]"), function(c) {
+        var sm = c.querySelector("small");
+        if (sm) sm.textContent = dtUse(c.getAttribute("data-dt"));
+      });
+      var b = $("nvPickBody");
+      if (!$("nvPickQ").value)
+        b.insertAdjacentHTML(
+          "afterbegin",
+          '<button type="button" class="nv-goal" data-nvs="goal">' + ic("target") + "<span><b>Bingung pilih yang mana?</b><small>Pilih berdasarkan tujuan: aplikasi, system design, database, API, keamanan, UX…</small></span>" + ic("chevron-right") + "</button>"
+        );
+    });
+    ux2Empty0 = renderEmpty;
+    set_renderEmpty(function() {
+      ux2Empty0();
+      var box = $("nvStart");
+      if (box && !box.hidden && !box.querySelector("[data-nvs=goal]"))
+        box.insertAdjacentHTML(
+          "afterbegin",
+          '<button type="button" data-nvs="goal" class="nv-start-goal">' + ic("target") + "<b>Mau merancang apa?</b><small>Pilih tujuan, PDA menyusun diagram yang tepat dan urutannya</small></button>"
+        );
+    });
+    document.addEventListener(
+      "click",
+      function(ev) {
+        var g = ev.target.closest && ev.target.closest("[data-nvs=goal]");
+        if (g) {
+          ev.stopPropagation();
+          ev.preventDefault();
+          if (typeof nvPickClose === "function") nvPickClose();
+          guideOpen();
+          return;
+        }
+        var m = ev.target.closest && ev.target.closest("[data-nvm]");
+        if (!m) return;
+        var a = m.getAttribute("data-nvm"), fn = {
+          theme: function() {
+            cycleTheme();
+          },
+          font: toggleCanvasFont,
+          tidy: function() {
+            pjView("canvas");
+            tidyAllEdges();
+          },
+          guide: guideOpen
+        }[a];
+        if (fn) {
+          ev.stopPropagation();
+          closeMenus();
+          fn();
+        }
+      },
+      true
+    );
+    ux2MoreItems0 = nvMoreItems;
+    set_nvMoreItems(function() {
+      var L3 = ux2MoreItems0(), i = L3.indexOf("-");
+      var extra = [
+        ["guide", "target", "Mau merancang apa?", "Panduan diagram per tujuan"],
+        "-",
+        [
+          "theme",
+          themeIcon(),
+          "Tema: " + themeLabel(),
+          "Klik: " + (THEME_PREF === "auto" ? "Terang" : THEME_PREF === "light" ? "Gelap" : "Otomatis")
+        ],
+        [
+          "font",
+          "type",
+          CANVAS_FONT === "excali" ? "Font kanvas: Normal" : "Font kanvas: Excalifont",
+          "Sekarang: " + (CANVAS_FONT === "excali" ? "Excalifont" : "Normal")
+        ],
+        ["tidy", "wand-sparkles", "Rapikan semua garis", "Hapus tekukan & posisi label manual"]
+      ];
+      return L3.slice(0, i + 1).concat(extra, L3.slice(i));
+    });
+    NV_ACTS.push(
+      [
+        "guide",
+        "Mau merancang apa? (panduan diagram per tujuan)",
+        "target",
+        "tujuan panduan pilih diagram rekomendasi",
+        guideOpen
+      ],
+      ["font", "Ganti font kanvas (Excalifont / Normal)", "type", "font huruf excalidraw tulisan", toggleCanvasFont],
+      [
+        "tidy",
+        "Rapikan semua garis di halaman ini",
+        "wand-sparkles",
+        "garis rapikan tekukan label reset",
+        function() {
+          pjView("canvas");
+          tidyAllEdges();
+        }
+      ]
+    );
+  }
+
   // src/editor/navigation.ts
   var NV_MENU_CUR = null;
   function nvPickOpen() {
@@ -18126,6 +19551,27 @@ svg.lab-drag,svg.lab-drag *{cursor:grabbing!important}
       ["set", "plug", "Pengaturan model & API key", "Sekarang: " + prov]
     ];
   }
+  function byId2(id) {
+    return function() {
+      $(id).click();
+    };
+  }
+  function doorRun() {
+    var t = $("doorText").value.trim();
+    if (!t) return $("doorText").focus();
+    if (!aiReady())
+      return toast(
+        L(
+          "Connect an AI model first (AI menu), or pick a goal below.",
+          "Hubungkan model AI dulu lewat menu AI, atau pilih tujuan di bawah."
+        )
+      );
+    $("btnGen").click();
+    $("genText").value = t;
+    setTimeout(function() {
+      if (!$("genGo").disabled) $("genGo").click();
+    }, 700);
+  }
   function nvMoreItems__base() {
     return [
       ["cmd", "search", "Cari & lompat…", "Ctrl + K"],
@@ -18140,6 +19586,16 @@ svg.lab-drag,svg.lab-drag *{cursor:grabbing!important}
       ["sketch", "pen-line", S.style === "sketch" ? "Gaya bersih" : "Gaya sketsa", "Disimpan bersama proyek"],
       ["legend", "info", "Sisipkan legenda", "Arti garis dan simbol"],
       "-",
+      // tools moved out of the canvas toolbar and top bar; each clicks the original control
+      ["slides", "monitor", L("Slides", "Slide"), L("16:9 frame for presenting", "Bingkai 16:9 untuk presentasi")],
+      ["image", "image-plus", L("Insert image", "Sisipkan gambar"), ""],
+      ["line", "minus", L("Free line", "Garis bebas"), ""],
+      ["arrow", "route", L("Free arrow", "Panah bebas"), ""],
+      ["autoc", "wand-sparkles", L("Auto-connect", "Hubungkan otomatis"), ""],
+      ["snap", "magnet", L("Snap to grid", "Tempel ke grid"), ""],
+      ["flow", "play", L("Animate flows", "Animasikan alur"), ""],
+      ["mini", "map", L("Minimap", "Peta mini"), ""],
+      "-",
       ["keys", "keyboard", "Pintasan keyboard", ""]
     ];
   }
@@ -18148,7 +19604,7 @@ svg.lab-drag,svg.lab-drag *{cursor:grabbing!important}
     return nvMoreItems = v;
   }
   var nvEmpty0;
-  function install12() {
+  function install17() {
     set_renderChips(function() {
       var dt = dtOf(), ws = uiWs || DT[dt].ws, all = Object.keys(DT).filter(function(k) {
         return DT[k].ws === ws;
@@ -18201,14 +19657,32 @@ svg.lab-drag,svg.lab-drag *{cursor:grabbing!important}
           box.className = "nv-start";
           card.appendChild(box);
         }
-        $("emptyT").textContent = "Mulai proyek";
-        $("emptyP").textContent = "Satu proyek menyatukan PRD, diagram bisnis, software, sistem, AI, dan UX. Pilih cara mulai:";
-        box.innerHTML = '<button type="button" data-nvs="prd">' + ic("file-text") + '<b>Dari PRD</b><small>Tulis atau impor .md, lalu bangun semua kanvas sekaligus</small></button><button type="button" data-nvs="pick">' + ic("layout-grid") + "<b>Pilih jenis diagram</b><small>" + Object.keys(DT).length + ' jenis: BPMN, ERD, SWOT, System Design…</small></button><button type="button" data-nvs="ex">' + ic("sparkles") + "<b>Lihat contoh</b><small>Buka contoh lengkap untuk dipelajari</small></button>";
+        var kept = $("doorText") ? $("doorText").value : "";
+        $("emptyT").textContent = L("What do you want to design?", "Mau merancang apa?");
+        $("emptyP").textContent = L(
+          "Describe it in a sentence, or pick a starting point.",
+          "Jelaskan dalam satu kalimat, atau pilih titik awal."
+        );
+        var goals = [
+          ["app", L("An app", "Aplikasi")],
+          ["biz", L("A business process", "Proses bisnis")],
+          ["arch", L("Cloud infrastructure", "Infrastruktur cloud")],
+          ["ai", L("An AI agent", "Agen AI")]
+        ];
+        box.innerHTML = '<div class="door-box"><textarea id="doorText" rows="2" aria-label="' + esc(L("Describe what you want to design", "Jelaskan yang mau dirancang")) + '" placeholder="' + esc(
+          L(
+            "e.g. A cafe ordering app with cashier, kitchen and stock…",
+            "mis. Aplikasi pemesanan kafe dengan kasir, dapur, dan stok…"
+          )
+        ) + '"></textarea><div class="door-row"><span class="chip-auto">' + L("Auto: picks the right diagram", "Otomatis: memilih diagram yang tepat") + '</span><button type="button" class="door-go" id="doorGo" aria-label="' + esc(L("Create with AI", "Buat dengan AI")) + '">' + ic("chevron-right") + '</button></div></div><div class="door-goals">' + goals.map(function(g) {
+          return '<button type="button" class="door-chip" data-door="' + g[0] + '">' + esc(g[1]) + "</button>";
+        }).join("") + '</div><div class="door-quiet"><button type="button" data-nvs="prd">' + L("Paste a PRD", "Tempel PRD") + '</button><button type="button" data-nvs="ex">' + L("Open an example", "Buka contoh") + '</button><button type="button" data-nvs="pick">' + L("All " + Object.keys(DT).length + " diagram types", "Semua " + Object.keys(DT).length + " jenis diagram") + '</button><button type="button" data-nvs="goal">' + L("More goals", "Tujuan lain") + "</button></div>";
+        if (kept) $("doorText").value = kept;
         box.hidden = false;
-        card.classList.add("wide");
+        card.classList.add("door");
       } else if (box) {
         box.hidden = true;
-        card.classList.remove("wide");
+        card.classList.remove("wide", "door");
       }
     });
     (function nvInit() {
@@ -18302,7 +19776,15 @@ svg.lab-drag,svg.lab-drag *{cursor:grabbing!important}
             },
             keys: function() {
               openModal("mKeys");
-            }
+            },
+            slides: byId2("btnSlides"),
+            image: byId2("tImg"),
+            line: byId2("tLine"),
+            arrow: byId2("tArrow"),
+            autoc: byId2("tAuto"),
+            snap: byId2("tGrid"),
+            flow: byId2("tFlow"),
+            mini: byId2("zMini")
           })[a]();
           return;
         }
@@ -18326,6 +19808,17 @@ svg.lab-drag,svg.lab-drag *{cursor:grabbing!important}
           return;
         }
         if (!$("nvPick").hidden && !ev.target.closest("#nvPick")) nvPickClose();
+        var dg = ev.target.closest("[data-door]");
+        if (dg) {
+          guideOpen();
+          var gu = $("mGuide").querySelector('[data-gset="' + dg.getAttribute("data-door") + '"]');
+          if (gu) gu.click();
+          return;
+        }
+        if (ev.target.closest("#doorGo")) {
+          doorRun();
+          return;
+        }
         var st = ev.target.closest("[data-nvs]");
         if (st) {
           var v = st.getAttribute("data-nvs");
@@ -18338,6 +19831,13 @@ svg.lab-drag,svg.lab-drag *{cursor:grabbing!important}
         }
       });
       $("nvPickX").onclick = nvPickClose;
+      document.addEventListener("keydown", function(ev) {
+        var t = ev.target;
+        if (t && t.id === "doorText" && ev.key === "Enter" && !ev.shiftKey) {
+          ev.preventDefault();
+          doorRun();
+        }
+      });
       $("nvPickQ").addEventListener("input", nvPickRender);
       $("nvPickQ").addEventListener("keydown", function(ev) {
         if (ev.key === "Escape") {
@@ -18478,7 +19978,7 @@ svg.lab-drag,svg.lab-drag *{cursor:grabbing!important}
   }
   var LABEL = { en: "English", id: "Bahasa Indonesia" };
   var langMore0;
-  function install13() {
+  function install18() {
     document.documentElement.lang = LANG;
     langMore0 = nvMoreItems;
     set_nvMoreItems(function() {
@@ -20088,7 +21588,7 @@ svg.lab-drag,svg.lab-drag *{cursor:grabbing!important}
       });
     });
   }
-  function install14() {
+  function install19() {
     (function i18nInit() {
       var root = document.body, busy = false, pend = false;
       function run() {
@@ -21403,7 +22903,7 @@ svg.lab-drag,svg.lab-drag *{cursor:grabbing!important}
   function set_closeMenus(v) {
     return closeMenus = v;
   }
-  function install15() {
+  function install20() {
     svg = $("svg");
     stage = $("stage");
     content = $("content");
@@ -22780,7 +24280,7 @@ svg.lab-drag,svg.lab-drag *{cursor:grabbing!important}
   function set_animate(v) {
     return animate = v;
   }
-  var showMini = true;
+  var showMini = false;
   function set_showMini(v) {
     return showMini = v;
   }
@@ -23478,7 +24978,7 @@ svg.lab-drag,svg.lab-drag *{cursor:grabbing!important}
   function set_drawAll(v) {
     return drawAll = v;
   }
-  function install16() {
+  function install21() {
     mctx = document.createElement("canvas").getContext("2d");
     CALM = lsGet0("rancang:calm") === "1";
     (function() {
@@ -23692,7 +25192,7 @@ svg.lab-drag,svg.lab-drag *{cursor:grabbing!important}
     var svg2 = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect x="4" y="4" width="92" height="92" rx="22" fill="' + m[1] + '"/><text x="50" y="52" dominant-baseline="central" text-anchor="middle" font-family="system-ui,Segoe UI,Roboto,Arial,sans-serif" font-weight="700" font-size="' + fs + '" fill="' + fg + '">' + esc(m[0]) + "</text></svg>";
     return TSI_URI[key] = { name, data: "data:image/svg+xml;base64," + btoa(svg2), builtin: 1 };
   }
-  function install17() {
+  function install22() {
     TECH_EXTRA.forEach(function(x) {
       var k = "c-" + techKey(x[1]);
       if (T[k]) return;
@@ -23894,7 +25394,7 @@ svg.lab-drag,svg.lab-drag *{cursor:grabbing!important}
     };
   }
   var lsAiRefresh0;
-  function install18() {
+  function install23() {
     (function() {
       var foot = document.querySelector("#mLlm .mb");
       if (foot)
@@ -25230,7 +26730,7 @@ svg.lab-drag,svg.lab-drag *{cursor:grabbing!important}
       }
     };
   }
-  function install19() {
+  function install24() {
     WS.splice(1, 0, { id: "plan", n: "Manajemen & Riset", icon: "flag" });
     WS_BY.plan = WS[1];
     SEC["fw-plan"] = { n: "Insert framework", keys: [] };
@@ -25740,1002 +27240,9 @@ svg.lab-drag,svg.lab-drag *{cursor:grabbing!important}
     };
   }
 
-  // src/lines/toolbar.ts
-  var EBAR = null;
-  function ebarBuild() {
-    if (EBAR) return EBAR;
-    EBAR = document.createElement("div");
-    EBAR.className = "ebar";
-    EBAR.id = "eBar";
-    EBAR.hidden = true;
-    EBAR.setAttribute("role", "toolbar");
-    EBAR.setAttribute("aria-label", "Atur garis (Alt+L untuk fokus, panah kiri/kanan untuk berpindah)");
-    EBAR.innerHTML = '<button type="button" data-eb="route" data-v="" title="Siku (elbow)" aria-label="Garis siku">' + ic("waypoints") + '</button><button type="button" data-eb="route" data-v="straight" title="Lurus" aria-label="Garis lurus">' + ic("slash") + '</button><button type="button" data-eb="route" data-v="curve" title="Lengkung" aria-label="Garis lengkung">' + ic("spline") + '</button><span class="sep" aria-hidden="true"></span><button type="button" data-eb="label" title="Tulis / ubah label (atau klik dua kali garis)" aria-label="Ubah label">' + ic("type") + '</button><button type="button" data-eb="center" title="Label ke tengah garis" aria-label="Label ke tengah">' + ic("crosshair") + '</button><button type="button" data-eb="flip" title="Balik arah panah" aria-label="Balik arah">' + ic("arrow-left-right") + '</button><button type="button" data-eb="tidy" title="Rapikan: hapus tekukan manual" aria-label="Rapikan garis">' + ic("wand-sparkles") + '</button><span class="sep" aria-hidden="true"></span><button type="button" data-eb="del" class="danger" title="Hapus garis (Delete)" aria-label="Hapus garis">' + ic("trash-2") + "</button>";
-    stage.appendChild(EBAR);
-    EBAR.addEventListener("pointerdown", function(ev) {
-      ev.stopPropagation();
-    });
-    EBAR.addEventListener("keydown", function(ev) {
-      var bs = [].slice.call(EBAR.querySelectorAll("button:not([hidden])")), i = bs.indexOf(document.activeElement);
-      if (ev.key === "Enter" || ev.key === " ") {
-        if (i >= 0) {
-          ev.preventDefault();
-          ev.stopPropagation();
-          bs[i].click();
-          setTimeout(function() {
-            var nb = EBAR.querySelector(
-              '[data-eb="' + bs[i].getAttribute("data-eb") + '"]' + (bs[i].getAttribute("data-v") != null ? '[data-v="' + bs[i].getAttribute("data-v") + '"]' : "")
-            );
-            if (nb && !EBAR.hidden) nb.focus();
-          }, 0);
-        }
-      } else if (ev.key === "Escape") {
-        ev.stopPropagation();
-        svg.focus && svg.focus();
-        document.activeElement.blur();
-      } else if (ev.key === "ArrowRight" || ev.key === "ArrowLeft") {
-        ev.preventDefault();
-        ev.stopPropagation();
-        var n = bs[(i + (ev.key === "ArrowRight" ? 1 : -1) + bs.length) % bs.length];
-        if (n) n.focus();
-      }
-    });
-    EBAR.addEventListener("click", function(ev) {
-      var b = ev.target.closest("[data-eb]");
-      if (!b) return;
-      var e = eById(selE);
-      if (!e) return;
-      var a = b.getAttribute("data-eb");
-      if (a === "label") {
-        startEdit({ k: "e", id: e.id });
-        return;
-      }
-      if (a === "del") {
-        pushUndo();
-        S.edges = S.edges.filter(function(x) {
-          return x.id !== e.id;
-        });
-        setSel([], null);
-        renderAll();
-        scheduleSave();
-        toast("Garis dihapus. Ctrl+Z membatalkan.");
-        return;
-      }
-      pushUndo();
-      if (a === "route") {
-        var v = b.getAttribute("data-v");
-        if (v) e.route = v;
-        else delete e.route;
-        e.mx = e.my = null;
-      } else if (a === "center") {
-        delete e.lt;
-        delete LBLT[e.id];
-      } else if (a === "flip") {
-        var f = e.from;
-        e.from = e.to;
-        e.to = f;
-        var s0 = e.start;
-        e.start = e.end;
-        e.end = s0;
-        var a0 = e.fromAnchor;
-        e.fromAnchor = e.toAnchor;
-        e.toAnchor = a0;
-        ["start", "end", "fromAnchor", "toAnchor"].forEach(function(k) {
-          if (e[k] == null) delete e[k];
-        });
-        if (e.lt != null) e.lt = Math.round((1 - e.lt) * 1e3) / 1e3;
-      } else if (a === "tidy") {
-        tidyEdge(e);
-      }
-      renderAll();
-      scheduleSave();
-    });
-    return EBAR;
-  }
-  function tidyEdge__base(e) {
-    e.mx = e.my = null;
-    delete e.lt;
-    delete LBLT[e.id];
-    var a = byId(e.from), b = byId(e.to);
-    if (a && b && !isLife(a) && !isLife(b)) {
-      delete e.fromAnchor;
-      delete e.toAnchor;
-    }
-  }
-  var tidyEdge = tidyEdge__base;
-  function set_tidyEdge(v) {
-    return tidyEdge = v;
-  }
-  function tidyAllEdges() {
-    var n = 0;
-    pushUndo();
-    S.edges.forEach(function(e) {
-      if (e.mx != null || e.my != null || e.lt != null || e.fromAnchor || e.toAnchor) {
-        var a = byId(e.from), b = byId(e.to);
-        if (a && b && (isLife(a) || isLife(b))) return;
-        tidyEdge(e);
-        n++;
-      }
-    });
-    renderAll();
-    scheduleSave();
-    toast(n ? n + " garis dirapikan. Ctrl+Z membatalkan." : "Semua garis sudah rapi.");
-  }
-  function ebarSync() {
-    var el = ebarBuild(), e = selE && eById(selE), busy = drag && drag.moved || LDRAG && LDRAG.moved || PJ_VIEW !== "canvas";
-    var pts = e && !busy && route(e);
-    if (!pts || selN.length) {
-      el.hidden = true;
-      return;
-    }
-    var r = stage.getBoundingClientRect(), minx = 1e9, miny = 1e9, maxx = -1e9, maxy = -1e9;
-    edgePoly(e, pts).concat(e.wp || []).forEach(function(q) {
-      minx = Math.min(minx, q.x);
-      miny = Math.min(miny, q.y);
-      maxx = Math.max(maxx, q.x);
-      maxy = Math.max(maxy, q.y);
-    });
-    var x = ((minx + maxx) / 2 - cam.x) * cam.z, y0 = (miny - cam.y) * cam.z, y1 = (maxy - cam.y) * cam.z;
-    el.hidden = false;
-    var w = el.offsetWidth || 300, h = el.offsetHeight || 40, top = y0 - h - 26;
-    if (top < 8) top = y1 + 26;
-    if (top + h > r.height - 8) top = Math.max(8, y0 - h - 26);
-    el.style.left = Math.round(clamp(x - w / 2, 8, Math.max(8, r.width - w - 8))) + "px";
-    el.style.top = Math.round(clamp(top, 8, Math.max(8, r.height - h - 8))) + "px";
-    var cur = e.route || "";
-    [].forEach.call(el.querySelectorAll("[data-eb=route]"), function(b) {
-      var on = b.getAttribute("data-v") === cur;
-      b.classList.toggle("on", on);
-      b.setAttribute("aria-pressed", on ? "true" : "false");
-    });
-    el.querySelector("[data-eb=center]").hidden = !(e.label && e.lt != null);
-  }
-  var ux2RenderOver0;
-  function install20() {
-    ux2RenderOver0 = renderOver;
-    set_renderOver(function() {
-      ux2RenderOver0.apply(this, arguments);
-      try {
-        ebarSync();
-      } catch (err) {
-      }
-    });
-  }
-
-  // src/lines/router.ts
-  var RT = {
-    deep: false,
-    timer: 0,
-    routes: {},
-    margin: 16,
-    bend: 34,
-    used: 14,
-    gap: 9,
-    soft: 520,
-    maxGrid: 4e5,
-    budget: 90,
-    memoKey: "",
-    memo: null
-  };
-  var RT_SIDES = [
-    { s: "R", nx: 1, ny: 0, d: 0 },
-    { s: "L", nx: -1, ny: 0, d: 1 },
-    { s: "B", nx: 0, ny: 1, d: 2 },
-    { s: "T", nx: 0, ny: -1, d: 3 }
-  ];
-  var RT_DX = [1, -1, 0, 0];
-  var RT_DY = [0, 0, 1, -1];
-  var RT_OPP = [1, 0, 3, 2];
-  function rtObstacle(n) {
-    var f = fam(n);
-    if (isCont(n) || isLife(n) || n.t === "u-seq-act") return false;
-    return !(f === "pool" || f === "zone" || f === "box" || f === "group" || f === "text" || f === "draw" || f === "slide" || f === "ann");
-  }
-  function rtEligible__base(e) {
-    if (!e.from || !e.to || e.from === e.to) return null;
-    if (e.route === "straight" || e.route === "curve") return null;
-    if (e.mx != null || e.my != null) return null;
-    var a = byId(e.from), b = byId(e.to);
-    if (!a || !b) return null;
-    if (isLife(a) || isLife(b) || isCont(a) || isCont(b)) return null;
-    var fa = fam(a), fb = fam(b);
-    if (TREEF[fa] || TREEF[fb] || fa === "mind" || fb === "mind") return null;
-    if (!rtObstacle(a) || !rtObstacle(b)) return null;
-    return [a, b];
-  }
-  var rtEligible = rtEligible__base;
-  function set_rtEligible(v) {
-    return rtEligible = v;
-  }
-  function rtKey(e, a, b) {
-    return [
-      a.x,
-      a.y,
-      a.w,
-      a.h,
-      b.x,
-      b.y,
-      b.w,
-      b.h,
-      e.dir || "",
-      e.fromAnchor ? e.fromAnchor.x + "," + e.fromAnchor.y : "",
-      e.toAnchor ? e.toAnchor.x + "," + e.toAnchor.y : ""
-    ].join("|");
-  }
-  function rtPorts(n, anchor) {
-    var m = RT.margin, cx = n.x + n.w / 2, cy = n.y + n.h / 2, out = [];
-    if (anchor) {
-      var px = n.x + n.w * anchor.x, py = n.y + n.h * anchor.y, dl = [Math.abs(px - (n.x + n.w)), Math.abs(px - n.x), Math.abs(py - (n.y + n.h)), Math.abs(py - n.y)], k = dl.indexOf(Math.min.apply(null, dl)), sd = RT_SIDES[k];
-      out.push({ p: { x: px, y: py }, st: { x: px + sd.nx * m, y: py + sd.ny * m }, side: sd });
-      return out;
-    }
-    RT_SIDES.forEach(function(sd2) {
-      var p = sd2.s === "R" ? { x: n.x + n.w, y: cy } : sd2.s === "L" ? { x: n.x, y: cy } : sd2.s === "B" ? { x: cx, y: n.y + n.h } : { x: cx, y: n.y };
-      if (fam(n) === "ev" || fam(n) === "gw" || shapeKind(n) !== "rect") {
-      }
-      out.push({ p, st: { x: p.x + sd2.nx * m, y: p.y + sd2.ny * m }, side: sd2 });
-    });
-    return out;
-  }
-  function rtSidePen(sd, from, to, dir) {
-    var dx = to.x - from.x, dy = to.y - from.y, L3 = Math.hypot(dx, dy) || 1, dot = (sd.nx * dx + sd.ny * dy) / L3, p = (1 - dot) * 55;
-    if (dir === "v" && sd.ny === 0) p += 90;
-    if (dir === "h" && sd.nx === 0) p += 90;
-    return p;
-  }
-  function RtHeap() {
-    this.c = [];
-    this.s = [];
-  }
-  function computeRoutes(nodes, edges) {
-    RT.routes = {};
-    if (!edges.length || nodes.length > 220 || edges.length > 320) return;
-    var todo = [];
-    edges.forEach(function(e) {
-      var ab = rtEligible(e);
-      if (ab) todo.push({ e, a: ab[0], b: ab[1] });
-    });
-    if (!todo.length) return;
-    var mk = nodes.map(function(n) {
-      return n.id + ":" + n.x + "," + n.y + "," + n.w + "," + n.h + (rtObstacle(n) ? "" : "-");
-    }).join("|") + "#" + todo.map(function(t) {
-      var e = t.e;
-      return e.id + ">" + e.from + ">" + e.to + (e.dir || "") + (e.fromAnchor ? e.fromAnchor.x + "," + e.fromAnchor.y : "") + (e.toAnchor ? e.toAnchor.x + "," + e.toAnchor.y : "");
-    }).join("|");
-    if (mk === RT.memoKey && RT.memo) {
-      RT.routes = RT.memo;
-      return;
-    }
-    var m = RT.margin, obs = nodes.filter(rtObstacle).map(function(n) {
-      return { id: n.id, x1: n.x - m, y1: n.y - m, x2: n.x + n.w + m, y2: n.y + n.h + m };
-    });
-    RT.raw = nodes.filter(rtObstacle).map(function(n) {
-      return { id: n.id, x1: n.x - 6, y1: n.y - 6, x2: n.x + n.w + 6, y2: n.y + n.h + 6 };
-    });
-    todo = todo.filter(function(t) {
-      var st = rtStraight(t.e, t.a, t.b);
-      if (st) {
-        RT.routes[t.e.id] = { key: rtKey(t.e, t.a, t.b), pts: st };
-        return false;
-      }
-      return true;
-    });
-    var XS = {}, YS = {}, addX = function(v) {
-      XS[Math.round(v * 2) / 2] = 1;
-    }, addY = function(v) {
-      YS[Math.round(v * 2) / 2] = 1;
-    };
-    obs.forEach(function(o) {
-      addX(o.x1);
-      addX(o.x2);
-      addY(o.y1);
-      addY(o.y2);
-    });
-    todo.forEach(function(t) {
-      t.pa = rtPorts(t.a, t.e.fromAnchor);
-      t.pb = rtPorts(t.b, t.e.toAnchor);
-      t.pa.concat(t.pb).forEach(function(q) {
-        q.st = { x: Math.round(q.st.x * 2) / 2, y: Math.round(q.st.y * 2) / 2 };
-        addX(q.st.x);
-        addY(q.st.y);
-      });
-    });
-    var xs = Object.keys(XS).map(Number).sort(function(a, b) {
-      return a - b;
-    }), ys = Object.keys(YS).map(Number).sort(function(a, b) {
-      return a - b;
-    }), NX = xs.length, NY = ys.length, G2 = NX * NY;
-    if (G2 > RT.maxGrid) return;
-    var xi = {}, yi = {};
-    xs.forEach(function(v, i2) {
-      xi[v] = i2;
-    });
-    ys.forEach(function(v, i2) {
-      yi[v] = i2;
-    });
-    var bad = new Uint8Array(G2), hB = new Uint8Array(G2), vB = new Uint8Array(G2), i, j, k;
-    obs.forEach(function(o) {
-      var i0 = 0;
-      while (i0 < NX && xs[i0] <= o.x1) i0++;
-      var i1 = NX - 1;
-      while (i1 >= 0 && xs[i1] >= o.x2) i1--;
-      var j0 = 0;
-      while (j0 < NY && ys[j0] <= o.y1) j0++;
-      var j1 = NY - 1;
-      while (j1 >= 0 && ys[j1] >= o.y2) j1--;
-      for (j = j0; j <= j1; j++) for (i = i0; i <= i1; i++) bad[j * NX + i] = 1;
-      for (j = j0; j <= j1; j++) for (i = 0; i < NX - 1; i++) if (xs[i] < o.x2 && xs[i + 1] > o.x1) hB[j * NX + i] = 1;
-      for (i = i0; i <= i1; i++) for (j = 0; j < NY - 1; j++) if (ys[j] < o.y2 && ys[j + 1] > o.y1) vB[j * NX + i] = 1;
-    });
-    var used = /* @__PURE__ */ new Map(), segKey = function(idx, h) {
-      return idx * 2 + (h ? 0 : 1);
-    };
-    var cost = new Float64Array(G2 * 4), prev = new Int32Array(G2 * 4), stamp = new Int32Array(G2 * 4), T0 = performance.now(), EI = 0;
-    function search(t, soft) {
-      var e = t.e, ca = { x: t.a.x + t.a.w / 2, y: t.a.y + t.a.h / 2 }, cb = { x: t.b.x + t.b.w / 2, y: t.b.y + t.b.h / 2 }, S2 = ++EI;
-      var H = new RtHeap(), tg = {}, best = Infinity, bestS = -1, bestT = null, TX2 = [], TY = [];
-      var g0 = function(s3) {
-        return stamp[s3] === S2 ? cost[s3] : Infinity;
-      }, hh = function(id2) {
-        var x = xs[id2 % NX], y = ys[id2 / NX | 0], b = Infinity;
-        for (var q = 0; q < TX2.length; q++) {
-          var v = Math.abs(x - TX2[q]) + Math.abs(y - TY[q]);
-          if (v < b) b = v;
-        }
-        return b === Infinity ? 0 : b;
-      };
-      var wall = function(id2) {
-        return bad[id2] ? soft ? RT.soft : -1 : 0;
-      };
-      t.pb.forEach(function(q) {
-        var id2 = yi[q.st.y] * NX + xi[q.st.x], w2 = wall(id2);
-        if (w2 < 0) return;
-        TX2.push(q.st.x);
-        TY.push(q.st.y);
-        (tg[id2] = tg[id2] || []).push({ q, pen: rtSidePen(q.side, cb, ca, e.dir) + w2, need: RT_OPP[q.side.d] });
-      });
-      t.pa.forEach(function(q) {
-        var id2 = yi[q.st.y] * NX + xi[q.st.x], w2 = wall(id2);
-        if (w2 < 0) return;
-        var st = id2 * 4 + q.side.d, c2 = rtSidePen(q.side, ca, cb, e.dir) + m + w2;
-        if (c2 < g0(st)) {
-          stamp[st] = S2;
-          cost[st] = c2;
-          prev[st] = -2 - t.pa.indexOf(q);
-          H.push(c2 + hh(id2), st);
-        }
-      });
-      while (H.size()) {
-        var s = H.pop(), f = H.lastCost, c = g0(s);
-        if (f >= best) break;
-        var id = s >> 2;
-        if (f > c + hh(id) + 1e-6) continue;
-        var d = s & 3, px = id % NX, py = id / NX | 0;
-        var Tg = tg[id];
-        if (Tg)
-          Tg.forEach(function(g) {
-            var fc = c + (d === g.need ? 0 : d === RT_OPP[g.need] ? 1e6 : RT.bend) + g.pen + m;
-            if (fc < best) {
-              best = fc;
-              bestS = s;
-              bestT = g;
-            }
-          });
-        for (var nd = 0; nd < 4; nd++) {
-          if (nd === RT_OPP[d]) continue;
-          var nx = px + RT_DX[nd], ny = py + RT_DY[nd];
-          if (nx < 0 || ny < 0 || nx >= NX || ny >= NY) continue;
-          var nid2 = ny * NX + nx, w = wall(nid2);
-          if (w < 0) continue;
-          var hor = nd < 2, lo = hor ? nd === 0 ? id : nid2 : nd === 2 ? id : nid2, blk = hor ? hB[lo] : vB[lo];
-          if (blk && !soft) continue;
-          var len = hor ? Math.abs(xs[nx] - xs[px]) : Math.abs(ys[ny] - ys[py]), u = used.get(segKey(lo, hor)) || 0;
-          var nc = c + len + (nd === d ? 0 : RT.bend) + u * RT.used * (1 + len / 80) + w + (blk ? RT.soft : 0), ns = nid2 * 4 + nd;
-          if (nc < g0(ns)) {
-            stamp[ns] = S2;
-            cost[ns] = nc;
-            prev[ns] = s;
-            H.push(nc + hh(nid2), ns);
-          }
-        }
-      }
-      if (bestS < 0) return false;
-      var chain = [], s2 = bestS, guard = 0, startQ = null;
-      while (s2 >= 0 && guard++ < G2 * 4) {
-        chain.push(s2 >> 2);
-        var pv = prev[s2];
-        if (pv < -1) {
-          startQ = t.pa[-2 - pv];
-          break;
-        }
-        s2 = pv;
-      }
-      chain.reverse();
-      if (!startQ) return false;
-      for (k = 1; k < chain.length; k++) {
-        var a1 = chain[k - 1], b1 = chain[k], h1 = a1 % NX !== b1 % NX, lo1 = Math.min(a1, b1);
-        used.set(segKey(lo1, h1), (used.get(segKey(lo1, h1)) || 0) + 1);
-      }
-      var pts = [startQ.p];
-      chain.forEach(function(id2) {
-        pts.push({ x: xs[id2 % NX], y: ys[id2 / NX | 0] });
-      });
-      pts.push(bestT.q.p);
-      RT.routes[e.id] = {
-        key: rtKey(e, t.a, t.b),
-        pts: rtCenterJog(rtSimplify(pts), t.a.id, t.b.id),
-        soft,
-        ia: t.a.id,
-        ib: t.b.id
-      };
-      return true;
-    }
-    var overBudget = function() {
-      return performance.now() - T0 > (RT.deep ? 4e3 : RT.budget);
-    };
-    todo.forEach(function(t) {
-      if (overBudget()) {
-        t.skip = 1;
-        return;
-      }
-      t.done = search(t, false);
-    });
-    todo.forEach(function(t) {
-      if (t.skip || t.done) return;
-      if (overBudget()) {
-        t.skip = 1;
-        return;
-      }
-      search(t, true);
-    });
-    rtNudge();
-    var unfinished = todo.some(function(t) {
-      return t.skip;
-    });
-    if (!unfinished) {
-      RT.memoKey = mk;
-      RT.memo = RT.routes;
-    } else {
-      RT.memoKey = "";
-      RT.memo = null;
-      if (!RT.deep && !RT.timer)
-        RT.timer = setTimeout(function() {
-          RT.timer = 0;
-          if (drag && drag.moved) return;
-          RT.deep = true;
-          try {
-            render();
-            renderOver();
-          } catch (err) {
-          }
-          RT.deep = false;
-        }, 60);
-    }
-  }
-  function rtSimplify(p) {
-    var o = [p[0]];
-    for (var i = 1; i < p.length; i++) {
-      var q = p[i], l = o[o.length - 1];
-      if (Math.abs(q.x - l.x) < 0.01 && Math.abs(q.y - l.y) < 0.01) continue;
-      o.push({ x: q.x, y: q.y });
-    }
-    var r = [o[0]];
-    for (i = 1; i < o.length - 1; i++) {
-      var a = r[r.length - 1], b = o[i], c = o[i + 1];
-      if (Math.abs(a.x - b.x) < 0.01 && Math.abs(b.x - c.x) < 0.01 || Math.abs(a.y - b.y) < 0.01 && Math.abs(b.y - c.y) < 0.01)
-        continue;
-      r.push(b);
-    }
-    r.push(o[o.length - 1]);
-    return r;
-  }
-  function rtNudge() {
-    var segs = [];
-    Object.keys(RT.routes).forEach(function(id) {
-      var P = RT.routes[id].pts;
-      for (var i = 1; i < P.length - 2; i++) {
-        var a = P[i], b = P[i + 1], v = Math.abs(a.x - b.x) < 0.01;
-        if (!v && Math.abs(a.y - b.y) >= 0.01) continue;
-        segs.push({
-          id,
-          i,
-          v,
-          c: v ? a.x : a.y,
-          lo: v ? Math.min(a.y, b.y) : Math.min(a.x, b.x),
-          hi: v ? Math.max(a.y, b.y) : Math.max(a.x, b.x)
-        });
-      }
-    });
-    var groups = {};
-    segs.forEach(function(s) {
-      var k = (s.v ? "v" : "h") + Math.round(s.c);
-      (groups[k] = groups[k] || []).push(s);
-    });
-    Object.keys(groups).forEach(function(k) {
-      var g = groups[k].sort(function(a, b) {
-        return a.lo - b.lo;
-      }), cl = [];
-      g.forEach(function(s) {
-        var last = cl[cl.length - 1];
-        if (last && s.lo < last.hi - 1) {
-          last.items.push(s);
-          last.hi = Math.max(last.hi, s.hi);
-        } else cl.push({ hi: s.hi, items: [s] });
-      });
-      cl.forEach(function(c) {
-        var it = c.items.filter(function(s, ix, arr) {
-          return arr.findIndex(function(o) {
-            return o.id === s.id;
-          }) === ix;
-        });
-        if (it.length < 2) return;
-        it.sort(function(a, b) {
-          return a.lo + a.hi - (b.lo + b.hi);
-        });
-        it.forEach(function(s, n) {
-          var off = (n - (it.length - 1) / 2) * RT.gap, r = RT.routes[s.id], P = r.pts, a = P[s.i], b = P[s.i + 1], ax = a.x, ay = a.y, bx = b.x, by = b.y;
-          if (s.v) {
-            a.x += off;
-            b.x += off;
-          } else {
-            a.y += off;
-            b.y += off;
-          }
-          if (!rtClear(P[s.i - 1], a, r.ia, r.ib) || !rtClear(a, b, r.ia, r.ib) || !rtClear(b, P[s.i + 2], r.ia, r.ib)) {
-            a.x = ax;
-            a.y = ay;
-            b.x = bx;
-            b.y = by;
-          }
-        });
-      });
-    });
-  }
-  var rtRoute0;
-  function rtShouldRun() {
-    return !(drag && drag.moved && (drag.kind === "move" || drag.kind === "resize"));
-  }
-  function rtClear(p, q, ia, ib) {
-    var x1 = Math.min(p.x, q.x), x2 = Math.max(p.x, q.x), y1 = Math.min(p.y, q.y), y2 = Math.max(p.y, q.y);
-    return !RT.raw.some(function(o) {
-      return o.id !== ia && o.id !== ib && x1 < o.x2 && x2 > o.x1 && y1 < o.y2 && y2 > o.y1;
-    });
-  }
-  function rtStraight(e, a, b) {
-    if (e.fromAnchor || e.toAnchor) return null;
-    var oy1 = Math.max(a.y, b.y), oy2 = Math.min(a.y + a.h, b.y + b.h), ox1 = Math.max(a.x, b.x), ox2 = Math.min(a.x + a.w, b.x + b.w), p, q, c;
-    if (e.dir !== "v" && oy2 - oy1 >= 14 && (b.x >= a.x + a.w + 12 || a.x >= b.x + b.w + 12)) {
-      c = clamp((a.y + a.h / 2 + b.y + b.h / 2) / 2, oy1 + 7, oy2 - 7);
-      var r = b.x > a.x;
-      p = { x: r ? a.x + a.w : a.x, y: c };
-      q = { x: r ? b.x : b.x + b.w, y: c };
-      if (rtClear(p, q, a.id, b.id)) return [p, q];
-    }
-    if (e.dir !== "h" && ox2 - ox1 >= 14 && (b.y >= a.y + a.h + 12 || a.y >= b.y + b.h + 12)) {
-      c = clamp((a.x + a.w / 2 + b.x + b.w / 2) / 2, ox1 + 7, ox2 - 7);
-      var d = b.y > a.y;
-      p = { x: c, y: d ? a.y + a.h : a.y };
-      q = { x: c, y: d ? b.y : b.y + b.h };
-      if (rtClear(p, q, a.id, b.id)) return [p, q];
-    }
-    return null;
-  }
-  function rtCenterJog(P, ia, ib) {
-    if (P.length !== 4) return P;
-    var h0 = Math.abs(P[0].y - P[1].y) < 0.01, h2 = Math.abs(P[2].y - P[3].y) < 0.01, v1 = Math.abs(P[1].x - P[2].x) < 0.01;
-    if (h0 && v1 && h2) {
-      var mx = (P[0].x + P[3].x) / 2, Q = [P[0], { x: mx, y: P[0].y }, { x: mx, y: P[3].y }, P[3]];
-      if (rtClear(Q[0], Q[1], ia, ib) && rtClear(Q[1], Q[2], ia, ib) && rtClear(Q[2], Q[3], ia, ib)) return Q;
-    }
-    var w0 = Math.abs(P[0].x - P[1].x) < 0.01, w2 = Math.abs(P[2].x - P[3].x) < 0.01, u1 = Math.abs(P[1].y - P[2].y) < 0.01;
-    if (w0 && u1 && w2) {
-      var my = (P[0].y + P[3].y) / 2, R = [P[0], { x: P[0].x, y: my }, { x: P[3].x, y: my }, P[3]];
-      if (rtClear(R[0], R[1], ia, ib) && rtClear(R[1], R[2], ia, ib) && rtClear(R[2], R[3], ia, ib)) return R;
-    }
-    return P;
-  }
-  function tidyLayout() {
-    var ns = S.nodes.filter(function(n) {
-      return !/^z-|^b-/.test(n.t) && !isLife(n);
-    });
-    if (ns.length < 2) {
-      toast("Belum ada cukup bentuk untuk dirapikan.");
-      return;
-    }
-    var ids = ns.map(function(n) {
-      return n.id;
-    }), keep = {};
-    ids.forEach(function(id) {
-      keep[id] = 1;
-    });
-    var lay = S.edges.filter(function(e) {
-      return keep[e.from] && keep[e.to];
-    }).map(function(e) {
-      return { from: e.from, to: e.to };
-    });
-    var x0 = Math.min.apply(
-      null,
-      ns.map(function(n) {
-        return n.x;
-      })
-    ), y0 = Math.min.apply(
-      null,
-      ns.map(function(n) {
-        return n.y;
-      })
-    );
-    var pos = layered(ids, lay, {}, S.dir || "LR", 120);
-    pushUndo();
-    ns.forEach(function(n) {
-      var q = pos[n.id];
-      if (q) {
-        n.x = snap(x0 + q.x);
-        n.y = snap(y0 + q.y);
-      }
-    });
-    S.edges.forEach(function(e) {
-      if (keep[e.from] && keep[e.to]) tidyEdge(e);
-    });
-    renderAll();
-    scheduleSave();
-    toast(ns.length + " bentuk ditata ulang. Ctrl+Z membatalkan.");
-  }
-  var rtMore0;
-  function install21() {
-    RtHeap.prototype.push = function(c, s) {
-      var C2 = this.c, S2 = this.s, i = C2.length;
-      C2.push(c);
-      S2.push(s);
-      while (i > 0) {
-        var p = i - 1 >> 1;
-        if (C2[p] <= c) break;
-        C2[i] = C2[p];
-        S2[i] = S2[p];
-        i = p;
-      }
-      C2[i] = c;
-      S2[i] = s;
-    };
-    RtHeap.prototype.pop = function() {
-      var C2 = this.c, S2 = this.s, top = S2[0], tc = C2[0], lc = C2.pop(), ls = S2.pop(), n = C2.length;
-      if (n) {
-        var i = 0;
-        while (true) {
-          var l = 2 * i + 1, r = l + 1, m = i;
-          var mc = lc;
-          if (l < n && C2[l] < mc) {
-            m = l;
-            mc = C2[l];
-          }
-          if (r < n && C2[r] < mc) {
-            m = r;
-            mc = C2[r];
-          }
-          if (m === i) break;
-          C2[i] = C2[m];
-          S2[i] = S2[m];
-          i = m;
-        }
-        C2[i] = lc;
-        S2[i] = ls;
-      }
-      this.lastCost = tc;
-      return top;
-    };
-    RtHeap.prototype.size = function() {
-      return this.c.length;
-    };
-    rtRoute0 = route;
-    set_route(function(e) {
-      var r = RT.routes[e.id];
-      if (r) {
-        var a = byId(e.from), b = byId(e.to);
-        if (a && b && e.mx == null && e.my == null && e.route !== "straight" && e.route !== "curve" && r.key === rtKey(e, a, b))
-          return r.pts.map(function(p) {
-            return { x: p.x, y: p.y };
-          });
-      }
-      return rtRoute0(e);
-    });
-    rtMore0 = nvMoreItems;
-    set_nvMoreItems(function() {
-      var L3 = rtMore0(), i = L3.findIndex(function(x) {
-        return x[0] === "tidy";
-      });
-      L3.splice(i + 1, 0, ["layout", "workflow", "Rapikan tata letak", "Susun ulang bentuk agar garis tidak bertumpuk"]);
-      return L3;
-    });
-    NV_ACTS.push([
-      "layout",
-      "Rapikan tata letak halaman ini",
-      "workflow",
-      "tata letak layout susun ulang auto arrange rapikan",
-      function() {
-        pjView("canvas");
-        tidyLayout();
-      }
-    ]);
-    document.addEventListener(
-      "click",
-      function(ev) {
-        var m = ev.target.closest && ev.target.closest("[data-nvm=layout]");
-        if (!m) return;
-        ev.stopPropagation();
-        closeMenus();
-        pjView("canvas");
-        tidyLayout();
-      },
-      true
-    );
-  }
-
-  // src/lines/labels.ts
-  var LBLQ = null;
-  var LBLOBS = null;
-  var LBLPL = null;
-  var LBLT = {};
-  var LMSEQ = 0;
-  var LBLSEG = null;
-  function segHitsRect(p, q, r) {
-    var x1 = Math.min(p.x, q.x), x2 = Math.max(p.x, q.x), y1 = Math.min(p.y, q.y), y2 = Math.max(p.y, q.y);
-    if (x2 < r.x || x1 > r.x + r.w || y2 < r.y || y1 > r.y + r.h) return false;
-    if (x1 === x2 || y1 === y2) return true;
-    for (var i = 0; i <= 10; i++) {
-      var t = i / 10, x = p.x + (q.x - p.x) * t, y = p.y + (q.y - p.y) * t;
-      if (x >= r.x && x <= r.x + r.w && y >= r.y && y <= r.y + r.h) return true;
-    }
-    return false;
-  }
-  function lblLineClash(bb, eid) {
-    if (!LBLSEG) return false;
-    for (var i = 0; i < LBLSEG.length; i++) {
-      var s = LBLSEG[i];
-      if (s.id !== eid && segHitsRect(s.p, s.q, bb)) return true;
-    }
-    return false;
-  }
-  function edgePoly__base(e, pts) {
-    if (e.route !== "curve") return pts;
-    var c = curveCtrl(e, pts), o = [];
-    for (var i = 0; i <= 24; i++) {
-      var t = i / 24, u = 1 - t;
-      o.push({
-        x: u * u * u * c[0].x + 3 * u * u * t * c[1].x + 3 * u * t * t * c[2].x + t * t * t * c[3].x,
-        y: u * u * u * c[0].y + 3 * u * u * t * c[1].y + 3 * u * t * t * c[2].y + t * t * t * c[3].y
-      });
-    }
-    return o;
-  }
-  var edgePoly = edgePoly__base;
-  function set_edgePoly(v) {
-    return edgePoly = v;
-  }
-  function lblBase(e) {
-    if (e.lt != null && isFinite(+e.lt)) return clamp(+e.lt, 0.04, 0.96);
-    var a = byId(e.from);
-    return a && fam(a) === "gw" ? 0.35 : 0.5;
-  }
-  function nearestT(poly, p) {
-    var L3 = 0, seg = [], i;
-    for (i = 1; i < poly.length; i++) {
-      var d = Math.hypot(poly[i].x - poly[i - 1].x, poly[i].y - poly[i - 1].y);
-      seg.push(d);
-      L3 += d;
-    }
-    if (!L3) return 0.5;
-    var best = 1e18, bt = 0.5, acc = 0;
-    for (i = 1; i < poly.length; i++) {
-      var a = poly[i - 1], b = poly[i], dx = b.x - a.x, dy = b.y - a.y, l2 = dx * dx + dy * dy, r = l2 ? clamp(((p.x - a.x) * dx + (p.y - a.y) * dy) / l2, 0, 1) : 0, qx = a.x + dx * r, qy = a.y + dy * r, dd = (p.x - qx) * (p.x - qx) + (p.y - qy) * (p.y - qy);
-      if (dd < best) {
-        best = dd;
-        bt = (acc + seg[i - 1] * r) / L3;
-      }
-      acc += seg[i - 1];
-    }
-    return bt;
-  }
-  function lblBox(e, poly, t) {
-    var lines2 = wrapText(e.label, 170, 11), lw = 0;
-    lines2.forEach(function(l) {
-      lw = Math.max(lw, textW(l, 11));
-    });
-    var h = lines2.length * 14 + 2, w = lw + 10, p = along(poly, t);
-    return { x: p.x - w / 2, y: p.y - h / 2, w, h, cx: p.x, cy: p.y, lines: lines2 };
-  }
-  function rectHit(a, b, m) {
-    m = m || 0;
-    return a.x < b.x + b.w + m && a.x + a.w + m > b.x && a.y < b.y + b.h + m && a.y + a.h + m > b.y;
-  }
-  var LDRAG = null;
-  function ldragEnd(ev) {
-    if (!LDRAG) return;
-    ev.stopPropagation();
-    var m = LDRAG.moved;
-    LDRAG = null;
-    svg.classList.remove("lab-drag");
-    if (m) {
-      scheduleSave();
-      renderInsp();
-    }
-    renderOver();
-  }
-  function install22() {
-    set_labelPoint(function(e, pts) {
-      var t = LBLT[e.id] != null && e.lt == null ? LBLT[e.id] : lblBase(e);
-      return along(edgePoly(e, pts), t);
-    });
-    set_drawEdge(function(e) {
-      var pts = route(e);
-      if (!pts) return "";
-      var k = EDGE[e.type] || EDGE.line, c = validColor(e.stroke) ? e.stroke : TH.ink, w = e.width || 1.5, d = edgeD(e, pts);
-      var ea = byId(e.from), eb = byId(e.to);
-      if (!validColor(e.stroke) && ea && eb && fam(ea) === "mind" && fam(eb) === "mind") {
-        c = branchColor(eb);
-        if (!e.width) w = (TREED[eb.id] || 0) <= 1 ? 2.4 : 1.6;
-      } else if (!validColor(e.stroke) && ea && eb && ea.look === "tile" && eb.look === "tile") {
-        c = TH.flow;
-        if (!e.width) w = 2;
-      }
-      var ms = k.cf ? "cf-" + (e.c1 || "only") : k.start, me = k.cf ? "cf-" + (e.c2 || "zmany") : k.end;
-      var at = ' fill="none" stroke="' + c + '" stroke-width="' + w + '" stroke-linecap="round" stroke-linejoin="round"' + (k.dash ? ' stroke-dasharray="' + k.dash + '"' : "") + (me ? ' marker-end="' + mref(me, c, w) + '"' : "") + (ms ? ' marker-start="' + mref(ms, c, w) + '"' : "");
-      var lab = "", mask = "", maskAt = "", tc = validColor(e.textColor) ? e.textColor : TH.text;
-      if (e.label) {
-        var poly = edgePoly(e, pts), B;
-        if (k.above) {
-          var vert = Math.abs(pts[pts.length - 1].x - pts[0].x) < Math.abs(pts[pts.length - 1].y - pts[0].y);
-          B = lblBox(e, poly, lblBase(e));
-          if (!vert) {
-            B.y -= B.h / 2 + 5;
-            B.cy -= B.h / 2 + 5;
-          }
-        } else {
-          var t0 = lblBase(e);
-          B = lblBox(e, poly, t0);
-          if (e.lt == null && LBLOBS) {
-            var cand = [t0, 0.5, 0.38, 0.62, 0.28, 0.72, 0.2, 0.8, 0.14, 0.86], ok = null;
-            for (var ci = 0; ci < cand.length && !ok; ci++) {
-              var bb = lblBox(e, poly, cand[ci]), clash = LBLPL.some(function(r) {
-                return rectHit(bb, r, 4);
-              }) || LBLOBS.some(function(r) {
-                return r.id !== e.from && r.id !== e.to && rectHit(bb, r, 2);
-              }) || lblLineClash({ x: bb.x - 2, y: bb.y - 2, w: bb.w + 4, h: bb.h + 4 }, e.id);
-              if (!clash) ok = [cand[ci], bb];
-            }
-            if (ok) {
-              B = ok[1];
-              LBLT[e.id] = ok[0];
-            } else delete LBLT[e.id];
-          }
-          var minx = 1e9, miny = 1e9, maxx = -1e9, maxy = -1e9;
-          poly.forEach(function(q) {
-            minx = Math.min(minx, q.x);
-            miny = Math.min(miny, q.y);
-            maxx = Math.max(maxx, q.x);
-            maxy = Math.max(maxy, q.y);
-          });
-          var mid = "lm" + ++LMSEQ + "-" + String(e.id).replace(/[^\w-]/g, "");
-          mask = '<mask id="' + mid + '" maskUnits="userSpaceOnUse" x="' + r1(minx - 60) + '" y="' + r1(miny - 60) + '" width="' + r1(maxx - minx + 120) + '" height="' + r1(maxy - miny + 120) + '"><rect x="' + r1(minx - 60) + '" y="' + r1(miny - 60) + '" width="' + r1(maxx - minx + 120) + '" height="' + r1(maxy - miny + 120) + '" fill="#fff"/><rect x="' + r1(B.x - 3) + '" y="' + r1(B.y - 2) + '" width="' + r1(B.w + 6) + '" height="' + r1(B.h + 4) + '" rx="4" fill="#000"/></mask>';
-          maskAt = ' mask="url(#' + mid + ')"';
-        }
-        if (LBLPL) LBLPL.push(B);
-        lab = '<g data-eid="' + e.id + '" data-lab="1" class="elab"><rect x="' + r1(B.x - 4) + '" y="' + r1(B.y - 3) + '" width="' + r1(B.w + 8) + '" height="' + r1(B.h + 6) + '" rx="5" fill="transparent"/>' + tblock(B.cx, B.cy, B.lines, { fs: 11, lh: 14, vcenter: 1, fill: tc }).replace(
-          "<text ",
-          '<text stroke="' + TH.paper + '" stroke-width="3.2" stroke-linejoin="round" paint-order="stroke" '
-        ) + "</g>";
-      }
-      var s = '<g data-eid="' + e.id + '">' + mask + '<path d="' + d + '" fill="none" stroke="transparent" stroke-width="16"/><path d="' + d + '"' + at + maskAt + "/>";
-      if (animate && !exporting && FLOWING[e.type])
-        s += '<path class="flowdot" d="' + d + '" fill="none" stroke="' + (validColor(e.stroke) ? e.stroke : TH.sel) + '" stroke-width="' + (w + 2.2) + '" stroke-linecap="round"' + maskAt + "/>";
-      s += "</g>";
-      if (LBLQ) {
-        if (lab) LBLQ.push(lab);
-        return s;
-      }
-      return s + lab;
-    });
-    set_drawAll(function(nodes, edges) {
-      computeTree();
-      nodes.forEach(autosize);
-      if (typeof computeRoutes === "function" && rtShouldRun())
-        try {
-          computeRoutes(nodes, edges);
-        } catch (err) {
-          RT.routes = {};
-        }
-      var back = [], zones = [], groups = [], others = [];
-      nodes.forEach(function(n) {
-        var f = fam(n);
-        (f === "pool" ? back : f === "zone" || f === "box" ? zones : f === "group" || f === "cell" || isLife(n) || n.t === "u-seq-act" ? groups : others).push(n);
-      });
-      zones.sort(function(a, b) {
-        return b.w * b.h - a.w * a.h;
-      });
-      groups.sort(function(a, b) {
-        var la = isLife(a) ? 1 : a.t === "u-seq-act" ? 2 : 0, lb = isLife(b) ? 1 : b.t === "u-seq-act" ? 2 : 0;
-        if (la !== lb) return la - lb;
-        return b.w * b.h - a.w * a.h;
-      });
-      var s = "";
-      back.concat(zones, groups).forEach(function(n) {
-        s += '<g data-id="' + n.id + '">' + drawNode(n) + "</g>";
-      });
-      LBLSEG = [];
-      edges.forEach(function(e) {
-        var P = route(e);
-        if (!P) return;
-        P = edgePoly(e, P);
-        for (var i = 1; i < P.length; i++) LBLSEG.push({ id: e.id, p: P[i - 1], q: P[i] });
-      });
-      LBLQ = [];
-      LBLPL = [];
-      LBLOBS = others.filter(function(n) {
-        return fam(n) !== "draw" && fam(n) !== "text";
-      }).map(function(n) {
-        var below = (fam(n) === "ev" || fam(n) === "gw" || fam(n) === "data") && n.label ? 18 : 0;
-        return { id: n.id, x: n.x, y: n.y, w: n.w, h: n.h + below };
-      });
-      try {
-        edges.forEach(function(e) {
-          s += drawEdge(e);
-        });
-        others.forEach(function(n) {
-          s += '<g data-id="' + n.id + '">' + drawNode(n) + "</g>";
-        });
-        s += LBLQ.join("");
-      } finally {
-        LBLQ = null;
-        LBLPL = null;
-        LBLOBS = null;
-        LBLSEG = null;
-      }
-      return s;
-    });
-    svg.addEventListener(
-      "pointerdown",
-      function(ev) {
-        if (ev.button !== 0 || tool !== "select" || spaceDown) return;
-        var lb = ev.target.closest && ev.target.closest("[data-lab]");
-        if (!lb) return;
-        var e = eById(lb.getAttribute("data-eid"));
-        if (!e) return;
-        ev.stopPropagation();
-        ev.preventDefault();
-        commitEdit();
-        if (selE !== e.id) setSel([], e.id);
-        LDRAG = { id: e.id, moved: false, sx: ev.clientX, sy: ev.clientY };
-        try {
-          svg.setPointerCapture(ev.pointerId);
-        } catch (_) {
-        }
-      },
-      true
-    );
-    svg.addEventListener(
-      "pointermove",
-      function(ev) {
-        if (!LDRAG) return;
-        ev.stopPropagation();
-        if (!LDRAG.moved && Math.hypot(ev.clientX - LDRAG.sx, ev.clientY - LDRAG.sy) < 3) return;
-        var e = eById(LDRAG.id), pts = e && route(e);
-        if (!pts) return;
-        if (!LDRAG.moved) {
-          pushUndo();
-          LDRAG.moved = true;
-          svg.classList.add("lab-drag");
-        }
-        e.lt = Math.round(clamp(nearestT(edgePoly(e, pts), pt(ev)), 0.04, 0.96) * 1e3) / 1e3;
-        render();
-        renderOver();
-      },
-      true
-    );
-    svg.addEventListener("pointerup", ldragEnd, true);
-    svg.addEventListener("pointercancel", ldragEnd, true);
-  }
-
   // src/lines/snap.ts
   var ux2SetEdgePoint0;
-  function install23() {
+  function install25() {
     ux2SetEdgePoint0 = setEdgePoint;
     set_setEdgePoint(function(e, start2, p, node) {
       ux2SetEdgePoint0(e, start2, p, node);
@@ -26771,7 +27278,7 @@ svg.lab-drag,svg.lab-drag *{cursor:grabbing!important}
   var ux2PjSwitch0;
   var ux2GenPrompt0;
   var ux2BuildGen0;
-  function install24() {
+  function install26() {
     reg("u-", "uml", [
       ["comp", "Component", [200, 92], { lab: "OrderService", init: { stereo: "component" } }],
       ["provided", "Provided interface", [26, 26], { lab: "IOrder", fixed: 1 }],
@@ -26993,405 +27500,6 @@ svg.lab-drag,svg.lab-drag *{cursor:grabbing!important}
         sysdesign: "c-service",
         threat: "dfd-proc"
       });
-  }
-
-  // src/editor/theme.ts
-  var THEME_PREF;
-  var ux2Resolved0;
-  function themeAttrSync() {
-    var el = document.documentElement;
-    if (THEME_PREF === "auto") return;
-    if (el.getAttribute("data-theme") !== THEME_PREF) {
-      el.setAttribute("data-theme", THEME_PREF);
-    }
-    el.setAttribute("data-rt-theme", THEME_PREF);
-  }
-  var THEME_HOST;
-  function themeIcon() {
-    return THEME_PREF === "light" ? "sun" : THEME_PREF === "dark" ? "moon" : "sun-moon";
-  }
-  function themeLabel() {
-    return THEME_PREF === "light" ? "Terang" : THEME_PREF === "dark" ? "Gelap" : "Otomatis";
-  }
-  function setThemePref(v) {
-    THEME_PREF = v === "light" || v === "dark" ? v : "auto";
-    lsSet("rancang:theme", THEME_PREF);
-    var el = document.documentElement;
-    if (THEME_PREF === "auto") {
-      el.removeAttribute("data-rt-theme");
-      if (THEME_HOST) el.setAttribute("data-theme", THEME_HOST);
-      else el.removeAttribute("data-theme");
-    } else themeAttrSync();
-    applyTheme(true);
-    themeBtnSync();
-    toast("Tema: " + themeLabel() + (THEME_PREF === "auto" ? " (ikut perangkat / claude.ai)" : ""));
-  }
-  function cycleTheme() {
-    setThemePref(THEME_PREF === "auto" ? "light" : THEME_PREF === "light" ? "dark" : "auto");
-  }
-  function themeBtnSync() {
-    var b = $("btnTheme");
-    if (!b) return;
-    b.innerHTML = ic(themeIcon());
-    b.title = "Tema: " + themeLabel() + " (klik untuk ganti)";
-    b.setAttribute("aria-label", "Ganti tema, sekarang " + themeLabel());
-  }
-  function install25() {
-    Object.assign(ICONS, {
-      sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>',
-      moon: '<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>',
-      "sun-moon": '<path d="M12 8a2.83 2.83 0 0 0 4 4 4 4 0 1 1-4-4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.9 4.9 1.4 1.4"/><path d="m17.7 17.7 1.4 1.4"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.3 17.7-1.4 1.4"/><path d="m19.1 4.9-1.4 1.4"/>'
-    });
-    THEME_PREF = /* @__PURE__ */ function(v) {
-      return v === "light" || v === "dark" ? v : "auto";
-    }(lsGet0("rancang:theme"));
-    ux2Resolved0 = resolvedTheme;
-    set_resolvedTheme(function() {
-      return THEME_PREF === "auto" ? ux2Resolved0() : THEME_PREF;
-    });
-    new MutationObserver(function() {
-      if (THEME_PREF !== "auto" && document.documentElement.getAttribute("data-theme") !== THEME_PREF) themeAttrSync();
-    }).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
-    THEME_HOST = document.documentElement.getAttribute("data-theme");
-    (function() {
-      themeAttrSync();
-      try {
-        applyTheme(true);
-      } catch (e) {
-      }
-      var more = $("btnMore");
-      if (more && !$("btnTheme")) {
-        more.parentNode.insertAdjacentHTML(
-          "beforebegin",
-          '<button class="btn ibtn-top" id="btnTheme" type="button"></button>'
-        );
-        $("btnTheme").onclick = cycleTheme;
-        themeBtnSync();
-      }
-    })();
-    NV_ACTS.push(
-      [
-        "theme-l",
-        "Tema terang",
-        "sun",
-        "theme light mode putih",
-        function() {
-          setThemePref("light");
-        }
-      ],
-      [
-        "theme-d",
-        "Tema gelap",
-        "moon",
-        "theme dark mode hitam",
-        function() {
-          setThemePref("dark");
-        }
-      ],
-      [
-        "theme-a",
-        "Tema otomatis (ikut perangkat)",
-        "sun-moon",
-        "theme auto system",
-        function() {
-          setThemePref("auto");
-        }
-      ]
-    );
-  }
-
-  // src/guide/goals.ts
-  var DT_USE = {
-    usecase: "Siapa (aktor) bisa melakukan apa di sistem. Dipakai di awal, untuk menyepakati cakupan fitur.",
-    activity: "Langkah-langkah satu proses beserta percabangannya. Untuk logika alur satu fitur.",
-    sequence: "Urutan pesan antar komponen dalam SATU skenario (request → response). Untuk desain interaksi & API.",
-    class: "Struktur objek di kode: atribut, method, relasi, pewarisan. Untuk desain OOP.",
-    state: "Siklus status satu objek (draft → aktif → selesai) dan pemicunya.",
-    dfd: "Aliran data antara entitas luar, proses, dan penyimpanan. Untuk analisis SI.",
-    erd: "Tabel, kolom, kunci, dan relasi database.",
-    eventstorm: "Peristiwa domain dalam urutan waktu. Untuk menemukan batas layanan (DDD).",
-    component: "Modul software dan antarmuka di antaranya. Untuk memecah sistem jadi bagian.",
-    deploy: "Di mesin/container mana tiap artefak berjalan dan bagaimana tersambung.",
-    api: "Daftar endpoint: method, path, hak akses, request, response, error.",
-    arch: "Gambaran besar komponen sistem dan zona jaringannya.",
-    c4: "Arsitektur bertingkat: konteks → container → komponen.",
-    sysdesign: "Desain untuk skala: load balancer, cache, replika, queue, sharding, angka QPS/latensi.",
-    k8s: "Objek Kubernetes: ingress, service, deployment, config, volume.",
-    network: "Topologi jaringan fisik: router, firewall, switch, perangkat.",
-    dist: "Pola sistem terdistribusi: leader/follower, sharding, konsensus.",
-    threat: "Ancaman keamanan per aliran data (STRIDE) dan batas kepercayaan.",
-    cicd: "Jalur kode dari commit sampai produksi beserta gerbang mutunya.",
-    bpmn: "Proses bisnis lintas peran (pool/lane), keputusan, dan event.",
-    userflow: "Jalan pengguna antar layar untuk mencapai satu tujuan.",
-    wire: "Tata letak tiap layar (low-fi).",
-    sitemap: "Struktur halaman dan navigasi.",
-    journey: "Pengalaman pelanggan per tahap: aksi, perasaan, masalah.",
-    gds: "Warna, tipografi, komponen visual.",
-    n8n: "Otomasi: pemicu → langkah → aplikasi.",
-    agent: "Agen AI berbasis graf dengan node dan rute kondisi.",
-    rag: "Pipeline tanya-jawab dokumen: ingest → retrieve → generate.",
-    multi: "Beberapa agen AI bekerja sama.",
-    mlpipe: "Siklus model ML dari data sampai produksi.",
-    mind: "Peta ide bercabang dari satu topik.",
-    board: "Papan bebas untuk brainstorming.",
-    deck: "Slide presentasi / pitch deck."
-  };
-  var GOALS = [
-    {
-      id: "app",
-      ic: "code-xml",
-      n: "Merancang aplikasi (tugas besar / produk)",
-      q: "Mulai dari kebutuhan sampai layar dan database.",
-      dts: ["usecase", "activity", "erd", "class", "sequence", "api", "sitemap", "wire", "arch"],
-      prd: 1
-    },
-    {
-      id: "sysd",
-      ic: "network",
-      n: "System design (skala & performa)",
-      q: "Cache, load balancer, replika, queue, angka QPS.",
-      dts: ["sysdesign", "sequence", "deploy", "erd", "threat"]
-    },
-    {
-      id: "arch",
-      ic: "server",
-      n: "Arsitektur & deployment",
-      q: "Komponen sistem, tempat berjalan, dan jalur rilis.",
-      dts: ["arch", "c4", "component", "deploy", "k8s", "cicd", "network"]
-    },
-    {
-      id: "data",
-      ic: "database",
-      n: "Desain database",
-      q: "Tabel, relasi, dan aliran data.",
-      dts: ["erd", "class", "dfd"]
-    },
-    {
-      id: "api",
-      ic: "plug-zap",
-      n: "API & integrasi",
-      q: "Endpoint, urutan panggilan, dan modul yang terlibat.",
-      dts: ["api", "sequence", "component", "state"]
-    },
-    {
-      id: "sec",
-      ic: "shield-alert",
-      n: "Keamanan",
-      q: "Ancaman, alur login, dan siklus session.",
-      dts: ["threat", "sequence", "state"]
-    },
-    {
-      id: "biz",
-      ic: "briefcase",
-      n: "Proses bisnis & sistem informasi",
-      q: "Siapa melakukan apa, data mengalir ke mana.",
-      dts: ["bpmn", "dfd", "vc", "swot", "bmc"]
-    },
-    {
-      id: "ux",
-      ic: "layout-template",
-      n: "Riset UX & antarmuka",
-      q: "Pengguna, perjalanannya, dan layarnya.",
-      dts: ["persona", "empathy", "journey", "userflow", "sitemap", "wire", "gds"]
-    },
-    {
-      id: "ai",
-      ic: "sparkles",
-      n: "Sistem AI & otomasi",
-      q: "Agen, RAG, workflow otomatis, pipeline ML.",
-      dts: ["rag", "agent", "multi", "n8n", "mlpipe"]
-    },
-    {
-      id: "pm",
-      ic: "flag",
-      n: "Rencana & manajemen proyek",
-      q: "Jadwal, tugas, peran, risiko.",
-      dts: ["gantt", "kanban", "raci", "risk", "okr"]
-    },
-    {
-      id: "strat",
-      ic: "target",
-      n: "Strategi bisnis",
-      q: "Model bisnis, posisi, dan peluang.",
-      dts: ["bmc", "lean", "swot", "pestel", "ff", "vpc"]
-    },
-    { id: "pitch", ic: "monitor", n: "Pitch & presentasi", q: "Slide untuk lomba atau investor.", dts: ["deck"] }
-  ];
-  function dtUse(k) {
-    return DT_USE[k] || String(DT[k] && DT[k].hint || "").split(". ")[0];
-  }
-  function guideOpen() {
-    var m = $("mGuide");
-    if (!m) {
-      $("scrim").insertAdjacentHTML(
-        "beforeend",
-        '<div class="modal wide" id="mGuide" role="dialog" aria-modal="true" aria-labelledby="mGuideT" hidden><header>' + ic("target") + '<h2 id="mGuideT">Mau merancang apa?</h2><button class="ibtn" type="button" data-close aria-label="Tutup">' + ic("x") + '</button></header><div class="mb"><p class="note">Pilih tujuanmu. Urutan diagram di tiap kartu adalah urutan yang disarankan, dari gambaran besar ke detail. Klik satu diagram untuk membukanya, atau <b>Pakai set ini</b> agar semuanya muncul sebagai saran di navigasi.</p><div class="gd-grid" id="gdGrid"></div></div></div>'
-      );
-      m = $("mGuide");
-      if (MODALS.indexOf("mGuide") < 0) MODALS.push("mGuide");
-      m.addEventListener("click", function(ev) {
-        var d = ev.target.closest("[data-gdt]");
-        if (d) {
-          closeModal();
-          pjSwitch(d.getAttribute("data-gdt"));
-          return;
-        }
-        var u = ev.target.closest("[data-gset]");
-        if (u) {
-          var g = GOALS.filter(function(x) {
-            return x.id === u.getAttribute("data-gset");
-          })[0];
-          if (!g) return;
-          PROJ.plan = g.dts.slice();
-          scheduleSave();
-          closeModal();
-          if (g.prd && !PROJ.prd.trim()) {
-            pjView("prd");
-          } else pjSwitch(g.dts[0]);
-          renderChips();
-          toast("Set “" + g.n + "” dipakai: " + g.dts.length + " halaman muncul sebagai saran di tiap bagian.");
-        }
-      });
-    }
-    $("gdGrid").innerHTML = GOALS.map(function(g) {
-      return '<section class="gd-card"><h3>' + ic(g.ic) + "<span>" + esc(g.n) + "</span></h3><p>" + esc(g.q) + "</p><ol>" + g.dts.map(function(k) {
-        var f = pjFilled(k);
-        return '<li><button type="button" data-gdt="' + k + '" title="' + esc(dtUse(k)) + '">' + ic(DT_ICON[k] || "layout-grid") + "<b>" + esc(DT[k].n) + (f ? "<em>ada isi</em>" : "") + "</b><small>" + esc(dtUse(k)) + "</small></button></li>";
-      }).join("") + '</ol><button type="button" class="btn" data-gset="' + g.id + '">' + ic("list-checks") + "Pakai set ini" + (g.prd ? " (mulai dari PRD)" : "") + "</button></section>";
-    }).join("");
-    openModal("mGuide");
-  }
-  var ux2RenderChips0;
-  var ux2PickRender0;
-  var ux2Empty0;
-  var ux2MoreItems0;
-  function install26() {
-    GOALS.forEach(function(g) {
-      g.dts = g.dts.filter(function(k) {
-        return DT[k];
-      });
-    });
-    ux2RenderChips0 = renderChips;
-    set_renderChips(function() {
-      ux2RenderChips0();
-      var plan = PROJ && PROJ.plan || [];
-      if (!plan.length) return;
-      var dt = dtOf(), ws = uiWs || DT[dt].ws, box = $("dtChips"), have = {};
-      [].forEach.call(box.querySelectorAll("[data-dt]"), function(b) {
-        have[b.getAttribute("data-dt")] = 1;
-      });
-      var add = plan.filter(function(k) {
-        return DT[k] && DT[k].ws === ws && !have[k];
-      });
-      if (!add.length) return;
-      var html = add.map(function(k) {
-        return '<button type="button" class="dt-chip sug plan" data-dt="' + k + '" aria-pressed="false" title="Direncanakan: ' + esc(dtUse(k)) + '">' + ic(DT_ICON[k] || "layout-grid") + "<span>" + esc(DT[k].n) + "</span></button>";
-      }).join("");
-      var more = $("nvMore");
-      if (more)
-        more.insertAdjacentHTML(
-          "beforebegin",
-          (box.querySelector(".nv-sep") ? "" : '<span class="nv-sep" aria-hidden="true"></span>') + html
-        );
-    });
-    ux2PickRender0 = nvPickRender;
-    set_nvPickRender(function() {
-      ux2PickRender0();
-      [].forEach.call($("nvPickBody").querySelectorAll(".nv-card[data-dt]"), function(c) {
-        var sm = c.querySelector("small");
-        if (sm) sm.textContent = dtUse(c.getAttribute("data-dt"));
-      });
-      var b = $("nvPickBody");
-      if (!$("nvPickQ").value)
-        b.insertAdjacentHTML(
-          "afterbegin",
-          '<button type="button" class="nv-goal" data-nvs="goal">' + ic("target") + "<span><b>Bingung pilih yang mana?</b><small>Pilih berdasarkan tujuan: aplikasi, system design, database, API, keamanan, UX…</small></span>" + ic("chevron-right") + "</button>"
-        );
-    });
-    ux2Empty0 = renderEmpty;
-    set_renderEmpty(function() {
-      ux2Empty0();
-      var box = $("nvStart");
-      if (box && !box.hidden && !box.querySelector("[data-nvs=goal]"))
-        box.insertAdjacentHTML(
-          "afterbegin",
-          '<button type="button" data-nvs="goal" class="nv-start-goal">' + ic("target") + "<b>Mau merancang apa?</b><small>Pilih tujuan, PDA menyusun diagram yang tepat dan urutannya</small></button>"
-        );
-    });
-    document.addEventListener(
-      "click",
-      function(ev) {
-        var g = ev.target.closest && ev.target.closest("[data-nvs=goal]");
-        if (g) {
-          ev.stopPropagation();
-          ev.preventDefault();
-          if (typeof nvPickClose === "function") nvPickClose();
-          guideOpen();
-          return;
-        }
-        var m = ev.target.closest && ev.target.closest("[data-nvm]");
-        if (!m) return;
-        var a = m.getAttribute("data-nvm"), fn = {
-          theme: function() {
-            cycleTheme();
-          },
-          font: toggleCanvasFont,
-          tidy: function() {
-            pjView("canvas");
-            tidyAllEdges();
-          },
-          guide: guideOpen
-        }[a];
-        if (fn) {
-          ev.stopPropagation();
-          closeMenus();
-          fn();
-        }
-      },
-      true
-    );
-    ux2MoreItems0 = nvMoreItems;
-    set_nvMoreItems(function() {
-      var L3 = ux2MoreItems0(), i = L3.indexOf("-");
-      var extra = [
-        ["guide", "target", "Mau merancang apa?", "Panduan diagram per tujuan"],
-        "-",
-        [
-          "theme",
-          themeIcon(),
-          "Tema: " + themeLabel(),
-          "Klik: " + (THEME_PREF === "auto" ? "Terang" : THEME_PREF === "light" ? "Gelap" : "Otomatis")
-        ],
-        [
-          "font",
-          "type",
-          CANVAS_FONT === "excali" ? "Font kanvas: Normal" : "Font kanvas: Excalifont",
-          "Sekarang: " + (CANVAS_FONT === "excali" ? "Excalifont" : "Normal")
-        ],
-        ["tidy", "wand-sparkles", "Rapikan semua garis", "Hapus tekukan & posisi label manual"]
-      ];
-      return L3.slice(0, i + 1).concat(extra, L3.slice(i));
-    });
-    NV_ACTS.push(
-      [
-        "guide",
-        "Mau merancang apa? (panduan diagram per tujuan)",
-        "target",
-        "tujuan panduan pilih diagram rekomendasi",
-        guideOpen
-      ],
-      ["font", "Ganti font kanvas (Excalifont / Normal)", "type", "font huruf excalidraw tulisan", toggleCanvasFont],
-      [
-        "tidy",
-        "Rapikan semua garis di halaman ini",
-        "wand-sparkles",
-        "garis rapikan tekukan label reset",
-        function() {
-          pjView("canvas");
-          tidyAllEdges();
-        }
-      ]
-    );
   }
 
   // src/ai/intent.ts
@@ -28298,34 +28406,34 @@ svg.lab-drag,svg.lab-drag *{cursor:grabbing!important}
 
   // src/main.ts
   var INSTALL_ORDER = [
-    install16,
+    install21,
     install,
-    install17,
-    install15,
+    install22,
+    install20,
     install7,
     install5,
     install2,
     install3,
     install4,
-    install18,
+    install23,
     install8,
     install9,
-    install19,
+    install24,
     install11,
-    install12,
+    install17,
     install10,
+    install18,
+    install19,
+    install6,
     install13,
     install14,
-    install6,
-    install22,
-    install20,
-    install23,
-    install24,
-    install26,
-    install27,
     install25,
+    install26,
+    install16,
+    install27,
+    install15,
     install28,
-    install21,
+    install12,
     install29,
     install30,
     install31

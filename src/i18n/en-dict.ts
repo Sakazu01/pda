@@ -1075,7 +1075,6 @@ export var EN_RE: [RegExp, string][] = [
   [/^Ganti tema, sekarang (.+)$/, 'Change theme, now $1'],
   [/^Show (.+) on canvas$/, 'Show $1 on canvas'],
   [/^Custom (.+)$/, 'Custom $1'],
-  [/^Semua logo tech \((\d+)\)$/, 'All tech logos ($1)'],
   [/^(\d+) kata · (\d+)\/(\d+) bagian terstruktur$/, '$1 words · $2/$3 structured sections'],
   [
     /^(\d+) halaman terisi · (\d+) istilah di kamus · (\d+) temuan \((\d+) penting\)$/,

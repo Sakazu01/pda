@@ -4,9 +4,10 @@ import { SEC, TECH, set_wsSections, techKey, wsSections } from './catalog';
 import { compImg, normName, onColor, set_compImg } from './draw';
 import { TECH_EXTRA, TSI } from '../vendor/tech-stack-icons';
 import { palItem, secHtml, set_secHtml } from '../editor/workspaces';
+import { TECH_SECTION_NAMES, TECH_SECTION_OF, TECH_SECTION_ORDER } from './tech-categories';
 
 // Every other logo in the pack becomes a component too: found by search and in
-// the "Semua logo tech" palette section, which only renders when opened.
+// its own "Tech stack · …" palette section, which only renders when opened.
 // catalog names that share a logo with another entry in the pack
 export var TSI_ALIAS = { 'GitHub Actions': 'GitHub' };
 export var TSI_ALL = [];
@@ -103,6 +104,20 @@ export function install(): void {
   Object.keys(TSI_ALIAS).forEach(function (a) {
     if (!TSI[a] && TSI[TSI_ALIAS[a]]) TSI[a] = TSI[TSI_ALIAS[a]];
   });
+  // Every tech section is lazy: ~700 logos cost nothing until a section is opened.
+  var SEC_CAT = {
+    'tech-ai': 'ai',
+    'tech-data': 'data',
+    'tech-app': 'compute',
+    'tech-web': 'client',
+    'tech-lang': 'compute',
+    'tech-cloud': 'edge',
+  };
+  TECH_SECTION_ORDER.forEach(function (id) {
+    if (!SEC[id]) SEC[id] = { n: '', keys: [], cat: SEC_CAT[id] || 'ext' };
+    SEC[id].n = TECH_SECTION_NAMES[id];
+    SEC[id].lazy = 1;
+  });
   Object.keys(TSI).forEach(function (name) {
     var k = 'c-' + techKey(name);
     if (T[k]) return;
@@ -110,18 +125,21 @@ export function install(): void {
       f: 'comp',
       n: name,
       icon: 'box',
-      cat: 'ext',
+      cat: SEC[TECH_SECTION_OF[name] || 'tech-more'].cat,
       tech: 1,
       logoOnly: 1,
       kw: 'tech stack logo ' + String(TSI[name].id || ''),
     };
     TSI_ALL.push(k);
+    SEC[TECH_SECTION_OF[name] || 'tech-more'].keys.push(k);
   });
-  SEC['tech-all'] = { n: 'Semua logo tech (' + Object.keys(TSI).length + ')', keys: TSI_ALL, cat: 'ext', lazy: 1 };
   tsiWsSections0 = wsSections;
   set_wsSections(function (ws) {
     var o = tsiWsSections0(ws);
-    if ((ws === 'sys' || ws === 'ai') && o.indexOf('tech-all') < 0) o.push('tech-all');
+    if (ws === 'sys' || ws === 'ai')
+      TECH_SECTION_ORDER.forEach(function (id) {
+        if (SEC[id].keys.length && o.indexOf(id) < 0) o.push(id);
+      });
     return o;
   });
   tsiSecHtml0 = secHtml;

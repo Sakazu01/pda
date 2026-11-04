@@ -17,11 +17,12 @@ await p.waitForTimeout(300);
 ok(await p.evaluate(()=>document.querySelectorAll('#content image').length)>=3,'logos render on the canvas');
 // the full logo section costs nothing until opened
 await p.evaluate(()=>{__RS.pjSwitch('arch')});await p.waitForTimeout(300);
-const lazy=await p.evaluate(()=>{const d=document.querySelector('details[data-sec="tech-all"]');return d?{n:d.querySelectorAll('.pal-item').length,lazy:d.hasAttribute('data-lazy')}:null});
-ok(lazy&&lazy.lazy&&lazy.n===0,'"Semua logo tech" section is present and empty until opened');
-await p.evaluate(()=>{const d=document.querySelector('details[data-sec="tech-all"]');d.open=true});await p.waitForTimeout(400);
-const opened=await p.evaluate(()=>document.querySelectorAll('details[data-sec="tech-all"] .pal-item img, details[data-sec="tech-all"] .pal-item image').length);
-ok(opened>500,'opening it shows '+opened+' logos');
+ok(await p.evaluate(()=>!document.querySelector('details[data-sec="tech-all"]')),'there is no "all tech logos" section any more');
+const lazy=await p.evaluate(()=>{const d=document.querySelector('details[data-sec="tech-web"]');return d?{n:d.querySelectorAll('.pal-item').length,lazy:d.hasAttribute('data-lazy')}:null});
+ok(lazy&&lazy.lazy&&lazy.n===0,'a category section is present and empty until opened');
+await p.evaluate(()=>{const d=document.querySelector('details[data-sec="tech-web"]');d.open=true});await p.waitForTimeout(400);
+const opened=await p.evaluate(()=>document.querySelectorAll('details[data-sec="tech-web"] .pal-item').length);
+ok(opened>60,'opening "frontend & UI" shows '+opened+' logos');
 await p.fill('#palQ','zustand');await p.waitForTimeout(300);
 ok(await p.evaluate(()=>[...document.querySelectorAll('#palBody .pal-item')].some(b=>/Zustand/.test(b.title))),'search finds a logo-only tech (Zustand)');
 await p.fill('#palQ','');

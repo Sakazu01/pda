@@ -1428,7 +1428,7 @@ export var PRD_TPL0 =
   '## Alur\n### Booking studio\n1. Pelanggan: Pilih studio dan jam\n2. Sistem: Cek ketersediaan slot\n3. Pelanggan: Bayar lewat QRIS\n4. Sistem: Kirim konfirmasi WhatsApp\n5. Admin: Siapkan studio\n\n' +
   '## Layar\n- **Beranda**: daftar studio, tombol Booking, menu bawah\n- **Pilih jadwal**: kalender, daftar jam, tombol Lanjut\n- **Pembayaran**: ringkasan booking, gambar QRIS, tombol Saya sudah bayar\n- **Booking berhasil**: teks konfirmasi, tombol Kembali ke beranda\n\n' +
   '## Otomasi\n- Booking dibuat → Kirim WhatsApp konfirmasi → Simpan ke Google Sheets\n- Setiap hari jam 22:00 → Rekap pendapatan → Kirim email ke Owner\n\n' +
-  '## Desain\n- Primer: #0e6169\n- Aksen: #f5c26b\n- Teks: #1b2230\n- Latar: #f5f7f7\n- Font: Geist\n- Gaya: minimal, sudut membulat 10px, banyak ruang kosong\n\n' +
+  '## Desain\n- Primer: #5b5bd6\n- Aksen: #f5c26b\n- Teks: #1b2230\n- Latar: #f7f7f8\n- Font: Geist\n- Gaya: minimal, sudut membulat 10px, banyak ruang kosong\n\n' +
   '## Kamus\n- **Booking** (alias: pemesanan, reservasi): satu pesanan studio untuk rentang jam tertentu.\n- **Slot**: satu jam yang bisa dipesan.\n';
 export var PRD_TPL0_EN =
   '# Music Studio Booking App\n\n## Summary\nCustomers book a studio and pay online, admins manage the schedule, the owner tracks revenue.\n\n## Goals\n- No more double bookings\n- Every payment recorded automatically\n\n' +
@@ -1438,7 +1438,7 @@ export var PRD_TPL0_EN =
   '## Flows\n### Book studio\n1. Customer: Choose studio and time\n2. System: Check slot availability\n3. Customer: Pay with QRIS\n4. System: Send WhatsApp confirmation\n5. Admin: Prepare the studio\n\n' +
   '## Screens\n- **Home**: studio list, Book button, bottom menu\n- **Choose time**: calendar, time list, Next button\n- **Payment**: booking summary, QRIS image, I have paid button\n- **Booking confirmed**: confirmation text, Back to home button\n\n' +
   '## Automation\n- Booking created → Send WhatsApp confirmation → Save to Google Sheets\n- Every day at 22:00 → Revenue summary → Email the Owner\n\n' +
-  '## Design\n- Primary: #0e6169\n- Accent: #f5c26b\n- Text: #1b2230\n- Background: #f5f7f7\n- Font: Geist\n- Style: minimal, 10px rounded corners, plenty of white space\n\n' +
+  '## Design\n- Primary: #5b5bd6\n- Accent: #f5c26b\n- Text: #1b2230\n- Background: #f7f7f8\n- Font: Geist\n- Style: minimal, 10px rounded corners, plenty of white space\n\n' +
   '## Glossary\n- **Booking** (alias: reservation): one studio order for a time range.\n- **Slot**: one bookable hour.\n';
 export var PRD_HEAD_EN = {
   actors: 'Actors',
@@ -1953,7 +1953,7 @@ export var PRD_BUILD = {
         cols = D.colors.length
           ? D.colors
           : [
-              { name: 'Primer', hex: '#0e6169' },
+              { name: 'Primer', hex: '#5b5bd6' },
               { name: 'Teks', hex: '#1b2230' },
               { name: 'Latar', hex: '#f5f7f7' },
             ],

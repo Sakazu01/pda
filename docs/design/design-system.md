@@ -9,32 +9,30 @@ Status: v2 draft. Contrast ratios have not been measured yet (the `axe2` and `ax
 1. **Quiet, guided, hand-made.** The work (canvas, PRD, slide) is the hero; chrome steps back.
 2. **One front door.** An empty project asks one question. Everything else is search (`Ctrl K`) or a menu.
 3. **Show controls when they matter.** Inspector on selection, style chips on selection, Library on demand.
-4. **One accent, colour means state.** Teal is the only brand colour. Green, amber, red are status only.
+4. **One accent, colour means state.** Indigo is the only brand colour. Green, amber, red are status only.
 5. **Same shell everywhere.** Header, colours, type and shapes never change between diagram, slides and PRD; only the side panels do.
 6. **Consistent before clever.** Use a token, a size from the scale, an existing component. A new value needs a reason written here.
 
-## 2. Colour
-
-Two modes, same names. Always use the variable, never a raw hex.
+## 2. Colour`n`nPalette **B · Graphite + indigo** (chosen). Near-neutral cool greys do most of the work; one lively indigo accent marks action and selection. Two modes, same names. Always use the variable, never a raw hex.`n`nBuilt on three ideas: neutrals carry about 90% of the UI with only a hint of tint; dark mode is not an inversion (base is darker, raised surfaces are lighter, the accent is lifted for contrast); text and UI contrast targets are set first and colours are tuned to meet them (`faint` and `good` were darkened for this).
 
 | Token | Light | Dark | Use |
 |---|---|---|---|
-| `bg` | `#f5f7f7` | `#0f1416` | app background, wells |
-| `panel` | `#ffffff` | `#192023` | headers, side panels, cards, inputs |
-| `panel-2` | `#eceff0` | `#283034` | hover fill |
-| `canvas` | `#ffffff` | `#0f1416` | the drawing surface |
-| `line` | `#dde2e4` | `#2a3337` | 1 px borders and dividers |
-| `line-2` | `#c3cbce` | `#3a4448` | stronger border, skeleton bars |
-| `ink` | `#192023` | `#e8eced` | primary text |
-| `muted` | `#4b585d` | `#a7b2b6` | secondary text, inactive icons |
-| `faint` | `#627075` | `#8a969b` | captions, placeholders |
-| `accent` | `#0e6169` | `#6db5bb` | primary action, selection, links |
-| `accent-ink` | `#ffffff` | `#06191b` | text on `accent` |
-| `accent-soft` | `#e8f4f5` | `#12292c` | selected pill, icon tile, soft highlight |
-| `accent-line` | `#a0d2d6` | `#1f7b84` | border of selected or soft elements |
-| `accent-tint` | `#c4dee0` | `#2a5155` | duotone fill inside custom icons |
-| `good` | `#1b6e46` | `#6fcb9a` | saved, success |
-| `grid-dot` | `#d6dbdd` | `#2a3337` | dot grid on the canvas |
+| `bg` | `#f7f7f8` | `#0e0e10` | app background, wells |
+| `panel` | `#ffffff` | `#17171a` | headers, side panels, cards, inputs |
+| `panel-2` | `#f0f0f2` | `#222226` | hover fill |
+| `canvas` | `#ffffff` | `#121215` | the drawing surface |
+| `line` | `#e6e6ea` | `#2a2a30` | 1 px borders and dividers |
+| `line-2` | `#d4d4da` | `#3a3a42` | stronger border, skeleton bars |
+| `ink` | `#1a1a1f` | `#ededef` | primary text |
+| `muted` | `#55555e` | `#a0a0a8` | secondary text, inactive icons |
+| `faint` | `#6e6e78` | `#8a8a94` | captions, placeholders |
+| `accent` | `#5b5bd6` | `#8e91f7` | primary action, selection, links |
+| `accent-ink` | `#ffffff` | `#0f1030` | text on `accent` |
+| `accent-soft` | `#eeeffd` | `#1d1e3f` | selected pill, icon tile, soft highlight |
+| `accent-line` | `#c4c8f3` | `#3b3e80` | border of selected or soft elements |
+| `accent-tint` | `#cecef4` | `#363768` | duotone fill inside custom icons |
+| `good` | `#1f7a4a` | `#4fd08a` | saved, success |
+| `grid-dot` | `#d9d9de` | `#26262c` | dot grid on the canvas |
 
 Rules:
 - Text on `panel` or `bg` uses `ink`, `muted` or `faint`, in that order of importance. Never `faint` for anything a user must read to act.

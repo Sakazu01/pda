@@ -6,10 +6,10 @@
 <style>
 /* Layout: drafting-table workbench. Palette | infinite blueprint canvas | inspector, with floating tool islands over the canvas. */
 :root{
-  --bg:#f5f7f7; --panel:#ffffff; --panel-2:#eceff0; --line:#dde2e4; --line-2:#c3cbce;
-  --ink:#192023; --muted:#4b585d; --faint:#627075;
-  --accent:#0e6169; --accent-ink:#ffffff; --accent-soft:#e8f4f5; --accent-line:#a0d2d6;
-  --good:#1b6e46; --warn:#8f5a0b; --bad:#b0271c; --info:#0e6169;
+  --bg:#f7f7f8; --panel:#ffffff; --panel-2:#f0f0f2; --line:#e6e6ea; --line-2:#d4d4da;
+  --ink:#1a1a1f; --muted:#55555e; --faint:#6e6e78;
+  --accent:#5b5bd6; --accent-ink:#ffffff; --accent-soft:#eeeffd; --accent-line:#c4c8f3;
+  --good:#1f7a4a; --warn:#8f5a0b; --bad:#b0271c; --info:#5b5bd6;
   --canvas:#ffffff;
   --shadow:0 2px 8px rgba(15,20,22,.08),0 0 0 1px rgba(15,20,22,.04);
   --shadow-sm:0 1px 2px rgba(15,20,22,.06);
@@ -18,20 +18,20 @@
   --r:10px; --r-sm:6px; --tb:32px;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#0f1416; --panel:#192023; --panel-2:#283034; --line:#2a3337; --line-2:#3a4448;
-  --ink:#e8eced; --muted:#a7b2b6; --faint:#8a969b;
-  --accent:#6db5bb; --accent-ink:#06191b; --accent-soft:#12292c; --accent-line:#1f7b84;
-  --good:#6fcb9a; --warn:#e4b766; --bad:#f09a92; --info:#6db5bb;
-  --canvas:#0f1416;
+  --bg:#0e0e10; --panel:#17171a; --panel-2:#222226; --line:#2a2a30; --line-2:#3a3a42;
+  --ink:#ededef; --muted:#a0a0a8; --faint:#8a8a94;
+  --accent:#8e91f7; --accent-ink:#0f1030; --accent-soft:#1d1e3f; --accent-line:#3b3e80;
+  --good:#4fd08a; --warn:#e4b766; --bad:#f09a92; --info:#8e91f7;
+  --canvas:#121215;
   --shadow:0 2px 8px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.05);
   --shadow-sm:0 1px 2px rgba(0,0,0,.4);
   color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#0f1416; --panel:#192023; --panel-2:#283034; --line:#2a3337; --line-2:#3a4448;
-  --ink:#e8eced; --muted:#a7b2b6; --faint:#8a969b;
-  --accent:#6db5bb; --accent-ink:#06191b; --accent-soft:#12292c; --accent-line:#1f7b84;
-  --good:#6fcb9a; --warn:#e4b766; --bad:#f09a92; --info:#6db5bb;
-  --canvas:#0f1416;
+  --bg:#0e0e10; --panel:#17171a; --panel-2:#222226; --line:#2a2a30; --line-2:#3a3a42;
+  --ink:#ededef; --muted:#a0a0a8; --faint:#8a8a94;
+  --accent:#8e91f7; --accent-ink:#0f1030; --accent-soft:#1d1e3f; --accent-line:#3b3e80;
+  --good:#4fd08a; --warn:#e4b766; --bad:#f09a92; --info:#8e91f7;
+  --canvas:#121215;
   --shadow:0 2px 8px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.05);
   --shadow-sm:0 1px 2px rgba(0,0,0,.4);
   color-scheme:dark}
@@ -664,7 +664,7 @@ button.iv-dot.on:hover{transform:scale(1.15)}
 #btnTheme{width:36px;padding:0;justify-content:center}
 #btnTheme .i{width:17px;height:17px}
 @media (max-width:480px){#btnTheme{display:none}}
-.ai-fab{position:absolute;top:66px;right:14px;z-index:6;display:inline-flex;align-items:center;gap:7px;height:36px;padding:0 14px 0 11px;border-radius:99px;border:1px solid var(--accent-line);background:var(--accent);color:var(--accent-ink);font:600 12.5px/1 var(--font-ui);box-shadow:0 6px 18px rgba(14,97,105,.25);cursor:pointer}
+.ai-fab{position:absolute;top:66px;right:14px;z-index:6;display:inline-flex;align-items:center;gap:7px;height:36px;padding:0 14px 0 11px;border-radius:99px;border:1px solid var(--accent-line);background:var(--accent);color:var(--accent-ink);font:600 12.5px/1 var(--font-ui);box-shadow:0 6px 18px rgba(91,91,214,.25);cursor:pointer}
 .ai-fab .i{width:16px;height:16px}
 .ai-fab:hover{filter:brightness(1.08)}
 .ai-fab:focus-visible{outline:2px solid var(--ink);outline-offset:2px}

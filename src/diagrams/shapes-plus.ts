@@ -2135,7 +2135,7 @@ export function install(): void {
     var I = TH.ink,
       F = TH.shape,
       M = TH.muted,
-      A = TH.name === 'dark' ? '#6db5bb' : '#0e6169';
+      A = TH.name === 'dark' ? '#8e91f7' : '#5b5bd6';
     if (t === 'media-img')
       return svgWrap(
         '0 0 48 40',

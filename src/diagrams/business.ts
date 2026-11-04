@@ -1427,7 +1427,7 @@ export function install(): void {
   });
 
   // ---------- system-design components & patterns ----------
-  CAT.pattern = { n: 'System design patterns', light: '#0e6169', dark: '#6db5bb' };
+  CAT.pattern = { n: 'System design patterns', light: '#5b5bd6', dark: '#8e91f7' };
   set_MORE_COMPS([
     ['rproxy', 'Reverse proxy', 'arrow-left-right', 'edge', 'nginx envoy traefik reverse proxy'],
     ['gslb', 'Global LB / GeoDNS', 'globe', 'edge', 'geo dns anycast global load balancer multi region'],

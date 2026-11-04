@@ -575,7 +575,7 @@ export function drawTree(n, noLabel) {
     tc = validColor(n.textColor) ? n.textColor : TH.text;
   if (f === 'org') {
     var root = !TREEP[n.id],
-      tone = validColor(n.stroke) ? n.stroke : TH.name === 'dark' ? '#6db5bb' : '#0e6169';
+      tone = validColor(n.stroke) ? n.stroke : TH.name === 'dark' ? '#8e91f7' : '#5b5bd6';
     s +=
       '<rect x="' +
       x +

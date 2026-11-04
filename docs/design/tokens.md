@@ -1,5 +1,7 @@
 # Design tokens (P3, step B)
 
+> **Superseded for colour.** The chosen palette is B (graphite + indigo); see [design-system.md](design-system.md) section 2. The teal values below are the old palette, kept for history. Type, spacing, shape and motion in this file still apply.
+
 Source of truth today: `src/shell/head.html` lines 9-36 (`:root`, dark theme, and the auto-dark copy). This page says what stays, what is added, and the rule for using them. Nothing in `src/` has changed yet; the CSS in §6 is applied in P6.
 
 ## 1. Already good, keep as is

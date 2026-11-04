@@ -696,7 +696,7 @@ export function fwPreview(k) {
 export function customPreview__base(t) {
   var I = TH.ink,
     F = TH.shape,
-    A = TH.name === 'dark' ? '#6db5bb' : '#0e6169',
+    A = TH.name === 'dark' ? '#8e91f7' : '#5b5bd6',
     M = TH.muted,
     st = ' stroke="' + I + '" stroke-width="1.3"';
   if (t === 'u-seq-life')
@@ -875,7 +875,7 @@ export function previewSvg(t) {
   }
   if (real === 'k-cell') {
     n.head = 'band';
-    n.tone = '#0e6169';
+    n.tone = '#5b5bd6';
     noLab = false;
   }
   if (real === 'b-frag') n.label = '';

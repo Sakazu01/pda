@@ -2,6 +2,16 @@
 
 All notable changes are listed here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions follow [SemVer](https://semver.org/).
 
+## [Unreleased]
+
+### Changed
+- **Calmer shell.** The top bar keeps search, projects, AI, ⋯ and Export. Slides, simulation, check and theme moved into the ⋯ menu. The canvas toolbar has four tools (select, pan, connect, pen); the line type shows only while connecting. Undo and redo sit bottom-left, zoom bottom-right. The minimap is off by default; the hint bar and the floating AI button are gone (AI lives in the top bar and the front door).
+- **Front door.** An empty project asks "What do you want to design?" with one box (sent to the AI generator), four goals, and quiet links for a PRD, an example, all diagram types and more goals.
+- **Tech logos by category.** The *All tech logos* section is gone. Every logo sits in its own section (AI & automation, data, backend, frontend & UI, languages, cloud & ops, dev tools & OS, design & game, apps & services, more). Sections still load only when opened, and search finds every logo.
+
+### Added
+- Design notes in `docs/` (plan, product purpose, control inventory, tokens, static mock).
+
 ## [1.4.0] - 2026-10-24
 
 ### Added

@@ -132,8 +132,8 @@ Skills: `superpowers:using-git-worktrees`, `superpowers:finishing-a-development-
 - [x] P2 Control inventory and keep/move/remove table (§2): `docs/design/control-inventory.md`
 - [x] P3 Moodboard + design tokens (§0.5 A, B): `docs/design/refs.md`, `docs/design/tokens.md`
 - [ ] P4 Mocks: empty state, canvas, selected, palette, ⋯ menu, 375 px, dark (§0.5 C, D): built as static HTML in `docs/design/mock/index.html` (Figma was not authorised in this session); **waiting for owner approval**
-- [ ] P5 Logo categories, remove "Semua logo tech" (§3), on `feat/logo-categories`
-- [ ] P6 Build the new shell and front door (§0.5 G), on `feat/simplify-ui`
-- [ ] P7 Motion and copy pass (§0.5 E, F)
-- [ ] P8 Quality gates and screenshots (§4, §0.5 H)
-- [ ] P9 Docs, changelog, release (§5)
+- [x] P5 Logo categories, "Semua logo tech" removed (§3), branch `feat/logo-categories`
+- [x] P6 New shell and front door (§0.5 G), branch `feat/simplify-ui`. Done: top bar, 4-tool toolbar, undo/zoom corners, minimap off, hint bar and floating AI button removed, front door. **Not done:** merging the 7 workspace tabs into one goal picker; dot-grid canvas background; 375 px layout not checked.
+- [x] P7 Motion (short transitions and door fade, off with reduced motion) and new copy through `L()`
+- [ ] P8 Quality gates: typecheck and build pass, front door and logo sections checked by hand in the browser. **Not run:** Playwright suites (Chromium not installed; needs a ~150 MB download), axe, 3-width screenshots
+- [x] P9 Docs and changelog (`[Unreleased]`); release/tag not done
